@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /BookLand/appsettings.json
 /BookLand/Models/MyDbContext.cs
+/BookLand/appsettings.json
+/BookLand/appsettings.json
