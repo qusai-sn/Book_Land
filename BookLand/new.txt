@@ -1,0 +1,6 @@
+﻿namespace BookLand
+{
+    public class @new
+    {
+    }
+}
