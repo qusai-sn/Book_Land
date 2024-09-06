@@ -7,5 +7,7 @@ namespace BookLand.Controllers
     [ApiController]
     public class QusaiController : ControllerBase
     {
+
+
     }
 }
