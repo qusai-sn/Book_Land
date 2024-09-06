@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BookLand/appsettings.json
+/BookLand/Models/MyDbContext.cs
