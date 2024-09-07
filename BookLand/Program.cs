@@ -16,8 +16,23 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("YourConnectionString")));
 
 
+// Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
+
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+app.UseCors("AllowAllOrigins");
 
 
 // Configure the HTTP request pipeline.
