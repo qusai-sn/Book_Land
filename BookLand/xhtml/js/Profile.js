@@ -2,7 +2,7 @@
 async function UserProfile(id) {
     
     try {
-        const apiUrl = `https://localhost:7198/api/UserProfile/Api/User/${id}`;
+        const apiUrl = `https://localhost:44301/api/UserProfile/Api/User/${id}`;
         const response = await fetch(apiUrl );
          console.log(response);
         
@@ -47,7 +47,7 @@ function populateForm(userData) {
 document.getElementById('UserProfile').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    const apiUrl = 'https://localhost:7198/api/UserProfile/1';
+    const apiUrl = 'https://localhost:44301/api/UserProfile/1';
     const formData = new FormData(); // Use FormData to handle multipart/form-data type
 
     // Append form fields to formData
