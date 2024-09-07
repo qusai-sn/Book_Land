@@ -33,19 +33,16 @@ namespace BookLand.Controllers
 
 
         // return books that belong to a specific category :
-        [HttpGet("categories/{categoryId}/books")]
-        public async Task<IActionResult> GetBooksByCategory(int categoryId)
+        [HttpGet("categories/books")]
+        public async Task<IActionResult> GetBooksByCategories([FromQuery] List<int> categoryIds)
         {
-            // First check if the category exists to provide a clear error if it doesn't
-            var categoryExists = await _db.Categories.AnyAsync(c => c.Id == categoryId);
-            if (!categoryExists)
+            if (categoryIds == null || !categoryIds.Any())
             {
-                return NotFound("Category not found.");
+                return BadRequest("No categories specified.");
             }
 
-            // Now query for books in that category
             var books = await _db.Books
-                .Where(b => b.Categories.Any(c => c.Id == categoryId))
+                .Where(b => b.Categories.Any(c => categoryIds.Contains(c.Id)))
                 .Select(b => new
                 {
                     b.Id,
@@ -57,27 +54,16 @@ namespace BookLand.Controllers
                     b.Price,
                     b.DiscountPercentage,
                     b.ImageUrl,
-                    b.Rating
+                    b.Rating,
+                    CommentsCount = b.CommentsReviews.Count,
+                    Categories = b.Categories.Select(c => new { c.Id, c.Name }).ToList()
                 })
                 .ToListAsync();
 
             return Ok(books);
-
-            // the output : 
-            //List of :
-            //{
-            //    "id": 11,
-            //    "title": "Book Title 11",
-            //    "author": "Author 11",
-            //    "publisher": "Publisher Name",
-            //    "yearPublished": 2020,
-            //    "description": "This is a sample description for book 11",
-            //    "price": 29.99,
-            //    "discountPercentage": 10,
-            //    "imageUrl": "https://edit.org/images/cat/book-covers-big-2019101610.jpg",
-            //    "rating": 4.5
-            //  }
         }
+
+
 
 
 
