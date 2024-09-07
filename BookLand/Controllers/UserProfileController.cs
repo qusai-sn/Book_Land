@@ -93,7 +93,6 @@ namespace BookLand.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Check if the Id is valid (nullable)
             int? contactId = contactUsDto.Id;
 
             var newContact = new ContactU
@@ -102,8 +101,7 @@ namespace BookLand.Controllers
                 Email = contactUsDto.Email,
                 Subject = contactUsDto.Subject,
                 Message = contactUsDto.Message,
-                // Only assign Id if it's not null
-                Id = contactId ?? 0 // Handle null by assigning default 0 or modify according to your logic
+                Id = contactId ?? 0 
             };
 
             _db.ContactUs.Add(newContact);
@@ -114,27 +112,61 @@ namespace BookLand.Controllers
 
         /// /////////////////////////////////////////////////////////////////////
 
-        [HttpPost("wishlist")]
-        public IActionResult AddToWishlist([FromForm] Wishlist wishlistItem)
+        //[HttpPost("wishlist")]
+        //public IActionResult AddToWishlist([FromForm] Wishlist wishlistItem)
+        //{
+        //    if (wishlistItem.UserId == null || wishlistItem.BookId == null)
+        //    {
+        //        return BadRequest("Invalid data.");
+        //    }
+
+        //    var existingItem = _db.Wishlists
+        //        .FirstOrDefault(w => w.UserId == wishlistItem.UserId && w.BookId == wishlistItem.BookId);
+
+        //    if (existingItem != null)
+        //    {
+        //        return Conflict("This item is already in your wishlist.");
+        //    }
+
+        //    _db.Wishlists.Add(wishlistItem);
+        //    _db.SaveChanges();
+
+        //    return Ok("Item added to wishlist.");
+        //}
+
+        //////////////////////////////////////////
+
+
+        [HttpGet("byUserId/{userId}")]
+        public IActionResult GetWishlistByUserIdall(int userId)
         {
-            if (wishlistItem.UserId == null || wishlistItem.BookId == null)
+            var wishlist = _db.Wishlists
+                                        .Where(a => a.UserId == userId)
+                                        .ToList();
+
+            if (wishlist == null || !wishlist.Any())
             {
-                return BadRequest("Invalid data.");
+                return NotFound();
             }
 
-            var existingItem = _db.Wishlists
-                .FirstOrDefault(w => w.UserId == wishlistItem.UserId && w.BookId == wishlistItem.BookId);
-
-            if (existingItem != null)
-            {
-                return Conflict("This item is already in your wishlist.");
-            }
-
-            _db.Wishlists.Add(wishlistItem);
-            _db.SaveChanges();
-
-            return Ok("Item added to wishlist.");
+            return Ok(wishlist);
         }
+
+        //[HttpDelete("remove/{userId}/{bookId}")]
+        //public IActionResult RemoveFromWishlist(int userId, int bookId)
+        //{
+        //    var wishlistItem = _db.Wishlists.FirstOrDefault(w => w.UserId == userId && w.BookId == bookId);
+
+        //    if (wishlistItem == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _db.Wishlists.Remove(wishlistItem);
+        //    _db.SaveChanges();
+
+        //    return Ok(new { message = "Item removed from wishlist" });
+        //}
     }
 }
 
