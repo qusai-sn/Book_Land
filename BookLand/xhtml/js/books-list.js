@@ -166,7 +166,7 @@ function addToCart(bookId, price) {
         format: "Hard Copy", // Default format
         price: parseFloat(price)
     };
-    localStorage.setItem(`Item${bookId}`, JSON.stringify(cartItem));
+    localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
     alert('Added to cart!');  // Example usage:
     showNotification('This is a success message!', 'success');
 }
