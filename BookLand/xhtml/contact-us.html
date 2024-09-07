@@ -354,20 +354,20 @@
 									<h6 class="sub-title text-primary">CONTACT US</h6>
 									<h3 class="title m-b20">Get In Touch With Us</h3>
 								</div>
-								<form class="dz-form dzForm" method="POST" action="https://bookland.dexignzone.com/xhtml/script/contact_smtp.php">
+								<form class="dz-form dzForm" method="POST" action="https://bookland.dexignzone.com/xhtml/script/contact_smtp.php" id="contactForm">
 									<input type="hidden" class="form-control" name="dzToDo" value="Contact">
 									<div class="dzFormMsg"></div>		
 									<div class="input-group">
-										<input required type="text" class="form-control" name="dzName" placeholder="Full Name">
+										<input required type="text" class="form-control" name="Name" id="Name" placeholder="Full Name">
 									</div>
 									<div class="input-group">
-										<input required type="text" class="form-control" name="dzEmail" placeholder="Email Adress">
+										<input required type="text" class="form-control" name="Email" id="Email" placeholder="Email Adress">
 									</div>
 									<div class="input-group">
-										<input required type="text" class="form-control" name="dzPhoneNumber" placeholder="Phone No.">
+										<input required type="text" class="form-control" name="Subject" id="Subject" placeholder="Subject:">
 									</div>
 									<div class="input-group">
-										<textarea required name="dzMessage" rows="5" class="form-control">Message</textarea>
+										<textarea required name="Message" id="Message" rows="5" class="form-control" placeholder="Message"></textarea>
 									</div>
 									<div class="mb-3">
 										<div class="g-recaptcha" data-sitekey="6LefsVUUAAAAADBPsLZzsNnETChealv6PYGzv3ZN" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
@@ -630,7 +630,8 @@
 <script src="vendor/counter/counterup.min.js"></script><!-- COUNTERUP JS -->
 <script src="js/dz.ajax.js"></script><!-- AJAX -->
 <script src="js/custom.js"></script><!-- CUSTOM JS -->
-
+<!-- /////////////////////////////////////////////////////////////////// -->
+<script src="./js/ContactInfo.js"></script>
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:14 GMT -->
