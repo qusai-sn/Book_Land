@@ -8,6 +8,7 @@ namespace BookLand.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class LoginAndRegister : ControllerBase
     {
 
@@ -59,7 +60,7 @@ namespace BookLand.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult Login([FromForm] UsersDTO model)
+        public IActionResult Login([FromForm] LoginDTO model)
         {
             var newUser = _db.Users.FirstOrDefault(x => x.Email == model.Email);
 
@@ -77,7 +78,7 @@ namespace BookLand.Controllers
             }
             else
             {
-                return Ok(/*new { Token = token }*/);
+                return Ok(new { /*Token = token ,*/ newUser.Id });
             }
         }
 
