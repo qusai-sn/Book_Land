@@ -167,6 +167,30 @@ namespace BookLand.Controllers
 
         //    return Ok(new { message = "Item removed from wishlist" });
         //}
+
+        [HttpGet("wishlist/{userId}")]
+        public IActionResult GetWishlistForUser(int userId)
+        {
+            var wishlistItems = _db.Wishlists
+                .Where(w => w.UserId == userId)
+                .Include(w => w.Book)  // Ensure you have a relationship set to include Book details
+                .ToList();
+
+            if (!wishlistItems.Any())
+            {
+                return NotFound("No items found in the wishlist for the specified user.");
+            }
+
+            var result = wishlistItems.Select(w => new
+            {
+                ProductId = w.Book.Id,
+                ProductName = w.Book.Title,
+                UnitPrice = w.Book.Price,
+                ProductImage = w.Book.ImageUrl  // Assuming you have an ImageUrl field in your Book model
+            }).ToList();
+
+            return Ok(result);
+        }
     }
 }
 
