@@ -88,7 +88,13 @@ namespace BookLand.Controllers
         [HttpPost]
         public IActionResult PostContactDetails([FromForm] ContactUsDTO contactUsDto)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Check if the Id is valid (nullable)
+            int? contactId = contactUsDto.Id;
 
             var newContact = new ContactU
             {
@@ -96,7 +102,8 @@ namespace BookLand.Controllers
                 Email = contactUsDto.Email,
                 Subject = contactUsDto.Subject,
                 Message = contactUsDto.Message,
-                //UserId = userId // Associate the contact details with the user
+                // Only assign Id if it's not null
+                Id = contactId ?? 0 // Handle null by assigning default 0 or modify according to your logic
             };
 
             _db.ContactUs.Add(newContact);
@@ -106,20 +113,28 @@ namespace BookLand.Controllers
         }
 
         /// /////////////////////////////////////////////////////////////////////
-       
-        [HttpGet("wishlist/{userId}")]
-        public IActionResult GetWishlist(int userId)
-        {
-            var wishlistItems = _db.Wishlists.Where(w => w.UserId == userId).Include(w => w.Book).ToList();
 
-            if (wishlistItems == null)
+        [HttpPost("wishlist")]
+        public IActionResult AddToWishlist([FromForm] Wishlist wishlistItem)
+        {
+            if (wishlistItem.UserId == null || wishlistItem.BookId == null)
             {
-                return NotFound();
+                return BadRequest("Invalid data.");
             }
 
-            return Ok(wishlistItems);
-        }
+            var existingItem = _db.Wishlists
+                .FirstOrDefault(w => w.UserId == wishlistItem.UserId && w.BookId == wishlistItem.BookId);
 
+            if (existingItem != null)
+            {
+                return Conflict("This item is already in your wishlist.");
+            }
+
+            _db.Wishlists.Add(wishlistItem);
+            _db.SaveChanges();
+
+            return Ok("Item added to wishlist.");
+        }
     }
 }
 
