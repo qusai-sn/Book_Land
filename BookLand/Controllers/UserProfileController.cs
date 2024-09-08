@@ -203,26 +203,7 @@ namespace BookLand.Controllers
         }
 
         /// //////////////////////////
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDetailsDto>>> GetUserDetails()
-        {
-            var userDetails = await _db.UserDetails
-                .Select(ud => new UserDetailsDto
-                {
-                    UserId = ud.UserId,
-                    ProfessionalTitle = ud.ProfessionalTitle,
-                    Languages = ud.Languages,
-                    Age = ud.Age,
-                    Description = ud.Description,
-                    Country = ud.Country,
-                    City = ud.City,
-                    Postcode = ud.Postcode
-                })
-                .ToListAsync();
-
-            return Ok(userDetails);
-        }
-
+       
     }
 }
 
