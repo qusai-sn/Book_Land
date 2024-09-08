@@ -64,9 +64,7 @@ namespace BookLand.Controllers
         {
             var newUser = _db.Users.FirstOrDefault(x => x.Email == model.Email);
 
-            //var roles = _db.UserRoles.Where(x => x.UserId == user.UserId).Select(ur => ur.Role).ToList();
-
-            //var token = _tokenGenerator.GenerateToken(user.Username, roles);
+            var token = _tokenGenerator.GenerateToken(newUser.Name);
 
             if (!PasswordHasher.VerifyPasswordHash(model.Password, newUser.PasswordHash, newUser.PasswordSalt))
             {
@@ -78,7 +76,7 @@ namespace BookLand.Controllers
             }
             else
             {
-                return Ok(new { /*Token = token ,*/ newUser.Id });
+                return Ok(new { Token = token, newUser.Id });
             }
         }
 
