@@ -45,6 +45,7 @@ function loadCategories() {
 function loadBooks() {
     const selectedCategories = Array.from(document.querySelectorAll('.form-check-input:checked')).map(input => input.value);
     let apiUrl = `https://localhost:7198/api/Shoping/categories/books?`;
+    let token = localStorage.jwtToken ;
     selectedCategories.forEach((id, index) => {
         apiUrl += `categoryIds=${id}`;
         if (index < selectedCategories.length - 1) {
@@ -52,7 +53,13 @@ function loadBooks() {
         }
     });
 
-    fetch(apiUrl)
+    fetch(apiUrl ,  {
+        method: 'GET', // The HTTP method you want to use for the request
+        headers: {
+            'Authorization': `Bearer ${token}`, // Properly formatted Authorization header
+            'Content-Type': 'application/json'  // Correctly placed within the headers object
+        }
+    })
         .then(response => response.json())
         .then(books => {
             const booksContainer = document.getElementById('books-container');

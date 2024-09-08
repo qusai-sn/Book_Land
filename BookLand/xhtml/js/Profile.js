@@ -1,85 +1,255 @@
-// Function to fetch user profile data and populate the form
-async function UserProfile(id) {
-    
+// // Function to fetch user profile data and populate the form
+// async function UserProfile(id) {
+//     debugger
+//     try {
+//         const apiUrl = `https://localhost:44301/api/UserProfile/${id}`;
+//         const response = await fetch(apiUrl );
+//          console.log(response);
+
+//         if (!response.ok) {
+//             throw new Error(`Network response was not ok (${response.status})`);
+//         }
+
+//         const userData = await response.json();
+
+//         populateForm(userData);
+
+//     } catch (error) {
+//         alert('Error fetching the user profile:', error);
+//     }
+// }
+
+// // Function to populate the form with user data
+// function populateForm(userData) {
+//     const formFields = {
+//         name: 'name',
+//         professionalTitle: 'formcontrolinput2',
+//         languages: 'formcontrolinput3',
+//         age: 'formcontrolinput4',
+//         description: 'exampleFormControlTextarea',
+//         contactNumber: 'phoneNumber',
+//         email: 'email',
+//         country: 'formcontrolinput7',
+//         postcode: 'formcontrolinput8',
+//         city: 'formcontrolinput9',
+//         fullAddress: 'address',
+//     };
+
+//     Object.keys(formFields).forEach((key) => {
+//         const elementId = formFields[key];
+//         const value = userData[key] || '';
+//         document.getElementById(elementId).value = value;
+//     });
+// }
+
+
+
+// document.getElementById('UserProfile').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent the default form submission behavior
+
+//     const apiUrl = 'https://localhost:44301/api/UserProfile/1';
+//     const formData = new FormData(); // Use FormData to handle multipart/form-data type
+
+//     // Append form fields to formData
+//     formData.append('Name', document.getElementById('name').value);
+//     formData.append('Email', document.getElementById('email').value);
+//     // formData.append('Image', document.getElementById('image').value); // Assuming there's an input with ID 'image'
+//     formData.append('Address', document.getElementById('address').value);
+//     formData.append('PhoneNumber', document.getElementById('phoneNumber').value);
+
+//     fetch(apiUrl, {
+//         method: 'PUT',
+//         body: formData,
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log(data);
+//         alert('Profile updated successfully!');
+//     })
+//     .catch(error => {
+//         console.error('Error updating the profile:', error);
+//         alert('Failed to update profile.');
+//     });
+// });
+
+
+// // Call the function when the page loads or when the user ID is available
+// window.onload = function () {
+//     const userId = 1;  // Replace with dynamic userId
+//     UserProfile(userId);
+// };
+
+
+
+
+
+
+
+// //////////////////////////////
+// document.addEventListener('DOMContentLoaded', function () {
+//     const userId = 1; // Replace with the actual user ID
+
+//     // Fetch user profile data and populate the form
+//     fetch(`https://localhost:44301/api/UserProfile/GetUserProfile/${userId}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Populate the form with user data
+//             document.getElementById('username').value = data.UserName;
+//             document.getElementById('email').value = data.Email;
+//             document.getElementById('phoneNumber').value = data.PhoneNumber;
+//             document.getElementById('professionalTitle').value = data.ProfessionalTitle;
+//             document.getElementById('languages').value = data.Languages;
+//             document.getElementById('age').value = data.Age;
+//             document.getElementById('description').value = data.Description;
+//             document.getElementById('country').value = data.Country;
+//             document.getElementById('city').value = data.City;
+//             document.getElementById('postcode').value = data.Postcode;
+//         })
+//         .catch(error => console.error('Error fetching user profile:', error));
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementById('UserProfile').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form from submitting the default way
+
+// const userId = 1; // Replace with dynamic user ID
+//     const userApiUrl = `https://localhost:44301/api/UserProfile/UpdateUserDetail/${userId}`;
+//     const userDetailApiUrl = `https://localhost:44301/api/UserProfile/${userId}`;
+
+// const userFormData = new FormData();
+// const userDetailFormData = new FormData();
+
+// // User data (e.g. Email, Phone)
+// userFormData.append('Email', document.getElementById('email').value);
+// userFormData.append('PhoneNumber', document.getElementById('phoneNumber').value);
+
+// // UserDetail data (Professional Title, etc.)
+// userDetailFormData.append('ProfessionalTitle', document.getElementById('professionalTitle').value);
+// userDetailFormData.append('Languages', document.getElementById('languages').value);
+// userDetailFormData.append('Age', document.getElementById('age').value);
+// userDetailFormData.append('Description', document.getElementById('description').value);
+// userDetailFormData.append('Country', document.getElementById('country').value);
+// userDetailFormData.append('City', document.getElementById('city').value);
+// userDetailFormData.append('Postcode', document.getElementById('postcode').value);
+
+// // Update User (Email, Phone, etc.)
+// fetch(userApiUrl, {
+//     method: 'PUT',
+// body: userFormData
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+// return response.json();
+//     })
+//     .then(data => {
+//     console.log('User updated successfully:', data);
+//     })
+//     .catch(error => console.error('Error updating user:', error));
+
+// // Update UserDetail (Professional Title, Languages, etc.)
+// fetch(userDetailApiUrl, {
+//     method: 'PUT',
+// body: userDetailFormData
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+// return response.json();
+//     })
+//     .then(data => {
+//     console.log('UserDetail updated successfully:', data);
+//     })
+//     .catch(error => console.error('Error updating user detail:', error));
+// });
+
+
+
+
+
+
+
+
+
+// async function fetchUserProfile(userId) {
+//     debugger
+//     const url = `https://localhost:44301/api/UserProfile/${userId}`;
+
+//     try {
+//         const response = await fetch(url);
+
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+
+//         const data = await response.json();
+//         updateProfileFields(data);
+//     } catch (error) {
+//         console.error('Error fetching user profile:', error);
+//         alert('Error fetching user profile.');
+//     }
+// }
+
+// function updateProfileFields(data) {
+//     $('#name').val(data.name);
+//     $('#phoneNumber').val(data.phoneNumber);
+//     $('#email').val(data.email);
+//     $('#address').val(data.address);
+// }
+
+
+
+async function fetchUserProfile(userId) {
+    console.log('Fetching user profile for userId:', userId);
+    const url = `https://localhost:44301/api/UserProfile/${userId}`;
+
     try {
-        const apiUrl = `https://localhost:44301/api/UserProfile/Api/User/${id}`;
-        const response = await fetch(apiUrl );
-         console.log(response);
-        
+        const response = await fetch(url);
+
         if (!response.ok) {
-            throw new Error(`Network response was not ok (${response.status})`);
+            throw new Error('Network response was not ok');
         }
 
-        const userData = await response.json();
-       
-        populateForm(userData);
-
+        const data = await response.json();
+        console.log('User profile data:', data);
+        updateProfileFields(data);
     } catch (error) {
-        alert('Error fetching the user profile:', error);
+        console.error('Error fetching user profile:', error);
+        alert('Error fetching user profile.');
     }
 }
 
-// Function to populate the form with user data
-function populateForm(userData) {
-    const formFields = {
-        name: 'name',
-        professionalTitle: 'formcontrolinput2',
-        languages: 'formcontrolinput3',
-        age: 'formcontrolinput4',
-        description: 'exampleFormControlTextarea',
-        contactNumber: 'phoneNumber',
-        email: 'email',
-        country: 'formcontrolinput7',
-        postcode: 'formcontrolinput8',
-        city: 'formcontrolinput9',
-        fullAddress: 'address',
-    };
-
-    Object.keys(formFields).forEach((key) => {
-        const elementId = formFields[key];
-        const value = userData[key] || '';
-        document.getElementById(elementId).value = value;
-    });
+function updateProfileFields(data) {
+    console.log('Updating profile fields with data:', data);
+    $('#name').val(data.name);
+    $('#phoneNumber').val(data.phoneNumber);
+    $('#email').val(data.email);
+    $('#address').val(data.address);
 }
 
+// Example usage
+fetchUserProfile(1); // Replace 1 with the actual user ID
 
-
-document.getElementById('UserProfile').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    const apiUrl = 'https://localhost:44301/api/UserProfile/1';
-    const formData = new FormData(); // Use FormData to handle multipart/form-data type
-
-    // Append form fields to formData
-    formData.append('Name', document.getElementById('name').value);
-    formData.append('Email', document.getElementById('email').value);
-    // formData.append('Image', document.getElementById('image').value); // Assuming there's an input with ID 'image'
-    formData.append('Address', document.getElementById('address').value);
-    formData.append('PhoneNumber', document.getElementById('phoneNumber').value);
-
-    fetch(apiUrl, {
-        method: 'PUT',
-        body: formData,
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        alert('Profile updated successfully!');
-    })
-    .catch(error => {
-        console.error('Error updating the profile:', error);
-        alert('Failed to update profile.');
-    });
-});
-
-
-// Call the function when the page loads or when the user ID is available
-window.onload = function () {
-    const userId = 1;  // Replace with dynamic userId
-    UserProfile(userId);
-};

@@ -59,28 +59,28 @@ var issuer = jwtSettings.GetValue<string>("Issuer");
 var audience = jwtSettings.GetValue<string>("Audience");
 
 // Ensure values are not null
-//if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience))
-//{
-//    throw new InvalidOperationException("JWT settings are not properly configured.");
-//}
+if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience))
+{
+    throw new InvalidOperationException("JWT settings are not properly configured.");
+}
 
 
 //// Add JWT Authentication
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        var jwtSettings = builder.Configuration.GetSection("Jwt");
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = jwtSettings["Issuer"],
-//            ValidAudience = jwtSettings["Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
-//        };
-//    });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSettings = builder.Configuration.GetSection("Jwt");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+        };
+    });
 
 
 builder.Services.AddAuthorization(options =>
@@ -88,13 +88,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
 
-
+    
 
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
-app.UseCors("AllowAllOrigins");
 
 
 // Configure the HTTP request pipeline.
@@ -106,6 +103,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+// Configure the HTTP request pipeline.
+app.UseCors("AllowAllOrigins"); // use Cors must be after useRouting
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
