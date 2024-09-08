@@ -20,7 +20,6 @@ namespace BookLand.Controllers
         [HttpGet]
         public IActionResult GetAllUsers()
         {
-
             var users = _db.Users.ToList();
             return Ok(users);
         }
@@ -90,10 +89,12 @@ namespace BookLand.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(string.Join(", ", errors));  // Return validation errors for debugging
             }
 
-            int? contactId = contactUsDto.Id;
+            // Log the incoming data
+            Console.WriteLine("Contact received: " + contactUsDto.Name + ", " + contactUsDto.Email);
 
             var newContact = new ContactU
             {
@@ -101,7 +102,7 @@ namespace BookLand.Controllers
                 Email = contactUsDto.Email,
                 Subject = contactUsDto.Subject,
                 Message = contactUsDto.Message,
-                Id = contactId ?? 0 
+                Id = contactUsDto.Id ?? 0
             };
 
             _db.ContactUs.Add(newContact);
@@ -109,6 +110,7 @@ namespace BookLand.Controllers
 
             return Ok("Contact details have been saved.");
         }
+
 
         /// /////////////////////////////////////////////////////////////////////
 
