@@ -68,6 +68,8 @@ function loadBooks() {
                 }
 
                 let categoriesHTML = book.categories.map(category => `<li><a href="books-list.html">${category.name}</a></li>`).join('');
+                let originalPrice = book.price;
+                let discountedPrice = originalPrice * (1 - book.discountPercentage / 100);
 
                 const bookCardHTML = `
                     <div class="col-md-12 col-sm-12">
@@ -83,10 +85,11 @@ function loadBooks() {
                                             <a href="books-detail.html?bookId=${book.id}">${book.title}</a>
                                         </h4>
                                     </div>
-                                    <div class="price">
-                                        <span class="price-num text-primary">$${book.price.toFixed(2)}</span>
-                                        <del>$${(book.price / (1 - book.discountPercentage / 100)).toFixed(2)}</del>
+                                   <div class="price">
+                                        <span class="price-num text-primary">$${discountedPrice.toFixed(2)}</span>
+                                        <del>$${originalPrice.toFixed(2)}</del>
                                     </div>
+
                                 </div>
                                 <div class="dz-body">
                                     <div class="dz-rating-box">
