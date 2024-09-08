@@ -26,13 +26,14 @@ namespace BookLand.Controllers
 
 
 
+        // move items to order and orderItems tables
         [HttpPost("MoveItemsToOrder/{userId}")]
         public IActionResult MoveItemsToOrder(List<OrderItemsDTO> order, int userId)
         {
             // check if cart items are empty
             if (order == null || order.Count == 0)
             {
-                return BadRequest("The order is empty");
+                return BadRequest("The cart is empty");
             }
 
 
@@ -40,7 +41,7 @@ namespace BookLand.Controllers
             decimal? total = 0;
             foreach (var Item in order)
             {
-                total += Item.Price;
+                total += Item.Price * Item.Quantity;
             }
 
 
@@ -54,9 +55,6 @@ namespace BookLand.Controllers
             _db.Orders.Add(newOrder);
             _db.SaveChanges();
 
-            // change  TransactionId to have the new order id
-            newOrder.TransactionId = "TXN10" + newOrder.Id;
-            _db.SaveChanges();
 
             // add order items
             foreach (var Item in order)
@@ -76,6 +74,165 @@ namespace BookLand.Controllers
 
             return Ok();
         }
+
+
+        // get user info for the billing info
+        [HttpGet("getUserInfo/{userID}")]
+        public IActionResult getUserInfo(int userID)
+        {
+            var user = _db.Users
+                .Where(a => a.Id == userID)
+                .Select(x => new CheckoutUserInfoDTO
+                {
+                    Name = x.Name,
+                    Email = x.Email,
+                    PhoneNumber = x.PhoneNumber,
+                });
+
+            if (user == null)
+            {
+                return NotFound("there's no user with this id");
+            }
+            else if (userID <= 0)
+            {
+                return BadRequest("invalid user id");
+            }
+            else
+            {
+                return Ok(user);
+            }
+        }
+
+
+        // get the order Items for the table
+        [HttpGet("getFinalOrderItemsInfo/{orderID}")]
+        public IActionResult getFianlOrderInfo(int orderID)
+        {
+            var orderList = _db.OrderItems
+                .Where(a => a.OrderId == orderID)
+                .Select(a => new FinalOrderTableDTO
+                {
+                    Price = a.Price,
+                    pi = new BookInfo
+                    {
+                        Title = a.Book.Title,
+                        ImageUrl = a.Book.ImageUrl,
+                    }
+                })
+                .ToList();
+
+            if (orderList == null)
+            {
+                return NotFound($"there's no orders with this id: {orderID}");
+            }
+            else if (orderID <= 0)
+            {
+                return BadRequest($"invalid order id: {orderID}");
+            }
+            else
+            {
+                return Ok(orderList);
+            }
+        }
+
+
+
+        [HttpGet("OrderTotal/{orderID}/{couponsPercentage}")]
+        public IActionResult OrderTotal(int orderID, int couponsPercentage)
+        {
+
+            var orderValue = _db.Orders
+                .Where(a => a.Id == orderID)
+                .Select(a => new CheckoutTotalPriceDTO
+                {
+                    TotalAmount = a.TotalAmount,
+                    CouponDiscount = (a.TotalAmount * couponsPercentage / 100),
+                    FinalPrice = a.TotalAmount - (a.TotalAmount * couponsPercentage / 100),
+                }).ToList();
+
+            if (orderValue == null)
+            {
+                return NotFound($"there's no orders with this id: {orderID}");
+            }
+            else if (orderID <= 0)
+            {
+                return BadRequest($"invalid order id: {orderID}");
+            }
+            else
+            {
+                return Ok(orderValue);
+            }
+
+        }
+
+
+
+        [HttpPut("FinishOrder/{orderID}")]
+        public IActionResult FinishOrder(int orderID)
+        {
+            var order = _db.Orders.FirstOrDefault(a => a.Id == orderID);
+
+            if (order == null)
+            {
+                return NotFound($"there's no orders with this id: {orderID}");
+            }
+            else if (orderID <= 0)
+            {
+                return BadRequest($"invalid order id: {orderID}");
+            }
+            else
+            {
+                order.Status = "Paid";
+                order.TransactionId = $"TXN10{orderID}";
+
+                _db.Orders.Update(order);
+                _db.SaveChanges();
+
+                return Ok(order);
+            }
+        }
+
+
+
+        [HttpPost("sendBooksToLibrary/{userID}-{orderID}")]
+        public IActionResult sendBooksToLibrary(int orderID, int userID)
+        {
+            var orderItems = _db.OrderItems
+                .Where(a => a.OrderId == orderID)
+                .ToList();
+
+            var userLibrary = new Library();
+
+            if (orderItems == null)
+            {
+                return NotFound($"there's no orders with this id: {orderID}");
+            }
+            else if (orderID <= 0)
+            {
+                return BadRequest($"invalid order id: {orderID}");
+            }
+            else if (userID <= 0)
+            {
+                return BadRequest($"invalid user id: {userID}");
+            }
+            else
+            {
+                foreach (var item in orderItems)
+                {
+                    userLibrary.UserId = userID;
+                    userLibrary.BookId = item.BookId;
+                    userLibrary.Format = item.Format;
+
+                    _db.Libraries.Add(userLibrary);
+                    _db.SaveChanges();
+                };
+
+                return Ok(userLibrary);
+            }
+
+        }
+
+
 
 
 

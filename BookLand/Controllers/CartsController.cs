@@ -44,29 +44,7 @@ namespace BookLand.Controllers
         }
 
 
-        [HttpGet("getUserInfo/{userID}")]
-        public
-            IActionResult getUserInfo(int userID)
-        {
-            var user = _db.Users.FirstOrDefault(a => a.Id == userID);
 
-            if (user == null)
-            {
-                return NotFound("there's no user with this id");
-            }
-            else if (userID == 0)
-            {
-                return BadRequest("invalid user id");
-            }
-            else
-            {
-                return Ok(user);
-            }
-        }
-
-
-
-        
 
 
 
