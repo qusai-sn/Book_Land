@@ -4,12 +4,12 @@ const deleteCart = "https://localhost:7198/api/Carts/deleteCart/";
 
 
 // test cart tems in local storage
-localStorage.setItem("item1", JSON.stringify({ cart_id: 16, bookId: 17, quantity: 1, format: "PDF", price: 29.99 }));
-localStorage.setItem("item2", JSON.stringify({ cart_id: 16, bookId: 22, quantity: 2, format: "Hard Copy", price: 29.99 }));
-localStorage.setItem("item3", JSON.stringify({ cart_id: 16, bookId: 5, quantity: 1, format: "Hard Copy", price: 29.99 }));
+// localStorage.setItem("item1", JSON.stringify({ cart_id: 16, bookId: 17, quantity: 1, format: "PDF", price: 29.99 }));
+// localStorage.setItem("item2", JSON.stringify({ cart_id: 16, bookId: 22, quantity: 2, format: "Hard Copy", price: 29.99 }));
+// localStorage.setItem("item3", JSON.stringify({ cart_id: 16, bookId: 5, quantity: 1, format: "Hard Copy", price: 29.99 }));
 
 // test data in local storage
-localStorage.setItem("cartId", 17);
+// localStorage.setItem("cartId", 17);
 
 
 // function to move cart items to order and delete them from local storage and DB
