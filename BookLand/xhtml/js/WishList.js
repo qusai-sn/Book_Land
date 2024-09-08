@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to fetch wishlist data by userId
     function fetchWishlist() {
-        fetch(`https://localhost:44301/api/Wishlist/byUserId/${userId}`)
+        fetch(`https://localhost:44301/api/UserProfile/wishlist/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error fetching wishlist');
@@ -26,20 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         const tableRow = `
                             <tr>
                                 <td class="product-item-img">
-                                    <img src="${item.bookImage}" alt="${item.bookName}">
+                                    <img src="${item.productImage}" alt="${item.productName}">
                                 </td>
-                                <td class="product-item-name">${item.bookName}</td>
-                                <td class="product-item-price">$${item.bookPrice}</td>
-                                <td class="product-item-quantity">
-                                    <div class="quantity btn-quantity style-1 me-3">
-                                        <input type="text" value="1" name="quantity"/>
-                                    </div>
-                                </td>
+                                <td class="product-item-name">${item.productName}</td>
+                                <td class="product-item-price">$${item.unitPrice}</td>
                                 <td class="product-item-totle">
                                     <a href="shop-cart.html" class="btn btn-primary btnhover">Add To Cart</a>
                                 </td>
                                 <td class="product-item-close">
-                                    <a href="javascript:void(0);" class="ti-close" onclick="removeFromWishlist(${item.bookId})"></a>
+                                    <a href="javascript:void(0);" class="ti-close" onclick="removeFromWishlist(${item.productId})"></a>
                                 </td>
                             </tr>
                         `;

@@ -170,8 +170,3 @@ function addToCart(bookId, price) {
     alert('Added to cart!');  // Example usage:
     showNotification('This is a success message!', 'success');
 }
-
-
-
-  
- 

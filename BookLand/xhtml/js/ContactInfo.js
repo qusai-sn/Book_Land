@@ -1,25 +1,30 @@
 document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-debugger
+     debugger
+
     const name = document.getElementById('Name').value;
     const email = document.getElementById('Email').value;
     const subject = document.getElementById('Subject').value;
     const message = document.getElementById('Message').value;
 
-    // Basic form validation
+    const id = 2;
+
     if (!name || !email || !subject || !message) {
         alert('Please fill in all fields!');
         return;
     }
 
     const data = {
+        Id: id,
         Name: name,
         Email: email,
         Subject: subject,
         Message: message
     };
 
-    fetch('https://your-api-url.com/api/UserProfile', {
+    console.log("Data to be sent:", data); 
+
+    fetch('https://localhost:44301/api/contact', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,12 +32,14 @@ debugger
         body: JSON.stringify(data),
     })
         .then(response => {
+            console.log("Response Status:", response.status); 
             if (!response.ok) {
-                throw new Error('Network response was not ok.');
+                return response.text().then(text => { throw new Error(text || 'Network response was not ok.'); });
             }
             return response.json();
         })
         .then(data => {
+            console.log("Response Data:", data); 
             alert('Message sent successfully!');
             document.getElementById('contactForm').reset();
         })
