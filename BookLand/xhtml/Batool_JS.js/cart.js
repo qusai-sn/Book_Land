@@ -9,8 +9,6 @@ localStorage.setItem("item2", JSON.stringify({ cart_id: 16, bookId: 22, quantity
 localStorage.setItem("item3", JSON.stringify({ cart_id: 16, bookId: 5, quantity: 1, format: "Hard Copy", price: 29.99 }));
 
 // test data in local storage
-// localStorage.setItem("jwtToken", "token");
-// localStorage.setItem("userId", 16);
 localStorage.setItem("cartId", 17);
 
 
@@ -22,7 +20,7 @@ async function goToCheckout() {
     let JWTToken = localStorage.getItem("jwtToken");
     if (JWTToken === null) {
         // saving the page the user is in to return to later on
-        localStorage.setItem("previousPage", "shop-cart.html")
+        localStorage.setItem("previousPage", "shop-cart")
 
         location.href = "shop-login.html";
         return;
@@ -55,12 +53,13 @@ async function goToCheckout() {
 
 
     //clear local storge from cart items
-    for (let i = 0; i < localStorage.length; i++) {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
         let key = localStorage.key(i);
         if (key.startsWith("item")) {
             localStorage.removeItem(key);
         }
     }
+    
 
     // delete cart + cart items from DB using the cart ID
     let cartId = localStorage.getItem("cartId");

@@ -11,7 +11,7 @@ namespace BookLand.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("development")]
+    [EnableCors]
     public class OrdersController : ControllerBase
     {
         private readonly MyDbContext _db;
