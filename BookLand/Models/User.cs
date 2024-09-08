@@ -33,5 +33,7 @@ public partial class User
 
     public virtual ICollection<PointsLoyalty> PointsLoyalties { get; set; } = new List<PointsLoyalty>();
 
+    public virtual UserDetail? UserDetail { get; set; }
+
     public virtual ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
 }
