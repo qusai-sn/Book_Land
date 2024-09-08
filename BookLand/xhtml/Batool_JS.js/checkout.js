@@ -1,20 +1,29 @@
 
-// const countriesAPI = "https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-name.json";
 
-// // inserting countries in the select dropdown
-// async function getCounties() {
-//     event.preventDefault();
+$(document).ready(function () {
+    // Initialize the selectpicker or dropdown
+    $('#countriesSelect').selectpicker();
 
-//     const selectCountries = document.getElementById("countriesSelect")
+    // After adding options, refresh the selectpicker
+    window.addEventListener("load", async function () {
+        const countriesAPI = "https://restcountries.com/v2/all?fields=name";
+        const selectCountries = document.getElementById("countriesSelect");
 
-//     const response = await fetch(countriesAPI);
-//     let data = await response.json();
+        const response = await fetch(countriesAPI);
+        const data = await response.json();
 
-//     data.forEach(element => {
+        data.forEach(country => {
+            const option = document.createElement("option");
+            option.value = country.name;
+            option.textContent = country.name;
+            selectCountries.appendChild(option);
+        });
 
-        
-//     });
-    
-// }
+        // Refresh the selectpicker after dynamically adding options
+        $('#countriesSelect').selectpicker('refresh');
+    });
+});
+
+
 
 
