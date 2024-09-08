@@ -24,24 +24,32 @@ namespace BookLand.Controllers
             return Ok(users);
         }
 
-
+        
         /// //////////////////////////////////////////////
-
-        [HttpGet("Api/User/{id}")]
-        public IActionResult GetUser(int id)
+        ///
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
         {
+            var user = await _db.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new UserRequestDTOs
+                {
+                    Name = u.Name,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber,
+                    Address = u.Address,
+                })
+                .FirstOrDefaultAsync();
 
-            if (id == 0)
+            if (user == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            else
-            {
-                var userById = _db.Users.Where(x => x.Id == id).FirstOrDefault();
-                return Ok(userById);
-            }
+
+            return Ok(user);
         }
-
+        ///////////////////////////////////////////////////
+     
         /// ///////////////////////////////////////////////
         [HttpPut("{id}")]
         public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
@@ -193,6 +201,28 @@ namespace BookLand.Controllers
 
             return Ok(result);
         }
+
+        /// //////////////////////////
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDetailsDto>>> GetUserDetails()
+        {
+            var userDetails = await _db.UserDetails
+                .Select(ud => new UserDetailsDto
+                {
+                    UserId = ud.UserId,
+                    ProfessionalTitle = ud.ProfessionalTitle,
+                    Languages = ud.Languages,
+                    Age = ud.Age,
+                    Description = ud.Description,
+                    Country = ud.Country,
+                    City = ud.City,
+                    Postcode = ud.Postcode
+                })
+                .ToListAsync();
+
+            return Ok(userDetails);
+        }
+
     }
 }
 
