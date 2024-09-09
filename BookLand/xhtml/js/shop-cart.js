@@ -215,7 +215,7 @@ document.getElementById("applyCouponBtn").addEventListener("click", function() {
         return response.json();
     })
     .then(data => {
-        localStorage.discountAmount = data.discountAmount ;
+        localStorage.couponPercentage = data.discountAmount ;
         alert(`Coupon applied! Discount: ${data.discountAmount}`);
         // Handle successful coupon application (e.g., update the cart total)
     })
