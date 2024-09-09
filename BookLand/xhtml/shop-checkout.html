@@ -38,9 +38,28 @@
 		rel="stylesheet">
 
 
-	<!-- links for the dropdown search library -->
-	<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+	<!-- style for paypal button -->
+	<style>
+		.paypal {
+			&-logo {
+				font-family: Verdana, Tahoma !important;
+				font-weight: bold !important;
+				font-size: 26px !important;
+
+				i:first-child {
+					color: #253b80 !important;
+				}
+
+				i:last-child {
+					color: #179bd7 !important;
+				}
+			}
+		}
+	</style>
+
+	<!-- paypal -->
+	<script
+		src="https://sandbox.paypal.com/sdk/js?client-id=AfvHDoUfy1upFdBXSB4IPuOsRolxYXToTa7AwMfdJ3ilNgK75IaNlTA6yc8BuV7UbtnUkjYGDMv-XI66"></script>
 
 
 
@@ -372,11 +391,12 @@
 				<div class="container">
 					<form class="shop-form">
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-6 col-md-6" id="billingShippingAddress">
 								<div class="widget">
 									<h4 class="widget-title">Billing & Shipping Address</h4>
 									<div class="form-group">
-										<select class="default-select" id="countriesSelect" tabindex="1">
+										<select class="default-select" id="countriesSelect" tabindex="1"
+											data-live-search="true">
 											<option value="" disabled selected>Select a country</option>
 										</select>
 									</div>
@@ -424,19 +444,21 @@
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6">
-								<button id="sendGift" class="btn btn-primary btnhover mb-3" type="button" data-bs-toggle="collapse"
-									data-bs-target="#different-address">Send a book as gift <i
+								<button id="sendGift" class="btn btn-primary btnhover mb-3" type="button"
+									data-bs-toggle="collapse" data-bs-target="#different-address">Send a book as gift <i
 										class="fa fa-arrow-circle-o-down"></i></button>
 								<div id="different-address" class="collapse">
 									<p>Spread the joy of reading book and help others find their new favorites.</p>
 									<div class="form-group">
-										<select class="default-select" tabindex="1" id="anotherDropdown">
+										<select class="default-select" tabindex="1" id="anotherDropdown"
+											data-live-search="true">
 											<option value="" disabled selected>Select a country</option>
 										</select>
 									</div>
 									<div class="form-group">
 										<select class="default-select" tabindex="1">
-											<option value="" disabled selected>What would you like the sender name to be?
+											<option value="" disabled selected>What would you like the sender name to
+												be?
 											</option>
 											<option value="anonymous">Anonymous</option>
 											<option value="friend">A Freind</option>
@@ -446,10 +468,12 @@
 									</div>
 									<div class="row">
 										<div class="form-group col-md-6">
-											<input type="text" class="form-control" placeholder="First Name Of The Receiver">
+											<input type="text" class="form-control"
+												placeholder="First Name Of The Receiver">
 										</div>
 										<div class="form-group col-md-6">
-											<input type="text" class="form-control" placeholder="Last Name Of The Receiver">
+											<input type="text" class="form-control"
+												placeholder="Last Name Of The Receiver">
 										</div>
 									</div>
 									<div class="form-group">
@@ -474,7 +498,8 @@
 									</div>
 									<div class="row">
 										<div class="form-group col-md-6">
-											<input type="email" class="form-control" placeholder="Email Of The Receiver">
+											<input type="email" class="form-control"
+												placeholder="Email Of The Receiver">
 										</div>
 										<div class="form-group col-md-6">
 											<input type="text" class="form-control" placeholder="Phone Of The Receiver">
@@ -500,40 +525,13 @@
 										<tr>
 											<th>IMAGE</th>
 											<th>PRODUCT NAME</th>
+											<th>QUANTITY</th>
+											<th>FORMAT</th>
 											<th>TOTAL</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td class="product-item-img"><img src="images/books/grid/book3.jpg" alt="">
-											</td>
-											<td class="product-item-name">Prduct Item 5</td>
-											<td class="product-price">$28.00</td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img src="images/books/grid/book2.jpg" alt="">
-											</td>
-											<td class="product-item-name">Prduct Item 4</td>
-											<td class="product-price">$36.00</td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img src="images/books/grid/book4.jpg" alt="">
-											</td>
-											<td class="product-item-name">Prduct Item 3</td>
-											<td class="product-price">$28.00</td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img src="images/books/grid/book5.jpg" alt="">
-											</td>
-											<td class="product-item-name">Prduct Item 2</td>
-											<td class="product-price">$36.00</td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img src="images/books/grid/book1.jpg" alt="">
-											</td>
-											<td class="product-item-name">Prduct Item 1</td>
-											<td class="product-price">$28.00</td>
-										</tr>
+									<tbody id="orderItemsTableBody">
+
 									</tbody>
 								</table>
 							</div>
@@ -545,7 +543,7 @@
 									<tbody>
 										<tr>
 											<td>Order Subtotal</td>
-											<td class="product-price">$125.96</td>
+											<td class="product-price" id="orderSubTotal">$</td>
 										</tr>
 										<tr>
 											<td>Shipping</td>
@@ -553,35 +551,26 @@
 										</tr>
 										<tr>
 											<td>Coupon</td>
-											<td class="product-price">$28.00</td>
+											<td class="product-price" id="appliedCoupons">$</td>
 										</tr>
 										<tr>
 											<td>Total</td>
-											<td class="product-price-total">$506.00</td>
+											<td class="product-price-total" id="finalTotal">$</td>
 										</tr>
 									</tbody>
 								</table>
 								<h4 class="widget-title">Payment Method</h4>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Name on Card">
-								</div>
-								<div class="form-group">
-									<select class="default-select">
-										<option value="">Credit Card Type</option>
-										<option value="">Another option</option>
-										<option value="">A option</option>
-										<option value="">Potato</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Credit Card Number">
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Card Verification Number">
-								</div>
-								<div class="form-group">
-									<button class="btn btn-primary btnhover" type="button">Place Order Now </button>
-								</div>
+								<div class="row">
+									<div class="form-group" id="PaypalInput">
+										<div id="smart-button-container">
+											<div style="text-align: center;">
+												<div id="paypal-button-container"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<button class="btn btn-primary btnhover" onclick="finishOrder()" type="button">Place Order Now </button>
+									</div>
 							</form>
 						</div>
 					</div>
