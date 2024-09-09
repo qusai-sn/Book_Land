@@ -197,11 +197,14 @@ namespace BookLand.Controllers
         [HttpPost("sendBooksToLibrary/{userID}-{orderID}")]
         public IActionResult sendBooksToLibrary(int orderID, int userID)
         {
+            //var orderInfo = _db.Orders.Where(a => a.UserId == userID);
+
             var orderItems = _db.OrderItems
                 .Where(a => a.OrderId == orderID)
                 .ToList();
 
-            var userLibrary = new Library();
+
+            var userLibrary = new sendBooksToLibraryDTO();
 
             if (orderItems == null)
             {
@@ -219,15 +222,18 @@ namespace BookLand.Controllers
             {
                 foreach (var item in orderItems)
                 {
-                    userLibrary.UserId = userID;
-                    userLibrary.BookId = item.BookId;
-                    userLibrary.Format = item.Format;
+                    var addToLibrary = new Library
+                    {
+                        UserId = userID,
+                        BookId = item.BookId,
+                        Format = item.Format,
+                    };
 
-                    _db.Libraries.Add(userLibrary);
+                    _db.Libraries.Add(addToLibrary);
                     _db.SaveChanges();
                 };
 
-                return Ok(userLibrary);
+                return Ok();
             }
 
         }

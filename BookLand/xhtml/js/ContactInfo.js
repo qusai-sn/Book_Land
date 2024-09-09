@@ -1,46 +1,50 @@
 document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-     debugger
 
-    const name = document.getElementById('Name').value;
-    const email = document.getElementById('Email').value;
-    const subject = document.getElementById('Subject').value;
-    const message = document.getElementById('Message').value;
+    // Get form values
+    const contactData = {
+        Id: null,  // Assuming you're not setting the ID for new entries
+        Name: document.getElementById('Name').value,
+        Email: document.getElementById('Email').value,
+        Subject: document.getElementById('Subject').value,
+        Message: document.getElementById('Message').value
+    };
 
-    const id = 2;
-
-    if (!name || !email || !subject || !message) {
+    // Basic form validation
+    if (!contactData.Name || !contactData.Email || !contactData.Subject || !contactData.Message) {
         alert('Please fill in all fields!');
         return;
     }
 
-    const data = {
-        Id: id,
-        Name: name,
-        Email: email,
-        Subject: subject,
-        Message: message
-    };
-
-    console.log("Data to be sent:", data); 
-
-    fetch('https://localhost:44301/api/contact', { 
+    // Send a POST request to the server with JSON data
+    fetch('https://localhost:44301/api/UserProfile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(contactData),  // Send the data as JSON
     })
         .then(response => {
-            console.log("Response Status:", response.status); 
+            console.log("Response Status:", response.status);  // Debugging purposes
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(text || 'Network response was not ok.'); });
             }
-            return response.json();
+            // Try to parse JSON. If it fails, treat the response as text.
+            return response.text().then(text => {
+                try {
+                    return JSON.parse(text);  // Try to parse the response as JSON
+                } catch {
+                    return text;  // If parsing fails, return the text as-is
+                }
+            });
         })
         .then(data => {
-            console.log("Response Data:", data); 
-            alert('Message sent successfully!');
+            console.log("Response Data:", data);  // Debugging purposes
+            if (typeof data === 'string') {
+                alert(data);  // If the response is plain text, show the message
+            } else {
+                alert('Message sent successfully!');
+            }
             document.getElementById('contactForm').reset();
         })
         .catch(error => {
