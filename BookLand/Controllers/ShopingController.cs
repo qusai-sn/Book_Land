@@ -150,6 +150,20 @@ namespace BookLand.Controllers
                 Format = ci.Format
             }));
         }
+
+        [HttpPost("validate")]
+        public ActionResult<Coupon> ValidateCoupon([FromBody] string couponCode)
+        {
+            var coupon = _db.Coupons
+                .Where(c => c.Name == couponCode && c.ExpirationDate > DateOnly.FromDateTime(DateTime.Now) && c.Status == "Active")
+                .FirstOrDefault();
+
+            if (coupon == null)
+                return NotFound("Coupon not valid or expired.");
+
+            return Ok(coupon);
+        }
+
     }
 
 

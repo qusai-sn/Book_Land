@@ -41,7 +41,19 @@ namespace BookLand.Controllers
             decimal? total = 0;
             foreach (var Item in order)
             {
-                total += Item.Price * Item.Quantity;
+                if (Item.Format.Contains("Hard Copy"))
+                {
+                    total += (Item.Price * Item.Quantity);
+                }
+                if (Item.Format.Contains("PDF"))
+                {
+                    total += (Item.Price * 50 / 100);
+                }
+                if (Item.Format.Contains("Audio"))
+                {
+                    total += (Item.Price * 60 / 100);
+                }
+
             }
 
 
@@ -72,7 +84,7 @@ namespace BookLand.Controllers
             _db.SaveChanges();
 
 
-            return Ok();
+            return Ok(new { newOrder.Id});
         }
 
 
@@ -113,6 +125,8 @@ namespace BookLand.Controllers
                 .Select(a => new FinalOrderTableDTO
                 {
                     Price = a.Price,
+                    Quantity = a.Quantity,
+                    Format = a.Format,
                     pi = new BookInfo
                     {
                         Title = a.Book.Title,
@@ -188,7 +202,7 @@ namespace BookLand.Controllers
                 _db.Orders.Update(order);
                 _db.SaveChanges();
 
-                return Ok(order);
+                return Ok();
             }
         }
 
