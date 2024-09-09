@@ -271,23 +271,116 @@
 
 
 
+// $(document).ready(function () {
+//     const userId = 1;
+
+//     function fetchUserData(id) {
+//         return fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`)
+//             .then(response => response.json())
+//             .catch(error => console.error('Error:', error));
+//     }
+
+//     function populateForm(data) {
+//         // Populate Basic Information
+//         $("#name").val(data.name);
+//         $("#phoneNumber").val(data.phoneNumber);
+//         $("#email").val(data.email);
+//         $("#address").val(data.address);
+
+//         // Populate Contact Information
+//         $("#formcontrolinput2").val(data.professionalTitle);
+//         $("#formcontrolinput3").val(data.languages);
+//         $("#formcontrolinput4").val(data.age);
+//         $("#exampleFormControlTextarea").val(data.description);
+//         $("#formcontrolinput7").val(data.country);
+//         $("#formcontrolinput9").val(data.city);
+//         $("#formcontrolinput8").val(data.postcode);
+//     }
+
+//     fetchUserData(userId)
+//         .then(data => populateForm(data))
+//         .catch(error => console.error('Error:', error));
+
+//     async function updateProfile(userId, updatedProfile) {
+//         try {
+//             const response = await fetch(`https://localhost:44301/api/CompinedData/${userId}/fullProfile`, {
+//                 method: 'PUT',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(updatedProfile)
+//             });
+
+//             if (!response.ok) {
+//                 throw new Error(`Failed to update profile: ${response.status} ${response.statusText}`);
+//             }
+
+//             return response;
+//         } catch (error) {
+//             console.error('Error updating profile:', error);
+//             throw error;
+//         }
+//     }
+
+//     async function updateUserProfile(userId) {
+//         const updatedProfile = {
+//             // Get values from form fields
+//             name: $('#name').val(),
+//             email: $('#email').val(),
+//             phoneNumber: $('#phoneNumber').val(),
+//             address: $('#address').val(),
+
+//             // Contact Information
+//             professionalTitle: $("#formcontrolinput2").val(),
+//             languages: $("#formcontrolinput3").val(),
+//             age: $("#formcontrolinput4").val(),
+//             description: $("#exampleFormControlTextarea").val(),
+//             country: $("#formcontrolinput7").val(),
+//             city: $("#formcontrolinput9").val(),
+//             postcode: $("#formcontrolinput8").val(),
+//         };
+
+//         try {
+//             const response = await updateProfile(userId, updatedProfile);
+//             alert('Profile updated successfully!');
+//         } catch (error) {
+//             alert('Error updating profile.');
+//         }
+//     }
+
+//     // Move the updateUserProfile function call inside the $(document).ready function
+//     updateUserProfile(userId);
+// });
+
+
+
+
+
+
+
 $(document).ready(function () {
     const userId = 1;
-
+    // Function to fetch user data
     function fetchUserData(id) {
         return fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`)
-            .then(response => response.json())
-            .catch(error => console.error('Error:', error));
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                throw error; // Rethrow the error
+            });
     }
 
+    // Function to populate the form with user data
     function populateForm(data) {
-        // Populate Basic Information
         $("#name").val(data.name);
         $("#phoneNumber").val(data.phoneNumber);
         $("#email").val(data.email);
         $("#address").val(data.address);
-
-        // Populate Contact Information
         $("#formcontrolinput2").val(data.professionalTitle);
         $("#formcontrolinput3").val(data.languages);
         $("#formcontrolinput4").val(data.age);
@@ -297,13 +390,10 @@ $(document).ready(function () {
         $("#formcontrolinput8").val(data.postcode);
     }
 
-    fetchUserData(userId)
-        .then(data => populateForm(data))
-        .catch(error => console.error('Error:', error));
-
-    async function updateProfile(userId, updatedProfile) {
+    // Function to update the user profile
+    async function updateProfile(id, updatedProfile) {
         try {
-            const response = await fetch(`https://localhost:44301/api/CompinedData/${userId}/fullProfile`, {
+            const response = await fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -311,43 +401,76 @@ $(document).ready(function () {
                 body: JSON.stringify(updatedProfile)
             });
 
+            // Check if the response is not OK
             if (!response.ok) {
-                throw new Error(`Failed to update profile: ${response.status} ${response.statusText}`);
+                let errorMessage = `${response.status} ${response.statusText}`;
+
+                // Attempt to parse the error response
+                try {
+                    const contentType = response.headers.get('Content-Type');
+                    if (contentType && contentType.includes('application/json')) {
+                        const errorData = await response.json();
+                        errorMessage += `: ${errorData.message || ''}`;
+                    } else {
+                        errorMessage += `: Unable to parse error details. Response is not JSON.`;
+                    }
+                } catch (e) {
+                    errorMessage += `: Unable to parse error details.`;
+                }
+
+                throw new Error(`Failed to update profile: ${errorMessage}`);
             }
 
-            return response;
+            // Optionally return response data if needed
+            const contentType = response.headers.get('Content-Type');
+            if (contentType && contentType.includes('application/json')) {
+                return await response.json(); // Assuming server responds with JSON
+            } else {
+                return {}; // Return an empty object if response is not JSON
+            }
+
         } catch (error) {
+            // Log and alert the error message
             console.error('Error updating profile:', error);
-            throw error;
+            alert(`Error updating profile: ${error.message}`);
+            throw error; // Re-throw to allow higher-level handling if necessary
         }
     }
 
-    async function updateUserProfile(userId) {
+
+    // Function to handle the form submission event
+    $("#UserProfile").submit(function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
         const updatedProfile = {
-            // Get values from form fields
             name: $('#name').val(),
             email: $('#email').val(),
             phoneNumber: $('#phoneNumber').val(),
             address: $('#address').val(),
-
-            // Contact Information
             professionalTitle: $("#formcontrolinput2").val(),
             languages: $("#formcontrolinput3").val(),
             age: $("#formcontrolinput4").val(),
             description: $("#exampleFormControlTextarea").val(),
             country: $("#formcontrolinput7").val(),
             city: $("#formcontrolinput9").val(),
-            postcode: $("#formcontrolinput8").val(),
+            postcode: $("#formcontrolinput8").val()
         };
 
-        try {
-            const response = await updateProfile(userId, updatedProfile);
-            alert('Profile updated successfully!');
-        } catch (error) {
-            alert('Error updating profile.');
+        // Validate the input data
+        if (!updatedProfile.name || !updatedProfile.email) {
+            alert('Please fill in the required fields.');
+            return;
         }
-    }
 
-    // Move the updateUserProfile function call inside the $(document).ready function
-    updateUserProfile(userId);
+        updateProfile(userId, updatedProfile)
+            .then(() => alert('Profile updated successfully!'))
+            .catch(() => alert('Error updating profile.'));
+       
 });
+
+    // Fetch and populate user data on page load
+    fetchUserData(userId)
+        .then(data => populateForm(data))
+        .catch(error => console.error('Error:', error));
+}
+);

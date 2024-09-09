@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const tableBody = document.getElementById('book-table-body');
             data.forEach(book => {
                 const row = document.createElement('tr');
-
                 row.innerHTML = `
                     <td><img src="${book.imageUrl}" alt="${book.title}" style="width: 100px;"/></td>
                     <td>${book.title}</td>

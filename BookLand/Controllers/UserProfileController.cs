@@ -27,70 +27,70 @@ namespace BookLand.Controllers
 
         /// //////////////////////////////////////////////
         ///
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
-        {
-            var user = await _db.Users
-                .Where(u => u.Id == userId)
-                .Select(u => new UserRequestDTOs
-                {
-                    Name = u.Name,
-                    Email = u.Email,
-                    PhoneNumber = u.PhoneNumber,
-                    Address = u.Address,
-                })
-                .FirstOrDefaultAsync();
+        //[HttpGet("{userId}")]
+        //public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
+        //{
+        //    var user = await _db.Users
+        //        .Where(u => u.Id == userId)
+        //        .Select(u => new UserRequestDTOs
+        //        {
+        //            Name = u.Name,
+        //            Email = u.Email,
+        //            PhoneNumber = u.PhoneNumber,
+        //            Address = u.Address,
+        //        })
+        //        .FirstOrDefaultAsync();
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(user);
-        }
-        ///////////////////////////////////////////////////
+        //    return Ok(user);
+        //}
+        /////////////////////////////////////////////////////
 
-        /// ///////////////////////////////////////////////
-        [HttpPut("{id}")]
-        public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
-        {
+        ///// ///////////////////////////////////////////////
+        //[HttpPut("{id}")]
+        //public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
+        //{
 
-            //var UsersImages = Path.Combine(Directory.GetCurrentDirectory(), "UsersImages");
+        //    //var UsersImages = Path.Combine(Directory.GetCurrentDirectory(), "UsersImages");
 
-            //if (!Directory.Exists(UsersImages))
-            //{
-            //    Directory.CreateDirectory(UsersImages);
-            //}
+        //    //if (!Directory.Exists(UsersImages))
+        //    //{
+        //    //    Directory.CreateDirectory(UsersImages);
+        //    //}
 
-            //if (userRequestDTOs.Image != null) { 
+        //    //if (userRequestDTOs.Image != null) { 
 
-            //    var UserImageFile = Path.Combine(UsersImages, userRequestDTOs.Image);
+        //    //    var UserImageFile = Path.Combine(UsersImages, userRequestDTOs.Image);
 
-            //    using (var stream = new FileStream(UserImageFile, FileMode.Create)) {
+        //    //    using (var stream = new FileStream(UserImageFile, FileMode.Create)) {
 
 
-            //        userRequestDTOs.Image.CopyTo(stream);
-            //    }
+        //    //        userRequestDTOs.Image.CopyTo(stream);
+        //    //    }
 
-            //}
+        //    //}
 
-            var editUserById = _db.Users.Where(u => u.Id == id).FirstOrDefault();
+        //    var editUserById = _db.Users.Where(u => u.Id == id).FirstOrDefault();
 
-            if (editUserById == null)
-            {
-                return BadRequest("User not found.");
-            }
+        //    if (editUserById == null)
+        //    {
+        //        return BadRequest("User not found.");
+        //    }
 
-            editUserById.Name = userRequestDTOs.Name;
-            editUserById.Address = userRequestDTOs.Address;
-            editUserById.Email = userRequestDTOs.Email;
-            editUserById.PhoneNumber = userRequestDTOs.PhoneNumber;
+        //    editUserById.Name = userRequestDTOs.Name;
+        //    editUserById.Address = userRequestDTOs.Address;
+        //    editUserById.Email = userRequestDTOs.Email;
+        //    editUserById.PhoneNumber = userRequestDTOs.PhoneNumber;
 
-            _db.Update(editUserById);
-            _db.SaveChanges();
+        //    _db.Update(editUserById);
+        //    _db.SaveChanges();
 
-            return Ok(editUserById);
-        }
+        //    return Ok(editUserById);
+        //}
         ///////////////////////////////////////////////////////////////
         [HttpPost]
         public IActionResult PostContactDetails([FromForm] ContactUsDTO contactUsDto)
@@ -118,6 +118,7 @@ namespace BookLand.Controllers
 
             return Ok("Contact details have been saved.");
         }
+
 
 
         /// /////////////////////////////////////////////////////////////////////
@@ -162,21 +163,21 @@ namespace BookLand.Controllers
             return Ok(wishlist);
         }
 
-        //[HttpDelete("remove/{userId}/{bookId}")]
-        //public IActionResult RemoveFromWishlist(int userId, int bookId)
-        //{
-        //    var wishlistItem = _db.Wishlists.FirstOrDefault(w => w.UserId == userId && w.BookId == bookId);
+        [HttpDelete("remove/{userId}/{bookId}")]
+        public IActionResult RemoveFromWishlist(int userId, int bookId)
+        {
+            var wishlistItem = _db.Wishlists.FirstOrDefault(w => w.UserId == userId && w.BookId == bookId);
 
-        //    if (wishlistItem == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (wishlistItem == null)
+            {
+                return NotFound();
+            }
 
-        //    _db.Wishlists.Remove(wishlistItem);
-        //    _db.SaveChanges();
+            _db.Wishlists.Remove(wishlistItem);
+            _db.SaveChanges();
 
-        //    return Ok(new { message = "Item removed from wishlist" });
-        //}
+            return Ok(new { message = "Item removed from wishlist" });
+        }
 
         [HttpGet("wishlist/{userId}")]
         public IActionResult GetWishlistForUser(int userId)
@@ -204,6 +205,34 @@ namespace BookLand.Controllers
 
         /// //////////////////////////
         /// 
+
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
+        {
+            var user = await _db.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new UserRequestDTOs
+                {
+                    Name = u.Name,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber,
+                    Address = u.Address,
+                    Image = u.Image // Assuming Image column contains the image file name or URL
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
+
+
 
     }
 }
