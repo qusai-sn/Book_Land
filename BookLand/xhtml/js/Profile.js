@@ -376,19 +376,23 @@ $(document).ready(function () {
     }
 
     // Function to populate the form with user data
-    function populateForm(data) {
-        $("#name").val(data.name);
-        $("#phoneNumber").val(data.phoneNumber);
-        $("#email").val(data.email);
-        $("#address").val(data.address);
-        $("#formcontrolinput2").val(data.professionalTitle);
-        $("#formcontrolinput3").val(data.languages);
-        $("#formcontrolinput4").val(data.age);
-        $("#exampleFormControlTextarea").val(data.description);
-        $("#formcontrolinput7").val(data.country);
-        $("#formcontrolinput9").val(data.city);
-        $("#formcontrolinput8").val(data.postcode);
-    }
+        function populateForm(data) {
+            $("#name").val(data.name);
+            $("#phoneNumber").val(data.phoneNumber);
+            $("#email").val(data.email);
+            $("#address").val(data.address);
+            $("#formcontrolinput2").val(data.professionalTitle);
+            $("#formcontrolinput3").val(data.languages);
+            $("#formcontrolinput4").val(data.age);
+            $("#exampleFormControlTextarea").val(data.description);
+            $("#formcontrolinput7").val(data.country);
+            $("#formcontrolinput9").val(data.city);
+            $("#formcontrolinput8").val(data.postcode);
+            
+            $(".account-detail h4 a").text(data.name);  // Update the name
+            $(".account-detail p a").text(data.professionalTitle);  // Update the professional title
+            $(".my-image img").attr("src", data.profileImage);  // Update image
+        }
 
     // Function to update the user profile
     async function updateProfile(id, updatedProfile) {

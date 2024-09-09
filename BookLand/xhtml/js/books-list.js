@@ -1,6 +1,6 @@
 
 function loadCategories() {
-    fetch('https://localhost:7198/api/Shoping/categories')
+    fetch('https://localhost:44301/api/Shoping/categories')
         .then(response => response.json())
         .then(categories => {
             const categoryList = document.getElementById('category-list');
@@ -44,7 +44,7 @@ function loadCategories() {
 
 function loadBooks() {
     const selectedCategories = Array.from(document.querySelectorAll('.form-check-input:checked')).map(input => input.value);
-    let apiUrl = `https://localhost:7198/api/Shoping/categories/books?`;
+    let apiUrl = `https://localhost:44301/api/Shoping/categories/books?`;
     let token = localStorage.jwtToken ;
     selectedCategories.forEach((id, index) => {
         apiUrl += `categoryIds=${id}`;
