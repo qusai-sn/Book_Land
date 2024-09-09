@@ -68,7 +68,7 @@ async function register() {
         );
 
         if (response.ok) {
-            location.href = "shop-login.html";
+            location.href = "shop-checkout.html";
         }
     }
     else {

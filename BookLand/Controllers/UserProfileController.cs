@@ -24,7 +24,7 @@ namespace BookLand.Controllers
             return Ok(users);
         }
 
-        
+
         /// //////////////////////////////////////////////
         ///
         [HttpGet("{userId}")]
@@ -49,7 +49,7 @@ namespace BookLand.Controllers
             return Ok(user);
         }
         ///////////////////////////////////////////////////
-     
+
         /// ///////////////////////////////////////////////
         [HttpPut("{id}")]
         public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
@@ -196,14 +196,15 @@ namespace BookLand.Controllers
                 ProductId = w.Book.Id,
                 ProductName = w.Book.Title,
                 UnitPrice = w.Book.Price,
-                ProductImage = w.Book.ImageUrl  // Assuming you have an ImageUrl field in your Book model
+                ProductImage = w.Book.ImageUrl
             }).ToList();
 
             return Ok(result);
         }
 
         /// //////////////////////////
-       
+        /// 
+
     }
 }
 
