@@ -116,7 +116,7 @@ function loadBooks() {
                                             <li><span>Year</span> ${book.yearPublished}</li>
                                         </ul>
                                         <div class="d-flex">
-                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn" data-bookid="${book.id}" data-price="${book.price.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
+                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn" data-BookName="${book.title}" data-image="${book.imageUrl}" data-bookid="${book.id}" data-price="${discountedPrice.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +147,9 @@ function attachCartEventListeners() {
         button.onclick = function() {
             const bookId = this.getAttribute('data-bookid');
             const price = this.getAttribute('data-price');
-            addToCart(bookId, price);
+            const ImageURL = this.getAttribute('data-image'); 
+            const BookName = this.getAttribute('data-BookName');
+            addToCart(bookId, BookName, price , ImageURL);
         };
     });
 }
@@ -167,16 +169,22 @@ function showNotification(message, type) {
       notification.remove();
     }, 3000); // Notification disappears after 3 seconds
   }
+
   
-function addToCart(bookId, price) {
+function addToCart( bookId, BookName , price, image , BookImage ){
+
     const cartItem = {
         cart_id: Math.random().toString(36).substr(2, 9), // Generate a random cart ID
         bookId: parseInt(bookId),
+        bookName: BookName ,
+        imageUrl : image ,
         quantity: 1,
-        format: "Hard Copy", // Default format
+        format: "HardCopy", // Default format
         price: parseFloat(price)
     };
+
     localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
     alert('Added to cart!');  // Example usage:
     showNotification('This is a success message!', 'success');
+
 }
