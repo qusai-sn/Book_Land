@@ -187,9 +187,23 @@
 // });
 
 
+// ${ userId }
 
-
-
+// $(document).ready(function () {
+//     debugger
+//     fetch(`https://localhost:44301/api/UserDetails/1`)
+//         .then(response => response.json())
+//         .then(data => {
+//             $("#formcontrolinput2").val(data.professionalTitle);
+//             $("#formcontrolinput3").val(data.languages);
+//             $("#formcontrolinput4").val(data.age);
+//             $("#exampleFormControlTextarea").val(data.description);
+//             $("#formcontrolinput7").val(data.country);
+//             $("#formcontrolinput9").val(data.city);
+//             $("#formcontrolinput8").val(data.postcode);
+//         })
+//         .catch(error => console.error('Error:', error));
+// });
 
 
 
@@ -222,34 +236,118 @@
 
 
 
-async function fetchUserProfile(userId) {
-    console.log('Fetching user profile for userId:', userId);
-    const url = `https://localhost:44301/api/UserProfile/${userId}`;
+// async function fetchUserProfile(userId) {
+//     console.log('Fetching user profile for userId:', userId);
+//     const url = `https://localhost:44301/api/UserProfile/${userId}`;
 
-    try {
-        const response = await fetch(url);
+//     try {
+//         const response = await fetch(url);
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
 
-        const data = await response.json();
-        console.log('User profile data:', data);
-        updateProfileFields(data);
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-        alert('Error fetching user profile.');
+//         const data = await response.json();
+//         console.log('User profile data:', data);
+//         updateProfileFields(data);
+//     } catch (error) {
+//         console.error('Error fetching user profile:', error);
+//         alert('Error fetching user profile.');
+//     }
+// }
+
+// function updateProfileFields(data) {
+//     console.log('Updating profile fields with data:', data);
+//     $('#name').val(data.name);
+//     $('#phoneNumber').val(data.phoneNumber);
+//     $('#email').val(data.email);
+//     $('#address').val(data.address);
+// }
+
+// // Example usage
+// fetchUserProfile(1); // Replace 1 with the actual user ID
+
+
+
+
+
+$(document).ready(function () {
+    const userId = 1;
+
+    function fetchUserData(id) {
+        return fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`)
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
     }
-}
 
-function updateProfileFields(data) {
-    console.log('Updating profile fields with data:', data);
-    $('#name').val(data.name);
-    $('#phoneNumber').val(data.phoneNumber);
-    $('#email').val(data.email);
-    $('#address').val(data.address);
-}
+    function populateForm(data) {
+        // Populate Basic Information
+        $("#name").val(data.name);
+        $("#phoneNumber").val(data.phoneNumber);
+        $("#email").val(data.email);
+        $("#address").val(data.address);
 
-// Example usage
-fetchUserProfile(1); // Replace 1 with the actual user ID
+        // Populate Contact Information
+        $("#formcontrolinput2").val(data.professionalTitle);
+        $("#formcontrolinput3").val(data.languages);
+        $("#formcontrolinput4").val(data.age);
+        $("#exampleFormControlTextarea").val(data.description);
+        $("#formcontrolinput7").val(data.country);
+        $("#formcontrolinput9").val(data.city);
+        $("#formcontrolinput8").val(data.postcode);
+    }
 
+    fetchUserData(userId)
+        .then(data => populateForm(data))
+        .catch(error => console.error('Error:', error));
+
+    async function updateProfile(userId, updatedProfile) {
+        try {
+            const response = await fetch(`https://localhost:44301/api/CompinedData/${userId}/fullProfile`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedProfile)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update profile: ${response.status} ${response.statusText}`);
+            }
+
+            return response;
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            throw error;
+        }
+    }
+
+    async function updateUserProfile(userId) {
+        const updatedProfile = {
+            // Get values from form fields
+            name: $('#name').val(),
+            email: $('#email').val(),
+            phoneNumber: $('#phoneNumber').val(),
+            address: $('#address').val(),
+
+            // Contact Information
+            professionalTitle: $("#formcontrolinput2").val(),
+            languages: $("#formcontrolinput3").val(),
+            age: $("#formcontrolinput4").val(),
+            description: $("#exampleFormControlTextarea").val(),
+            country: $("#formcontrolinput7").val(),
+            city: $("#formcontrolinput9").val(),
+            postcode: $("#formcontrolinput8").val(),
+        };
+
+        try {
+            const response = await updateProfile(userId, updatedProfile);
+            alert('Profile updated successfully!');
+        } catch (error) {
+            alert('Error updating profile.');
+        }
+    }
+
+    // Move the updateUserProfile function call inside the $(document).ready function
+    updateUserProfile(userId);
+});
