@@ -42,7 +42,7 @@ namespace BookLand.Controllers
             {
                 return BadRequest("No categories specified.");
             }
-
+          
             var books = await _db.Books
                 .Where(b => b.Categories.Any(c => categoryIds.Contains(c.Id)))
                 .Select(b => new
@@ -123,9 +123,35 @@ namespace BookLand.Controllers
         }
 
 
+ 
+        // GET api/carts/5/items
+        [HttpGet("{userId}/items")]
+        public async Task<ActionResult> GetCartItems(int userId)
+        {
+            var cart = await _db.Carts
+                                     .Include(c => c.CartItems)
+                                     .ThenInclude(ci => ci.Book)  // Optional, remove if you do not need book details
+                                     .FirstOrDefaultAsync(c => c.UserId == userId);
 
+            if (cart == null)
+            {
+                return NotFound("No cart found for the given user.");
+            }
 
-
-
+            return Ok(cart.CartItems.Select(ci => new
+            {
+                CartItemId = ci.Id,
+                image = ci.Book.ImageUrl,
+                CartId = ci.CartId,
+                BookId = ci.BookId,
+                BookTitle = ci.Book?.Title,  // Assuming the Book model has a Title property
+                Quantity = ci.Quantity,
+                Price = ci.Price,
+                Format = ci.Format
+            }));
+        }
     }
+
+
 }
+
