@@ -362,7 +362,7 @@ $(document).ready(function () {
     const userId = 1;
     // Function to fetch user data
     function fetchUserData(id) {
-        return fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`)
+        return fetch(`https://localhost:7198/api/CompinedData/${id}/fullProfile`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
@@ -397,7 +397,7 @@ $(document).ready(function () {
     // Function to update the user profile
     async function updateProfile(id, updatedProfile) {
         try {
-            const response = await fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`, {
+            const response = await fetch(`https://localhost:7198/api/CompinedData/${id}/fullProfile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
