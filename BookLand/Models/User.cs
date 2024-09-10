@@ -25,6 +25,8 @@ public partial class User
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
+    public virtual Chat? Chat { get; set; }
+
     public virtual ICollection<CommentsReview> CommentsReviews { get; set; } = new List<CommentsReview>();
 
     public virtual ICollection<Library> Libraries { get; set; } = new List<Library>();
