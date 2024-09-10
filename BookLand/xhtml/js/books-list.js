@@ -1,6 +1,6 @@
 
 function loadCategories() {
-    fetch('https://localhost:44301/api/Shoping/categories')
+    fetch('https://localhost:7198/api/Shoping/categories')
         .then(response => response.json())
         .then(categories => {
             const categoryList = document.getElementById('category-list');
@@ -44,7 +44,7 @@ function loadCategories() {
 
 function loadBooks() {
     const selectedCategories = Array.from(document.querySelectorAll('.form-check-input:checked')).map(input => input.value);
-    let apiUrl = `https://localhost:44301/api/Shoping/categories/books?`;
+    let apiUrl = `https://localhost:7198/api/Shoping/categories/books?`;
     let token = localStorage.jwtToken ;
     selectedCategories.forEach((id, index) => {
         apiUrl += `categoryIds=${id}`;
@@ -116,7 +116,7 @@ function loadBooks() {
                                             <li><span>Year</span> ${book.yearPublished}</li>
                                         </ul>
                                         <div class="d-flex">
-                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn" data-BookName="${book.title}" data-image="${book.imageUrl}" data-bookid="${book.id}" data-price="${discountedPrice.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
+                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn"   data-BookName="${book.title}" data-image="${book.imageUrl}" data-bookid="${book.id}" data-price="${discountedPrice.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -141,15 +141,17 @@ document.getElementById('category-list').addEventListener('change', loadBooks);
 
 
 
+
+// Ensure you attach event listeners correctly
 function attachCartEventListeners() {
     const buttons = document.querySelectorAll('.add-to-cart-btn');
     buttons.forEach(button => {
         button.onclick = function() {
             const bookId = this.getAttribute('data-bookid');
+            const bookName = this.getAttribute('data-BookName');
+            const imageUrl = this.getAttribute('data-image');
             const price = this.getAttribute('data-price');
-            const ImageURL = this.getAttribute('data-image'); 
-            const BookName = this.getAttribute('data-BookName');
-            addToCart(bookId, BookName, price , ImageURL);
+            addToCart(bookId, bookName, imageUrl, price);
         };
     });
 }
@@ -170,21 +172,84 @@ function showNotification(message, type) {
     }, 3000); // Notification disappears after 3 seconds
   }
 
-  
-function addToCart( bookId, BookName , price, image , BookImage ){
+  function addToCart(bookId, bookName, imageUrl, price) {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('jwtToken');
 
+    // Define the cart item structure for local storage
     const cartItem = {
-        cart_id: Math.random().toString(36).substr(2, 9), // Generate a random cart ID
-        bookId: parseInt(bookId),
-        bookName: BookName ,
-        imageUrl : image ,
+        bookId: parseInt(bookId, 10),
+        bookName: bookName,
+        imageUrl: imageUrl,
+        price: parseFloat(price),
         quantity: 1,
-        format: "HardCopy", // Default format
-        price: parseFloat(price)
+        format: "HardCopy" , // Default format for the example; this can be dynamic as needed       
     };
 
-    localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
-    alert('Added to cart!');  // Example usage:
-    showNotification('This is a success message!', 'success');
+    if (!token) {
+        // User is not logged in, store the cart item in local storage
+        localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
+        alert('Added to cart locally!');
+        return;  // Exit the function early as no need to interact with the server
+    }
+    
+   
+    // register the cart id in the local storage 
+    fetch(`https://localhost:7198/api/Carts/getCartID/${userId}`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Store the received cart ID in local storage
+    localStorage.setItem("cartId", data);
+   
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
 
+
+     // User is logged in, proceed to send the data to the server
+    const url = `https://localhost:7198/api/Shoping/${userId}/items`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            bookId: cartItem.bookId,
+            quantity: cartItem.quantity,
+            format: cartItem.format,
+            price: cartItem.price
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
+        alert('Added to cart locally!');
+
+        console.log('Item added to server cart:', data);
+        alert('Item added to server cart successfully!');
+    })
+    .catch(error => {
+        console.error('Error adding item to server cart:', error);
+        alert(`Error: ${error.message}`);
+    });
 }
+
+
+
+//https://localhost:7198/api/Shoping/16/items
+
+
+ 

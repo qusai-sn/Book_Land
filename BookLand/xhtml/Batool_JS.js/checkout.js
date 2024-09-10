@@ -172,6 +172,23 @@ function initPayPalButton() {
 
                 // Or go to another URL:  actions.redirect('thank_you.html');
 
+                async function completeTXN() {
+                    const orderid = localStorage.getItem("orderID");
+                    // update status of the order in the database to "Paid" 
+                    // add transaction id to the order
+
+                    const editOrderURL = `https://localhost:7198/api/Orders/FinishOrder/${orderid}`;
+
+                    let response = await fetch(editOrderURL, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ userId: userid })
+                    });
+                };
+                completeTXN();
+
             });
         },
 
@@ -189,20 +206,6 @@ async function finishOrder() {
     const orderid = localStorage.getItem("orderID");
     const userid = localStorage.getItem("userId");
 
-    // update status of the order in the database to "Paid" 
-    // add transaction id to the order
-
-    const editOrderURL = `https://localhost:7198/api/Orders/FinishOrder/${orderid}`;
-
-    let response = await fetch(editOrderURL, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId: userid })
-    });
-
-
     // send orders to library
 
     const sendToLibraryURL = `https://localhost:7198/api/Orders/SendBooksToLibrary/${userid}-${orderid}`;
@@ -215,6 +218,7 @@ async function finishOrder() {
 
     });
 
+    localStorage.removeItem("orderID");
     location.href = "services.html";
 
 };

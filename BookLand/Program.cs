@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BookLand.Models;
 using BookLand;
+using BookLand.Services;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -88,7 +89,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
 
-    
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+
 
 var app = builder.Build();
 
