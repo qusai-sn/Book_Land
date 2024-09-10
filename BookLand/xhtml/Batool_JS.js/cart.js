@@ -47,13 +47,18 @@ async function goToCheckout() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(cartItems)
+        body: JSON.stringify(cartItems) // local to table 
     });
     // console.log(response);
 
 
     // add orderid to local storage to use in checkout request in next page
-    localStorage.setItem("orderID", response.id);
+    
+    let responseData = await response.json();
+    console.log(responseData);
+
+    // Add orderID to local storage to use in checkout request on the next page
+    localStorage.setItem("orderID", responseData.id);
 
 
     //clear local storge from cart items
@@ -63,7 +68,7 @@ async function goToCheckout() {
             localStorage.removeItem(key);
         }
     }
-
+    
 
     // delete cart + cart items from DB using the cart ID
     let cartId = localStorage.getItem("cartId");

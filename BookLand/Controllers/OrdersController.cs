@@ -41,7 +41,7 @@ namespace BookLand.Controllers
             decimal? total = 0;
             foreach (var Item in order)
             {
-                if (Item.Format.Contains("Hard Copy"))
+                if (Item.Format.Contains("Copy"))
                 {
                     total += (Item.Price * Item.Quantity);
                 }
@@ -52,6 +52,10 @@ namespace BookLand.Controllers
                 if (Item.Format.Contains("Audio"))
                 {
                     total += (Item.Price * 60 / 100);
+                }
+                else
+                {
+                    total += Item.Price;
                 }
 
             }
@@ -84,7 +88,7 @@ namespace BookLand.Controllers
             _db.SaveChanges();
 
 
-            return Ok(new { newOrder.Id});
+            return Ok(new { id = newOrder.Id});
         }
 
 
