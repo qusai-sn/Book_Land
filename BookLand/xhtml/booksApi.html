@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Books Viewer</title>
+    <style>
+        /* Add styles for the iframe */
+        iframe {
+            /* Set the width and height to 100% of the parent container */
+            width: 30%;
+            height: 85vh;
+            /* Remove the border */
+            border: none;
+            /* Add some padding and margin for better layout */
+            padding: 10px;
+            margin: 20px;
+            /* Make the iframe responsive */
+            display: block;
+        }
+
+        /* Add some basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Add styles for the buttons */
+        .button {
+            /* Remove absolute positioning */
+            display: inline-block;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viewerCanvas"></div>
+
+    <script src="https://www.google.com/books/jsapi.js"></script>
+    <script>
+        function getISBNFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('isbn') || '0738531367'; // Default ISBN
+        }
+
+        google.books.load();
+
+        function initialize() {
+            const isbn = getISBNFromUrl();
+            const viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+            viewer.load(`ISBN:${isbn}`);
+        }
+
+        google.books.setOnLoadCallback(initialize);
+    </script>
+
+    <!-- Add an open button -->
+    <button class="button" onclick="openIframe()">Open</button>
+
+    <!-- Add a close button -->
+    <button class="button" onclick="closeIframe()">Close</button>
+
+    <!-- The iframe will be added dynamically -->
+    <div id="iframe-container"></div>
+
+    <script>
+        function openIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const iframe = document.createElement('iframe');
+            iframe.frameBorder = "0";
+            iframe.scrolling = "no";
+            iframe.id = "googleBooksIframe";
+            iframe.src = "https://books.google.jo/books?id=VpNa9UckT24C&lpg=PP1&hl=ar&pg=PA15&output=embed";
+            iframeContainer.appendChild(iframe);
+        }
+
+        function closeIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const iframe = document.getElementById('googleBooksIframe');
+            iframeContainer.removeChild(iframe);
+        }
+    </script>
+
+    <!-- <script src="js/Apibooks.js"></script> -->
+
+</body>
+
+</html>
