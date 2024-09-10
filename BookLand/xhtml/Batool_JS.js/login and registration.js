@@ -314,7 +314,7 @@ async function NewPWD(event) {
     const otp = localStorage.getItem("OTP");
     const url = `https://localhost:7198/api/LoginAndRegister/reset/password/${otp}`;
 
-    try {
+    
         const response = await fetch(url, {
             method: "PUT",
             headers: {
