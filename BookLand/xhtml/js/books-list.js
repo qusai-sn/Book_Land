@@ -1,6 +1,6 @@
 
 function loadCategories() {
-    fetch('https://localhost:7198/api/Shoping/categories')
+    fetch('https://localhost:44301/api/Shoping/categories')
         .then(response => response.json())
         .then(categories => {
             const categoryList = document.getElementById('category-list');
@@ -44,7 +44,8 @@ function loadCategories() {
 
 function loadBooks() {
     const selectedCategories = Array.from(document.querySelectorAll('.form-check-input:checked')).map(input => input.value);
-    let apiUrl = `https://localhost:7198/api/Shoping/categories/books?`;
+    let apiUrl = `https://localhost:44301/api/Shoping/categories/books?`;
+    let token = localStorage.jwtToken ;
     selectedCategories.forEach((id, index) => {
         apiUrl += `categoryIds=${id}`;
         if (index < selectedCategories.length - 1) {
@@ -52,7 +53,13 @@ function loadBooks() {
         }
     });
 
-    fetch(apiUrl)
+    fetch(apiUrl ,  {
+        method: 'GET', // The HTTP method you want to use for the request
+        headers: {
+            'Authorization': `Bearer ${token}`, // Properly formatted Authorization header
+            'Content-Type': 'application/json'  // Correctly placed within the headers object
+        }
+    })
         .then(response => response.json())
         .then(books => {
             const booksContainer = document.getElementById('books-container');
@@ -68,6 +75,8 @@ function loadBooks() {
                 }
 
                 let categoriesHTML = book.categories.map(category => `<li><a href="books-list.html">${category.name}</a></li>`).join('');
+                let originalPrice = book.price;
+                let discountedPrice = originalPrice * (1 - book.discountPercentage / 100);
 
                 const bookCardHTML = `
                     <div class="col-md-12 col-sm-12">
@@ -83,10 +92,11 @@ function loadBooks() {
                                             <a href="books-detail.html?bookId=${book.id}">${book.title}</a>
                                         </h4>
                                     </div>
-                                    <div class="price">
-                                        <span class="price-num text-primary">$${book.price.toFixed(2)}</span>
-                                        <del>$${(book.price / (1 - book.discountPercentage / 100)).toFixed(2)}</del>
+                                   <div class="price">
+                                        <span class="price-num text-primary">$${discountedPrice.toFixed(2)}</span>
+                                        <del>$${originalPrice.toFixed(2)}</del>
                                     </div>
+
                                 </div>
                                 <div class="dz-body">
                                     <div class="dz-rating-box">
@@ -106,7 +116,7 @@ function loadBooks() {
                                             <li><span>Year</span> ${book.yearPublished}</li>
                                         </ul>
                                         <div class="d-flex">
-                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn" data-bookid="${book.id}" data-price="${book.price.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
+                                            <button class="btn btn-secondary btnhover btnhover2 add-to-cart-btn" data-BookName="${book.title}" data-image="${book.imageUrl}" data-bookid="${book.id}" data-price="${discountedPrice.toFixed(2)}"><i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +147,9 @@ function attachCartEventListeners() {
         button.onclick = function() {
             const bookId = this.getAttribute('data-bookid');
             const price = this.getAttribute('data-price');
-            addToCart(bookId, price);
+            const ImageURL = this.getAttribute('data-image'); 
+            const BookName = this.getAttribute('data-BookName');
+            addToCart(bookId, BookName, price , ImageURL);
         };
     });
 }
@@ -157,16 +169,22 @@ function showNotification(message, type) {
       notification.remove();
     }, 3000); // Notification disappears after 3 seconds
   }
+
   
-function addToCart(bookId, price) {
+function addToCart( bookId, BookName , price, image , BookImage ){
+
     const cartItem = {
         cart_id: Math.random().toString(36).substr(2, 9), // Generate a random cart ID
         bookId: parseInt(bookId),
+        bookName: BookName ,
+        imageUrl : image ,
         quantity: 1,
-        format: "Hard Copy", // Default format
+        format: "HardCopy", // Default format
         price: parseFloat(price)
     };
+
     localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
     alert('Added to cart!');  // Example usage:
     showNotification('This is a success message!', 'success');
+
 }

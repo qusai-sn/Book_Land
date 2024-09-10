@@ -1,38 +1,33 @@
 document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-debugger
-    const name = document.getElementById('Name').value;
-    const email = document.getElementById('Email').value;
-    const subject = document.getElementById('Subject').value;
-    const message = document.getElementById('Message').value;
 
-    // Basic form validation
-    if (!name || !email || !subject || !message) {
-        alert('Please fill in all fields!');
-        return;
-    }
+    // Get form data
+    const formData = new FormData(document.getElementById('contactForm'));
 
-    const data = {
-        Name: name,
-        Email: email,
-        Subject: subject,
-        Message: message
-    };
+    // Convert form data to URL-encoded string
+    const formBody = Array.from(formData.entries())
+        .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
+        .join('&');
 
-    fetch('https://your-api-url.com/api/UserProfile', {
+    // Send a POST request to the server with URL-encoded data
+    fetch('https://localhost:44301/api/UserProfile', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(data),
+        body: formBody,  // Send the data as URL-encoded
     })
         .then(response => {
+            console.log("Response Status:", response.status);  // Debugging purposes
+
             if (!response.ok) {
-                throw new Error('Network response was not ok.');
+                return response.json().then(data => { throw new Error(data.title || 'Network response was not ok.'); });
             }
-            return response.json();
+
+            return response.text();  // Read response as text
         })
         .then(data => {
+            console.log("Response Data:", data);  // Debugging purposes
             alert('Message sent successfully!');
             document.getElementById('contactForm').reset();
         })

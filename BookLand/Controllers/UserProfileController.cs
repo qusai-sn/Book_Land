@@ -20,80 +20,89 @@ namespace BookLand.Controllers
         [HttpGet]
         public IActionResult GetAllUsers()
         {
-
             var users = _db.Users.ToList();
             return Ok(users);
         }
 
 
         /// //////////////////////////////////////////////
+        ///
+        //[HttpGet("{userId}")]
+        //public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
+        //{
+        //    var user = await _db.Users
+        //        .Where(u => u.Id == userId)
+        //        .Select(u => new UserRequestDTOs
+        //        {
+        //            Name = u.Name,
+        //            Email = u.Email,
+        //            PhoneNumber = u.PhoneNumber,
+        //            Address = u.Address,
+        //        })
+        //        .FirstOrDefaultAsync();
 
-        [HttpGet("Api/User/{id}")]
-        public IActionResult GetUser(int id)
-        {
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (id == 0)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                var userById = _db.Users.Where(x => x.Id == id).FirstOrDefault();
-                return Ok(userById);
-            }
-        }
+        //    return Ok(user);
+        //}
+        /////////////////////////////////////////////////////
 
-        /// ///////////////////////////////////////////////
-        [HttpPut("{id}")]
-        public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
-        {
+        ///// ///////////////////////////////////////////////
+        //[HttpPut("{id}")]
+        //public IActionResult EditUser([FromForm] UserRequestDTOs userRequestDTOs, int id)
+        //{
 
-            //var UsersImages = Path.Combine(Directory.GetCurrentDirectory(), "UsersImages");
+        //    //var UsersImages = Path.Combine(Directory.GetCurrentDirectory(), "UsersImages");
 
-            //if (!Directory.Exists(UsersImages))
-            //{
-            //    Directory.CreateDirectory(UsersImages);
-            //}
+        //    //if (!Directory.Exists(UsersImages))
+        //    //{
+        //    //    Directory.CreateDirectory(UsersImages);
+        //    //}
 
-            //if (userRequestDTOs.Image != null) { 
+        //    //if (userRequestDTOs.Image != null) { 
 
-            //    var UserImageFile = Path.Combine(UsersImages, userRequestDTOs.Image);
+        //    //    var UserImageFile = Path.Combine(UsersImages, userRequestDTOs.Image);
 
-            //    using (var stream = new FileStream(UserImageFile, FileMode.Create)) {
+        //    //    using (var stream = new FileStream(UserImageFile, FileMode.Create)) {
 
 
-            //        userRequestDTOs.Image.CopyTo(stream);
-            //    }
+        //    //        userRequestDTOs.Image.CopyTo(stream);
+        //    //    }
 
-            //}
+        //    //}
 
-            var editUserById = _db.Users.Where(u => u.Id == id).FirstOrDefault();
+        //    var editUserById = _db.Users.Where(u => u.Id == id).FirstOrDefault();
 
-            if (editUserById == null)
-            {
-                return BadRequest("User not found.");
-            }
+        //    if (editUserById == null)
+        //    {
+        //        return BadRequest("User not found.");
+        //    }
 
-            editUserById.Name = userRequestDTOs.Name;
-            editUserById.Address = userRequestDTOs.Address;
-            editUserById.Email = userRequestDTOs.Email;
-            editUserById.PhoneNumber = userRequestDTOs.PhoneNumber;
+        //    editUserById.Name = userRequestDTOs.Name;
+        //    editUserById.Address = userRequestDTOs.Address;
+        //    editUserById.Email = userRequestDTOs.Email;
+        //    editUserById.PhoneNumber = userRequestDTOs.PhoneNumber;
 
-            _db.Update(editUserById);
-            _db.SaveChanges();
+        //    _db.Update(editUserById);
+        //    _db.SaveChanges();
 
-            return Ok(editUserById);
-        }
+        //    return Ok(editUserById);
+        //}
         ///////////////////////////////////////////////////////////////
         [HttpPost]
         public IActionResult PostContactDetails([FromForm] ContactUsDTO contactUsDto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(string.Join(", ", errors));  // Return validation errors for debugging
             }
 
-            int? contactId = contactUsDto.Id;
+            // Log the incoming data
+            Console.WriteLine("Contact received: " + contactUsDto.Name + ", " + contactUsDto.Email);
 
             var newContact = new ContactU
             {
@@ -101,7 +110,7 @@ namespace BookLand.Controllers
                 Email = contactUsDto.Email,
                 Subject = contactUsDto.Subject,
                 Message = contactUsDto.Message,
-                Id = contactId ?? 0 
+                Id = contactUsDto.Id ?? 0
             };
 
             _db.ContactUs.Add(newContact);
@@ -109,6 +118,8 @@ namespace BookLand.Controllers
 
             return Ok("Contact details have been saved.");
         }
+
+
 
         /// /////////////////////////////////////////////////////////////////////
 
@@ -152,21 +163,21 @@ namespace BookLand.Controllers
             return Ok(wishlist);
         }
 
-        //[HttpDelete("remove/{userId}/{bookId}")]
-        //public IActionResult RemoveFromWishlist(int userId, int bookId)
-        //{
-        //    var wishlistItem = _db.Wishlists.FirstOrDefault(w => w.UserId == userId && w.BookId == bookId);
+        [HttpDelete("remove/{userId}/{bookId}")]
+        public IActionResult RemoveFromWishlist(int userId, int bookId)
+        {
+            var wishlistItem = _db.Wishlists.FirstOrDefault(w => w.UserId == userId && w.BookId == bookId);
 
-        //    if (wishlistItem == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (wishlistItem == null)
+            {
+                return NotFound();
+            }
 
-        //    _db.Wishlists.Remove(wishlistItem);
-        //    _db.SaveChanges();
+            _db.Wishlists.Remove(wishlistItem);
+            _db.SaveChanges();
 
-        //    return Ok(new { message = "Item removed from wishlist" });
-        //}
+            return Ok(new { message = "Item removed from wishlist" });
+        }
 
         [HttpGet("wishlist/{userId}")]
         public IActionResult GetWishlistForUser(int userId)
@@ -186,11 +197,43 @@ namespace BookLand.Controllers
                 ProductId = w.Book.Id,
                 ProductName = w.Book.Title,
                 UnitPrice = w.Book.Price,
-                ProductImage = w.Book.ImageUrl  // Assuming you have an ImageUrl field in your Book model
+                ProductImage = w.Book.ImageUrl
             }).ToList();
 
             return Ok(result);
         }
+
+        /// //////////////////////////
+        /// 
+
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserRequestDTOs>> GetUserProfile(int userId)
+        {
+            var user = await _db.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new UserRequestDTOs
+                {
+                    Name = u.Name,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber,
+                    Address = u.Address,
+                    Image = u.Image // Assuming Image column contains the image file name or URL
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
+
+
+
     }
 }
 
