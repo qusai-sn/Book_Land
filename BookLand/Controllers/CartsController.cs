@@ -25,7 +25,7 @@ namespace BookLand.Controllers
         [HttpDelete("deleteCart/{cartID}")]
         public IActionResult deleteCart(int cartID)
         {
-            var x = _db.Carts.FirstOrDefault(a => a.Id == cartID);
+            var x = _db.CartItems.Where(a => a.CartId == cartID);
 
             if (x == null)
             {
@@ -37,11 +37,25 @@ namespace BookLand.Controllers
             }
             else
             {
-                _db.Carts.Remove(x);
+                _db.CartItems.RemoveRange(x);
                 _db.SaveChanges();
                 return NoContent();
             }
         }
+
+
+        [HttpGet("getCartID/{userID:int}")]
+        public IActionResult GetCartID(int userID)
+        {
+            var cart = _db.Carts.FirstOrDefault(c => c.UserId == userID); // Use FirstOrDefault to get a single result or null
+            if (cart == null)
+            {
+                return NotFound();
+            }
+            return Ok(cart.Id);  // Return the cart id
+        }
+
+
 
 
 

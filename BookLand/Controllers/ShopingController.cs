@@ -1,4 +1,5 @@
-﻿using BookLand.Models;
+﻿using BookLand.DTOs;
+using BookLand.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -122,8 +123,65 @@ namespace BookLand.Controllers
             return Ok(comments);
         }
 
+        [HttpPost("{userId}/items")]
+        public async Task<IActionResult> AddToCart(int userId, [FromBody] CartItemDto itemDto)
+        {
+            if (itemDto == null || itemDto.BookId == null || itemDto.Quantity == null || itemDto.Quantity <= 0)
+            {
+                return BadRequest("Invalid item data. ");
+            }
 
- 
+            try
+            {
+                var cart = await _db.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == userId);
+                if (cart == null)
+                {
+                    cart = new Cart { UserId = userId, CartItems = new List<CartItem>() };
+                    _db.Carts.Add(cart);
+                    await _db.SaveChangesAsync();
+                }
+
+                CartItem existingItem = cart.CartItems.FirstOrDefault(ci => ci.BookId == itemDto.BookId);
+                if (existingItem != null)
+                {
+                    existingItem.Quantity += itemDto.Quantity.Value; // Ensure value is correctly incremented
+                    await _db.SaveChangesAsync();
+                }
+                else
+                {
+                    var newItem = new CartItem
+                    {
+                        BookId = itemDto.BookId.Value, // Make sure BookId is assigned
+                        Quantity = itemDto.Quantity.Value,
+                        Format = itemDto.Format,
+                        Price = itemDto.Price.Value
+                    };
+                    cart.CartItems.Add(newItem);
+                    await _db.SaveChangesAsync();
+                }
+
+                var cartDto = new CartDto
+                {
+                    Id = cart.Id,
+                    CartItems = cart.CartItems.Select(ci => new CartItemDto
+                    {
+                        BookId = ci.BookId,
+                        Quantity = ci.Quantity,
+                        Format = ci.Format,
+                        Price = ci.Price
+                    }).ToList()
+                };
+
+                return Ok(cartDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while adding the item to the cart: " + ex.Message);
+            }
+        }
+
+
+
         // GET api/carts/5/items
         [HttpGet("{userId}/items")]
         public async Task<ActionResult> GetCartItems(int userId)
