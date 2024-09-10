@@ -40,12 +40,15 @@ if (googleLogin) {
           email: user.email,
           photoURL: user.photoURL,
         }));
+
+
+        addgoogleUser();
         
         // console.log(localStorage.getItem('GoogleUser'));
         // console.log(JSON.parse(localStorage.getItem('GoogleUser')));
 
   
-        window.location.href = "books-list.html";
+        // window.location.href = "books-list.html";
       } catch (error) {
         console.error("Error during login:", error);
         alert("Error during login. Please try again.");
@@ -56,4 +59,65 @@ if (googleLogin) {
 }
 
 
+function getFromLocal()
+{
+          let googleUser = JSON.parse(localStorage.getItem("GoogleUser"));
+        if (!googleUser) {
+            throw new Error("Google user not found in local storage");
+        }
+
+        console.log("Sending data:", {
+          name: googleUser.displayName,
+          email: googleUser.email,
+          image: googleUser.photoURL,
+      });
+
+      localStorage.setItem("GName",googleUser.displayName);
+      localStorage.setItem("GEmail",googleUser.email);
+      localStorage.setItem("GImg",googleUser.photoURL);
+};
+
+
+async function addgoogleUser() {
+  // debugger
+
+   getFromLocal();
+
+        const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin";
+
+        const GName = localStorage.getItem("GName");
+        const GEmail = localStorage.getItem("GEmail");
+        const GImg = localStorage.getItem("GImg");
+
+        const response = await fetch(googleLoginURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: GName,
+                email: GEmail,
+                image: GImg,
+            }),
+        });
+
+        if (!response.ok) {
+            Swal.fire({
+                icon: "error",
+                title: "Huh!",
+                text: "Failed to login via Google",
+                footer: 'throw new Error(" Error : " + response.statusText)'
+              });
+        }
+
+        const token = await response.text();
+        console.log("Token received:", token);
+
+        // Save token to local storage or proceed as needed
+        localStorage.setItem("token", token);
+
+        localStorage.removeItem("GName");
+        localStorage.removeItem("GEmail");
+        localStorage.removeItem("GImg");
+}
 
