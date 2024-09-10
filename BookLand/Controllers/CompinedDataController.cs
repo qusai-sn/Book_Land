@@ -30,6 +30,7 @@ namespace BookLand.Controllers
                 {
                     Name = u.Name,
                     Email = u.Email,
+                    Image =u.Image,
                     PhoneNumber = u.PhoneNumber,
                     Address = u.Address,
 
@@ -73,6 +74,7 @@ namespace BookLand.Controllers
             // Update user basic information
             user.Name = updatedProfile.Name;
             user.Email = updatedProfile.Email;
+            user.Image = updatedProfile.Image;
             user.PhoneNumber = updatedProfile.PhoneNumber;
             user.Address = updatedProfile.Address;
 
