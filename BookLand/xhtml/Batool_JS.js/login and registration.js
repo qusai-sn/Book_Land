@@ -304,15 +304,18 @@ async function checkOTP() {
 }
 
 
-async function NewPWD() {
-    // debugger
-    console.log(document.getElementById("resetPasswordNewPWD").value)
+async function NewPWD(event) {
+    // Optional: Prevent default form submission if used in a form
+    if (event) event.preventDefault();
+
+    console.log("Attempting to reset password...");
+    console.log(document.getElementById("resetPasswordNewPWD").value);
 
     const otp = localStorage.getItem("OTP");
     const url = `https://localhost:7198/api/LoginAndRegister/reset/password/${otp}`;
 
-    const response = await fetch(url,
-        {
+    try {
+        const response = await fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -320,8 +323,9 @@ async function NewPWD() {
             body: JSON.stringify({
                 newPassword: document.getElementById("resetPasswordNewPWD").value,
             }),
-        }
-    );
+        });
+
+        console.log(`Response Status: ${response.status}`); // Debugging line
 
     if (response.status === 200) {
         resetDone();
@@ -354,6 +358,7 @@ async function NewPWD() {
         resetWrong();
     }
 }
+
 
 
 
