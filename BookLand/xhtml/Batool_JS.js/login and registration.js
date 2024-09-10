@@ -100,3 +100,73 @@ async function logout() {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('userId');
 }
+
+
+
+
+
+
+// async function loginwithgoogle()
+// {
+
+//  console.log("test1");
+
+//         let googleUser = localStorage.getItem("GoogleUser");
+
+//  console.log("test2");
+
+//         const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin"
+//  console.log("test3");
+
+//         const response = await fetch(googleLoginURL, {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             name: googleUser.displayName,
+//             email: googleUser.email,
+//             image: googleUser.photoURL,
+//           }),
+//         });
+//         console.log("test4");
+
+
+// }
+
+
+
+async function loginwithgoogle() {
+    try {
+        let googleUser = JSON.parse(localStorage.getItem("GoogleUser"));
+        if (!googleUser) {
+            throw new Error("Google user not found in local storage");
+        }
+
+        const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin";
+        const response = await fetch(googleLoginURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: googleUser.displayName,
+                email: googleUser.email,
+                image: googleUser.photoURL,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to login via Google: " + response.statusText);
+        }
+
+        const token = await response.json();
+        console.log("Token received:", token);
+        // Save token to local storage or proceed as needed
+        localStorage.setItem("token", token);
+
+    } catch (error) {
+        console.error("Error during Google login:", error);
+        alert("Error during Google login. Please try again.");
+    }
+}

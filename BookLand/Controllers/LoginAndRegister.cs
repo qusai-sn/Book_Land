@@ -82,5 +82,44 @@ namespace BookLand.Controllers
 
 
 
+        [HttpPost("GoogleLogin")]
+        public IActionResult GoogleLogin(GoogleLoginDTO g)
+        {
+            // check if google email is used before
+            var user = _db.Users.FirstOrDefault(a => a.Email == g.Email);
+
+            // if yes just login // if no then add to table and login
+            if (user == null)
+            {
+                var token = _tokenGenerator.GenerateToken(g.Name);
+
+                return Ok(token);
+            }
+            else
+            {
+                var googleUser = new User
+                {
+                    Name = g.Name,
+                    Email = g.Email,
+                    Image = g.Image,
+                };
+                _db.Users.Add(googleUser);
+                _db.SaveChanges();
+
+                var token = _tokenGenerator.GenerateToken(g.Name);
+
+                return Ok(token);
+            }
+
+        }
+
+
+
+
+
+
+
+
+
     }
 }

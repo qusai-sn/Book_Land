@@ -52,6 +52,10 @@ async function goToCheckout() {
     // console.log(response);
 
 
+    // add orderid to local storage to use in checkout request in next page
+    localStorage.setItem("orderID", response.id);
+
+
     //clear local storge from cart items
     for (let i = localStorage.length - 1; i >= 0; i--) {
         let key = localStorage.key(i);
@@ -59,7 +63,7 @@ async function goToCheckout() {
             localStorage.removeItem(key);
         }
     }
-    
+
 
     // delete cart + cart items from DB using the cart ID
     let cartId = localStorage.getItem("cartId");
