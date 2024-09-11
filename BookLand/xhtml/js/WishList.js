@@ -44,7 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to fetch wishlist.');
+                // alert('Failed to fetch wishlist.');
+                Swal.fire({
+                    title: "Error",
+                    text: "Failed to fetch wishlist",
+                    icon: "error"
+                  });
             });
     }
 
@@ -64,9 +69,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (rowToDelete) {
                         rowToDelete.remove();
                     }
-                    alert('Book removed from wishlist');
+                    // alert('Book removed from wishlist');
+                    Swal.fire({
+                        title: "Removed",
+                        text: "Book removed from wishlist",
+                        icon: "success"
+                  });
                 } else {
-                    alert('Failed to remove the book');
+                    // alert('Failed to remove the book');
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to remove the book",
+                        icon: "error"
+                  });
                 }
             })
             .catch(error => {

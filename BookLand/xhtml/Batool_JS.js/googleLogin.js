@@ -51,7 +51,12 @@ if (googleLogin) {
         // window.location.href = "books-list.html";
       } catch (error) {
         console.error("Error during login:", error);
-        alert("Error during login. Please try again.");
+        // alert("Error during login. Please try again.");
+        Swal.fire({
+          title: "Error",
+          text: "Something happened during login. Please try again.",
+          icon: "info"
+        });
       }
     });
 } else {

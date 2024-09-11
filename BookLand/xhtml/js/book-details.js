@@ -147,6 +147,11 @@ function addToCart(bookId, price) {
         price: parseFloat(price)
     };
     localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
-    alert('Added to cart!');  // Example usage:
+    // alert('Added to cart!');  // Example usage:
+    Swal.fire({
+        title: "success",
+        text: "Your book has been added to the cart!",
+        icon: "success"
+      });
     showNotification('This is a success message!', 'success');
 }

@@ -189,7 +189,12 @@ function showNotification(message, type) {
     if (!token) {
         // User is not logged in, store the cart item in local storage
         localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
-        alert('Added to cart locally!');
+        // alert('Added to cart locally!');
+        Swal.fire({
+            title: "success",
+            text: "Your book has been added locally.",
+            icon: "success"
+          });
         return;  // Exit the function early as no need to interact with the server
     }
     
@@ -236,14 +241,29 @@ function showNotification(message, type) {
     .then(data => {
 
         localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
-        alert('Added to cart locally!');
+        // alert('Added to cart locally!');
+        Swal.fire({
+            title: "success",
+            text: "Your book has been added locally.",
+            icon: "success"
+          });
 
         console.log('Item added to server cart:', data);
-        alert('Item added to server cart successfully!');
+        // alert('Item added to server cart successfully!');
+        Swal.fire({
+            title: "success",
+            text: "Your book has been added to the cart.",
+            icon: "success"
+          });
     })
     .catch(error => {
         console.error('Error adding item to server cart:', error);
-        alert(`Error: ${error.message}`);
+        // alert(`Error: ${error.message}`);
+        Swal.fire({
+            title: "Error",
+            text: `The error : ${error.message}`,
+            icon: "error"
+          });
     });
 }
 

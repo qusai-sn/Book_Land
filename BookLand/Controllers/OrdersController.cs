@@ -155,16 +155,25 @@ namespace BookLand.Controllers
 
 
 
-        [HttpGet("OrderTotal/{orderID}/{couponsPercentage}")]
+        [HttpGet("OrderTotal/{orderID}")]
         public IActionResult OrderTotal(int orderID, int couponsPercentage)
         {
+            int coupon;
+            if (couponsPercentage <= 0  )
+            {
+                coupon = 0;
+            }
+            else
+            {
+                coupon = couponsPercentage;
+            }
 
             var orderValue = _db.Orders
                 .Where(a => a.Id == orderID)
                 .Select(a => new CheckoutTotalPriceDTO
                 {
                     TotalAmount = a.TotalAmount,
-                    CouponDiscount = (a.TotalAmount * couponsPercentage / 100),
+                    CouponDiscount = (a.TotalAmount * coupon / 100),
                     FinalPrice = a.TotalAmount - (a.TotalAmount * couponsPercentage / 100),
                 }).ToList();
 
