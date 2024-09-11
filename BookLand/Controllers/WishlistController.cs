@@ -93,6 +93,7 @@ namespace BookLand.Controllers
         [HttpGet("wishlistItemCount/{userId}")]
         public IActionResult GetWishlistItemCountByUserId(int userId)
         {
+
             var itemCount = _myDbContext.Wishlists
                                         .Count(a => a.UserId == userId);
 
@@ -103,6 +104,8 @@ namespace BookLand.Controllers
 
             return Ok(new { Count = itemCount });
         }
+
+       
 
     }
 }
