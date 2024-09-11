@@ -101,7 +101,7 @@ function loadBooks() {
                                 <div class="dz-body">
                                     <div class="dz-rating-box">
                                         <div>
-                                            <p class="dz-para">${book.description}</p>
+                                            <p class="dz-para" style="width:760px;">${book.description}</p>
                                         </div>
                                         <div class="review-num">
                                             <h4>${book.rating.toFixed(1)}</h4>
