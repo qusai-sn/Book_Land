@@ -1,4 +1,4 @@
-let url18 = `http://localhost:44301/api/LatestNews`;
+let url18 = `https://localhost:44301/api/LatestNews`;
 
 async function getNews() {
   try {
@@ -14,24 +14,33 @@ async function getNews() {
     // Generate and append the content for each news item
     result.forEach((news) => {
       newsContainer.innerHTML += `
-        <div class="swiper-slide">
-          <div class="news-card">
-            <div class="news-media">
-              <img src="${news.imageUrl || "default-image.jpg"}" alt="${
-        news.newsType || "News Image"
-      }" />
-            </div>
-            <div class="news-content">
-              <h5>${news.newsType || "No Title"}</h5>
-              <p>${news.description || "No Description"}</p>
-              <div class="news-meta">
-                <span class="date"> <i class="far fa-calendar fa-fw m-r10"></i> ${new Date(
-                  news.publishedAt
-                ).toLocaleDateString()}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+             <div class="swiper-slide">
+							<div class="dz-blog style-1 bg-white m-b30 wow fadeInUp" data-wow-delay="0.1s" >
+								<div class="dz-media">
+      <img src="${news.imageUrl || "default-image.jpg"}" alt="${news.newsType || "News Image"
+        }" />								</div>
+								<div class="dz-info p-3">
+									<h6 class="dz-title">
+										<a href="blog-detail.html">${news.newsType || "No Title"}</a>
+									</h6>
+									<p class="m-b0">${news.description || "No Description"}</p>
+									<div class="dz-meta meta-bottom mt-3 pt-3">
+										<ul class="">
+											<li class="post-date"><i class="far fa-calendar fa-fw m-r10"></i>${new Date(
+          news.publishedAt
+        ).toLocaleDateString()}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+
+
+
+
+
+
       `;
     });
 

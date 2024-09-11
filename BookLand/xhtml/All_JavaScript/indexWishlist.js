@@ -1,5 +1,5 @@
 var n = localStorage.getItem("userId");
-const url2 = `http://localhost:44301/api/Wishlist/wishlistItemCount/${n}`;
+const url2 = `https://localhost:44301/api/Wishlist/wishlistItemCount/${n}`;
 
 async function getWishlist() {
   try {

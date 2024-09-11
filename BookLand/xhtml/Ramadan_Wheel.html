@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            margin: auto;
+            background-color: tomato;
+        }
+
+        .luckywheel {
+            margin: 40px auto;
+            width: 50%;
+            height: 50%;
+        }
+
+        .btn,
+        .btn:visited {
+            font-weight: 800;
+            margin: 10px;
+            height: 40px;
+            width: 140px;
+            box-shadow: 4px 4px 20px 0 #cc4c45;
+            border-radius: 0;
+            border: 2px solid #000;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .btn:hover,
+        .btn:active {
+            color: #fff;
+            background-color: #000;
+            border: none;
+            text-decoration: none;
+            box-shadow: 4px 4px 5px 0 #cc4c45;
+        }
+
+        .frame, .sticks {
+            fill: #fff;
+        }
+
+        .winIndicator {
+            fill: #fff;
+        }
+
+        .wheelMiddle {
+            fill: #fff;
+        }
+
+        #_1 { fill: #ba4d4e; }
+        #_2 { fill: #1592e8; }
+        #_3 { fill: #14c187; }
+        #_4 { fill: #fc7800; }
+        #_5 { fill: #14c187; }
+        #_6 { fill: #1592e8; }
+        #_7 { fill: #ba4d4e; }
+        #_8 { fill: #1592e8; }
+        #_9 { fill: #14c187; }
+        #_10 { fill: #fc7800; }
+        #_11 { fill: #14c187; }
+        #_12 { fill: #1592e8; }
+        .sparkle {
+    position: absolute;
+    width: 30px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: yellow;
+    box-shadow: 0 0 10px 5px yellow;
+    opacity: 1;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="luckywheel">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 730">
+                    <g class="wheel">
+                        <circle class="frame" cx="365" cy="365" r="347.6"/>
+                        <g class="sticks">
+                            <!-- ... (stick rectangles) ... -->
+                        </g>
+                        <g class="sectors">
+                            <path id="_1" d="M365,365V35.9A328.1,328.1,0,0,0,200.5,80Z" transform="translate(0)"/>
+                            <path id="_2" d="M365,365,529.5,80A328.1,328.1,0,0,0,365,35.9Z" transform="translate(0)"/>
+                            <path id="_3" d="M365,365,650,200.5A328.5,328.5,0,0,0,529.5,80Z" transform="translate(0)"/>
+                            <path id="_4" d="M365,365H694.1A328.1,328.1,0,0,0,650,200.5Z" transform="translate(0)"/>
+                            <path id="_5" d="M365,365,650,529.5A328.1,328.1,0,0,0,694.1,365Z" transform="translate(0)"/>
+                            <path id="_6" d="M365,365,529.5,650A328.5,328.5,0,0,0,650,529.5Z" transform="translate(0)"/>
+                            <path id="_7" d="M365,365V694.1A328.1,328.1,0,0,0,529.5,650Z" transform="translate(0)"/>
+                            <path id="_8" d="M365,365,200.5,650A328.1,328.1,0,0,0,365,694.1Z" transform="translate(0)"/>
+                            <path id="_9" d="M365,365,80,529.5A328.5,328.5,0,0,0,200.5,650Z" transform="translate(0)"/>
+                            <path id="_10" d="M365,365H35.9A328.1,328.1,0,0,0,80,529.5Z" transform="translate(0)"/>
+                            <path id="_11" d="M365,365,80,200.5A328.1,328.1,0,0,0,35.9,365Z" transform="translate(0)"/>
+                            <path id="_12" d="M365,365,200.5,80A328.5,328.5,0,0,0,80,200.5Z" transform="translate(0)"/>
+                        </g>
+                        <g class="middle">
+                            <g id="shadow-1" opacity="0.2">
+                                <circle cx="368.5" cy="368.5" r="54.5"/>
+                            </g>
+                            <g class="wheelMiddle">
+                                <circle cx="365" cy="365" r="54.5" fill="#fff"/>
+                            </g>
+                            <circle id="middle-3" cx="365" cy="365" r="11.6" fill="#ccc"/>
+                        </g>
+                    </g>
+                    <g id="shadow-2" opacity="0.15">
+                        <path d="M46.9,372.5c0-181.7,147.4-329,329.1-329A327.3,327.3,0,0,1,556.3,97.2,327.3,327.3,0,0,0,365,35.9C183.3,35.9,35.9,183.3,35.9,365c0,115.2,59.2,216.5,148.8,275.3C101.3,580.6,46.9,482.9,46.9,372.5Z" transform="translate(0)"/>
+                    </g>
+                    <g class="active">
+                        <g>
+                            <path d="M707,160.5c-11.4-17.9-35.8-22.8-54.5-11a41.7,41.7,0,0,0-13.6,14.1l-33.6,58.9a2.3,2.3,0,0,0,0,2.4,2.4,2.4,0,0,0,2.3,1.1l67.5-5.1a43.8,43.8,0,0,0,18.6-6.3C712.4,202.7,718.3,178.5,707,160.5Z" transform="translate(0)" fill-opacity="0.22"/>
+                            <path class="winIndicator" d="M711.9,157.4a38.4,38.4,0,0,0-66,1.8l-31.5,57.5a2.1,2.1,0,0,0,0,2.4,2.6,2.6,0,0,0,2.2,1.2l65.6-3.9a39.6,39.6,0,0,0,17.9-5.9A38.5,38.5,0,0,0,711.9,157.4Z" transform="translate(0)"/>
+                            <path d="M681.7,166.9a9.3,9.3,0,0,0-6.6,4.8l-.8,2.1a14.9,14.9,0,0,0-.2,2.1,8.8,8.8,0,0,0,1.1,4.2,9.2,9.2,0,0,0,2.9,3,7.6,7.6,0,0,0,2.9,1.3l1.1.2a8.6,8.6,0,0,0,4.2-.6,8.4,8.4,0,0,0,3.4-2.5,7.4,7.4,0,0,0,2-3.8,8.5,8.5,0,0,0-.1-4.2,8.4,8.4,0,0,0-2.1-3.8,7.4,7.4,0,0,0-3.5-2.3l-1-.3A12.2,12.2,0,0,0,681.7,166.9Z" transform="translate(0)" fill="#ccc"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row buttons">
+            <div class="col-xs-6 col-lg-6 col-md-6">
+                <button id="btnPlay" class="btn btn-primary">Start</button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-md-6">
+                <button id="btnSlowMo" class="btn btn-primary">SlowMo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+   $(document).ready(function() {
+    var wheel = $(".wheel"),
+        active = $(".active"),
+        lastRotation = 0,
+        currentRotation = 0,
+        tolerance,
+        deg,
+        $btnPlay = $("#btnPlay"),
+        $btnSlowMo = $("#btnSlowMo");
+
+    var books = [
+        {id: 1, title: "Book Title 1"},
+        {id: 2, title: "Book Title 2"},
+        {id: 3, title: "Book Title 3"},
+        {id: 4, title: "Book Title 4"},
+        {id: 5, title: "Book Title 5"},
+        {id: 6, title: "Book Title 6"},
+        {id: 7, title: "Book Title 7"},
+        {id: 8, title: "Book Title 8"},
+        {id: 9, title: "Book Title 9"},
+        {id: 10, title: "Book Title 10"},
+        {id: 11, title: "Book Title 11"},
+        {id: 12, title: "Book Title 12"}
+    ];
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var spinWheel = gsap.timeline({
+        onUpdate: function() {
+            currentRotation = Math.round(gsap.getProperty(wheel[0], "rotation"));
+        }
+    });
+
+    function spin() {
+        deg = getRandomInt(360, 1080);
+
+        spinWheel.to(wheel, {
+            duration: 5,
+            rotation: deg,
+            transformOrigin: "50% 50%",
+            ease: "power4.out"
+        });
+    }
+
+    $btnPlay.click(function() {
+        spin();
+    });
+
+    $btnSlowMo.click(function() {
+        spinWheel.timeScale(0.2);
+        spin();
+    });
+
+    function getWinner() {
+        var normalizedRotation = currentRotation % 360;
+        if (normalizedRotation < 0) {
+            normalizedRotation += 360;
+        }
+
+        var sectorAngle = 360 / books.length;
+        var winningIndex = Math.floor((360 - normalizedRotation) / sectorAngle);
+        winningIndex = winningIndex % books.length;
+
+        console.log("Current Rotation: " + normalizedRotation);
+        console.log("Winning Index: " + winningIndex);
+
+        var winnerTitle = books[winningIndex]?.title;
+
+        if (!winnerTitle) {
+            console.error("Invalid winning index or title not found.");
+            return "Unknown";
+        }
+
+        localStorage.setItem('winningBook', winnerTitle);
+        return winnerTitle;
+    }
+
+    // Create the sparkle elements
+    function createSparkle(x, y) {
+        var sparkle = $('<div class="sparkle"></div>').appendTo('body');
+        sparkle.css({
+            left: x,
+            top: y
+        });
+
+        // Animate the sparkle with GSAP
+        gsap.to(sparkle, {
+            duration: 1,
+            x: getRandomInt(-200, 200),
+            y: getRandomInt(-200, 200),
+            opacity: 0,
+            scale: 0.5,
+            ease: "power1.out",
+            onComplete: function() {
+                sparkle.remove(); // Remove sparkle after animation
+            }
+        });
+    }
+
+    // Generate multiple sparkles
+    function sparkleEffect() {
+        var wheelCenter = wheel.offset();
+        var wheelWidth = wheel.width() / 2;
+        var wheelHeight = wheel.height() / 2;
+
+        // Create sparkles around the center of the wheel
+        for (var i = 0; i < 20; i++) {
+            createSparkle(
+                wheelCenter.left + wheelWidth, 
+                wheelCenter.top + wheelHeight
+            );
+        }
+    }
+
+    function celebrateWinner() {
+        var winner = getWinner();
+
+        if (winner === "Unknown") return;
+
+        // Trigger the sparkle effect
+        sparkleEffect();
+
+        alert("The winning book is: " + winner);
+    }
+
+    spinWheel.eventCallback("onComplete", function() {
+        celebrateWinner();
+    });
+});
+
+
+
+
+        
+    </script>
+</body>
+</html>

@@ -1,11 +1,55 @@
-const url6 = `http://localhost:44301/api/Books/RandomBook?count=5`;
+// Function to initialize Swiper
+function initializeSwiper() {
+  const swiper = new Swiper(".swiper-container", {
+    slidesPerView: 5, // Number of books to display
+    spaceBetween: 10, // Space between slides
+    loop: true, // Infinite loop
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    on: {
+      slideChange: function () {
+        updateActiveSlideBackground(swiper);
+      },
+    },
+  });
+
+  // Set background for the initial active slide
+  updateActiveSlideBackground(swiper);
+}
+
+// Fetch books and initialize Swiper after data is ready
+getBooks();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const url6 = `https://localhost:44301/api/Books/RandomBook?count=5`;
 
 async function getBooks() {
   try {
     const response = await fetch(url6);
     const result = await response.json(); // array of books
 
-    const booksContainer = document.getElementById("Book");
+    const booksContainer = document.getElementById("Bookh");
 
     // Clear previous content
     booksContainer.innerHTML = "";
@@ -33,9 +77,8 @@ async function getBooks() {
         <div class="swiper-slide">
           <div class="books-card">
             <div class="dz-media">
-              <img src="${book.imageUrl || "default-image.jpg"}" alt="${
-        book.title || "Book Image"
-      }" style="width: 100%; height: auto;" />
+              <img src="${book.imageUrl || "default-image.jpg"}" alt="${book.title || "Book Image"
+        }" style="width: 100%; height: auto;" />
             </div>
             <div class="dz-content">
               <h5 class="title mb-0">${book.title || "Untitled"}</h5>
