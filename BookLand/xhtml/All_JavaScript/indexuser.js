@@ -187,53 +187,80 @@
 // getbook();
 // getuser();
 // var userId = localStorage.getItem("userId");
+var n = localStorage.getItem("userId") || 0;
 
-const url4 = `http://localhost:44301/api/User/byIDUser/15`;
+if (!n) {
+  console.error("User ID not found in local storage");
+  // Handle the case where there's no user ID, for example:
+  // Redirect to login or show a default message
+  document.getElementById("profile2").innerHTML = `
+    <h6 class="m-0">Guest</h6>
+    <span>Please log in to see your profile.</span>
+  `;
+} else {
+  const url4 = `https://localhost:44301/api/User/byIDUser/${n}`;
 
-async function getuser() {
-  var response = await fetch(url4);
-  console.log(response);
-  var result = await response.json();
-  console.log(result);
+  async function getuser() {
+    try {
+      var response = await fetch(url4);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      var result = await response.json();
+      console.log(result);
 
-  var profile = document.getElementById("profile2");
-
-  profile.innerHTML = `
-       <h6 class="m-0">${result.name}</h6>
-      <span>${result.email}</span>
-    `;
-}
-
-getuser();
-
-async function getusertwo() {
-  var response = await fetch(url4);
-  console.log(response);
-  var result = await response.json();
-  console.log(result);
-
-  var profile1 = document.getElementById("profile1");
-
-  profile1.innerHTML = `
-       <h6 class="m-0">${result.name}</h6>
-      <span>${result.email}</span>
-    `;
-}
-
-getusertwo();
-
-async function getusertree() {
-  var response = await fetch(url4);
-  console.log(response);
-  var result = await response.json();
-  console.log(result);
-
-  var imgContainer = document.getElementById("img");
-  if (imgContainer && result.image) {
-    imgContainer.innerHTML = `<img src="${result.image}" alt="img" />`;
-  } else {
-    console.error("Image container or image data is missing");
+      var profile = document.getElementById("profile2");
+      profile.innerHTML = `
+         <h6 class="m-0">${result.name}</h6>
+        <span>${result.email}</span>
+      `;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }
-}
 
-getusertree();
+  getuser();
+
+  async function getusertwo() {
+    try {
+      var response = await fetch(url4);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      var result = await response.json();
+      console.log(result);
+
+      var profile1 = document.getElementById("profile1");
+      profile1.innerHTML = `
+         <h6 class="m-0">${result.name}</h6>
+        <span>${result.email}</span>
+      `;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+
+  getusertwo();
+
+  async function getusertree() {
+    try {
+      var response = await fetch(url4);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      var result = await response.json();
+      console.log(result);
+
+      var imgContainer = document.getElementById("img");
+      if (imgContainer && result.image) {
+        imgContainer.innerHTML = `<img src="${result.image}" alt="img" />`;
+      } else {
+        console.error("Image container or image data is missing");
+      }
+    } catch (error) {
+      console.error("Error fetching user image:", error);
+    }
+  }
+
+  getusertree();
+}
