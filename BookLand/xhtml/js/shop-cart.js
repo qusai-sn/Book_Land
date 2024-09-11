@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
         item.quantity = parseInt(newQuantity, 10);
         localStorage.setItem(`item${itemId}`, JSON.stringify(item));
         updateCartDisplay(); // Refresh display
+        localStorage.setItem(`${item.quantity}`, JSON.stringify(item));
+        updateCartDisplay(); // Refresh display
     }
 
     function removeItem(itemId) {
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         // Send POST request to validate the coupon
-        fetch('https://localhost:7198/api/Shoping/validate', {
+        fetch('https://localhost:44301/api/Shoping/validate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

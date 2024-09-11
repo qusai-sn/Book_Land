@@ -10,7 +10,7 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
         .join('&');
 
     // Send a POST request to the server with URL-encoded data
-    fetch('https://localhost:7198/api/UserProfile', {
+    fetch('https://localhost:44301/api/UserProfile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

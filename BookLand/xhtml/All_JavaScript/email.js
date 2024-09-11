@@ -5,7 +5,7 @@ async function addNewsletter() {
   const form = document.getElementById("newsletterForm"); // Get the form element
   const formData = new FormData(form); // Create FormData object from the form
 
-  let url = "http://localhost:44301/api/Newsletter"; // API endpoint
+  let url = "https://localhost:44301/api/Newsletter"; // API endpoint
   let request = await fetch(url, {
     method: "POST", // Set request method to POST
     body: formData, // Attach the FormData object to the request body

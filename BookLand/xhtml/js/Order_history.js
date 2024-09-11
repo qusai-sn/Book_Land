@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('https://localhost:7198/api/BookLibrary')
+    fetch('https://localhost:44301/api/BookLibrary')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('book-table-body');

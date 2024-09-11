@@ -1,6 +1,6 @@
 
 function loadCategories() {
-    fetch('https://localhost:7198/api/Shoping/categories')
+    fetch('https://localhost:44301/api/Shoping/categories')
         .then(response => response.json())
         .then(categories => {
             const categoryList = document.getElementById('category-list');
@@ -44,7 +44,7 @@ function loadCategories() {
 
 function loadBooks() {
     const selectedCategories = Array.from(document.querySelectorAll('.form-check-input:checked')).map(input => input.value);
-    let apiUrl = `https://localhost:7198/api/Shoping/categories/books?`;
+    let apiUrl = `https://localhost:44301/api/Shoping/categories/books?`;
     let token = localStorage.jwtToken ;
     selectedCategories.forEach((id, index) => {
         apiUrl += `categoryIds=${id}`;
@@ -195,7 +195,7 @@ function showNotification(message, type) {
     
    
     // register the cart id in the local storage 
-    fetch(`https://localhost:7198/api/Carts/getCartID/${userId}`)
+      fetch(`https://localhost:44301/api/Carts/getCartID/${userId}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -213,7 +213,7 @@ function showNotification(message, type) {
 
 
      // User is logged in, proceed to send the data to the server
-    const url = `https://localhost:7198/api/Shoping/${userId}/items`;
+      const url = `https://localhost:44301/api/Shoping/${userId}/items`;
     fetch(url, {
         method: 'POST',
         headers: {
