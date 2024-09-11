@@ -123,6 +123,61 @@ namespace BookLand.Controllers
             return Ok(comments);
         }
 
+
+
+        // Ensure GetComment is correctly set up
+        [HttpGet("GetComments")]
+        public async Task<ActionResult<CommentsReview>> GetComment(int id)
+        {
+            var comment = await _db.CommentsReviews.FindAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return comment;
+        }
+
+        // POST method should call this route correctly
+        [HttpPost]
+        public async Task<ActionResult<CommentsReview>> PostComment([FromForm] int userId, [FromForm] int bookId, [FromForm] string commentText, [FromForm] int rating)
+        {
+            if (string.IsNullOrWhiteSpace(commentText) || rating < 1 || rating > 5)
+            {
+                return BadRequest("Invalid comment or rating");
+            }
+
+            var comment = new CommentsReview
+            {
+                UserId = userId,
+                BookId = bookId,
+                CommentText = commentText,
+                Rating = rating
+            };
+
+            _db.CommentsReviews.Add(comment);  
+            await _db.SaveChangesAsync();
+
+            // Ensure that the route is valid
+            return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
+        }
+
+        // DELETE: api/Comments/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await _db.CommentsReviews.FindAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            _db.CommentsReviews.Remove(comment);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
         [HttpPost("{userId}/items")]
         public async Task<IActionResult> AddToCart(int userId, [FromBody] CartItemDto itemDto)
         {
