@@ -84,7 +84,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             const cartItems = await fetchCartDataFromServer(userId);
             displayCartItems(cartItems);
         } else {
-            alert('User ID not found. Please ensure you are logged in.');
+            // alert('User ID not found. Please ensure you are logged in.');
+            Swal.fire({
+                title: "Error",
+                text: "User ID not found. Please ensure you are logged in",
+                icon: "error"
+              });
         }
     }
     function updateFormat(itemId, format, isChecked) {
@@ -94,7 +99,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const couponCode = document.getElementById("couponInput").value;
     
         if (!couponCode) {
-            alert("Please enter a coupon code.");
+            // alert("Please enter a coupon code.");
+            Swal.fire({
+                title: "Error",
+                text: "Please enter a coupon code",
+                icon: "error"
+              });
             return;
         }
     
@@ -114,11 +124,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
         .then(data => {
             localStorage.couponPercentage = data.discountAmount ;
-            alert(`Coupon applied! Discount: ${data.discountAmount}`);
+            // alert(`Coupon applied! Discount: ${data.discountAmount}`);
+            Swal.fire({
+                title: "Coupon Applied!",
+                text: `Discount: ${data.discountAmount}`,
+                icon: "success"
+              });
             // Handle successful coupon application (e.g., update the cart total)
         })
         .catch(error => {
-            alert(error.message);
+            // alert(error.message);
+            Swal.fire({
+                title: "Error",
+                text: `Error : ${error.message}`,
+                icon: "error"
+              });
         });
     });
     

@@ -147,6 +147,46 @@ function addToCart(bookId, price) {
         price: parseFloat(price)
     };
     localStorage.setItem(`item${bookId}`, JSON.stringify(cartItem));
-    alert('Added to cart!');  // Example usage:
+    // alert('Added to cart!');  // Example usage:
+    Swal.fire({
+        title: "success",
+        text: "Your book has been added to the cart!",
+        icon: "success"
+      });
     showNotification('This is a success message!', 'success');
 }
+
+document.getElementById('commentForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const params = new URLSearchParams(window.location.search);
+
+    const userId = localStorage.getItem('userId');
+    const bookId = params.get('bookId');
+    const commentText = document.getElementById('commentText').value;
+    const rating = document.getElementById('rating').value;
+
+    const formData = new FormData();
+    formData.append('userId', userId);
+    formData.append('bookId', bookId);
+    formData.append('commentText', commentText);
+    formData.append('rating', rating);
+
+    try {
+        const response = await fetch('https://localhost:7198/api/Shoping', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            alert('Comment submitted successfully');
+            // Optionally reload the page or refresh the comment list
+         } else {
+            const errorMessage = await response.text();
+            alert('Failed to submit comment: ' + errorMessage);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error submitting comment');
+    }
+});

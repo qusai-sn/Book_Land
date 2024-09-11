@@ -40,7 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
     async function sendMessage() {
         const messageInput = document.getElementById('message-input').value.trim();
         if (!messageInput) {
-            alert("Please enter a message before sending.");
+            // alert("Please enter a message before sending.");
+            Swal.fire({
+                title: "Something is wrong",
+                text: "Please enter a message before sending.",
+                icon: "question"
+              });
             return;
         }
 

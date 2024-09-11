@@ -120,7 +120,7 @@ fillOrderItemsTable(getOrderId);
 // fill order total table
 async function getOrderTotal(orderid, couponPercent) {
     // debugger
-    const url = `https://localhost:7198/api/Orders/OrderTotal/${orderid}/${couponPercent}`;
+    const url = `https://localhost:7198/api/Orders/OrderTotal/${orderid}`;
     const response = await fetch(url);
     let Data = await response.json();
 
@@ -201,9 +201,9 @@ function initPayPalButton() {
 initPayPalButton();
 
 
-
+document.getElementById("finishOrder").addEventListener('click', 
 async function finishOrder() {
-
+    debugger
     const orderid = localStorage.getItem("orderID");
     const userid = localStorage.getItem("userId");
 
@@ -220,9 +220,15 @@ async function finishOrder() {
     });
 
     localStorage.removeItem("orderID");
-    location.href = "services.html";
+    Swal.fire({
+        title: "success",
+        text: "You can find your books in the library.",
+        icon: "success"
+    });
+    location.href = "Order_history.html";
 
-};
+}
+)
 
 
 

@@ -36,6 +36,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<style>
 		.dz-body{
 			min-height: 500px;
@@ -43,6 +45,7 @@
 			flex-direction: column;
 			justify-content: space-evenly;
 		}
+		
 	</style>
 </head>
 
@@ -381,23 +384,32 @@
                                     </table>
                                 </div>
 								<div id="developement-1" class="tab-pane">
-                                    
 									<div class="clear" id="comment-list">
 										<div class="post-comments comments-area style-1 clearfix">
-											<h4 class="comments-title">4 COMMENTS</h4>
+											<h4 class="comments-title">Customer Reviews</h4>
 											<div id="comment">
 												<ol class="comment-list">
 													<!-- Comments will be inserted here -->
 												</ol>
 											</div>
+											<div class="comment-form">
+												<h5>Leave a Comment</h5>
+												<form id="commentForm">
+													<input type="hidden" id="userId" value="1" /> <!-- Replace with dynamic user id -->
+													<input type="hidden" id="bookId" value="123" /> <!-- Replace with dynamic book id -->
+													<textarea id="commentText" placeholder="Write your comment" required></textarea>
+													<input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5" required />
+													<button type="submit">Submit Comment</button>
+												</form>
+											</div>
 										</div>
 									</div>
-									
-									
 								</div>
+								
 							</div>
 						</div>
 					</div>
+
 					<div class="col-xl-4 mt-5 mt-xl-0">
 						<div class="widget">
 							<h4 class="widget-title">Related Books</h4>
@@ -734,7 +746,7 @@
 <script src="js/dz.ajax.js"></script><!-- AJAX -->
 <script src="js/custom.js"></script><!-- CUSTOM JS -->
 <script src="js/book-details.js"></script><!-- CUSTOM JS -->
-
+ 
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/books-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:13 GMT -->

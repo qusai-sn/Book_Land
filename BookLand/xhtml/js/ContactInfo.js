@@ -28,11 +28,21 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
         })
         .then(data => {
             console.log("Response Data:", data);  // Debugging purposes
-            alert('Message sent successfully!');
+            // alert('Message sent successfully!');
+            Swal.fire({
+                title: "success",
+                text: "Your message has been sent.",
+                icon: "success"
+              });
             document.getElementById('contactForm').reset();
         })
         .catch(error => {
             console.error('Error:', error);
-            alert(`An error occurred while sending the message: ${error.message}`);
+            // alert(`An error occurred while sending the message: ${error.message}`);
+            Swal.fire({
+                title: "Error",
+                text: `An error occurred while sending the message : ${error.message}`,
+                icon: "error"
+              });
         });
 });
