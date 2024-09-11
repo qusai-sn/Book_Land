@@ -1,7 +1,7 @@
-const urlBook = (id) => `http://localhost:44301/api/Books/bynameBooksid/${id}`;
+const urlBook = (id) => `https://localhost:44301/api/Books/bynameBooksid/${id}`;
 const urlComments =
-  "http://localhost:44301/api/commentsreviews/topRatedcommentsreviews";
-const urlUser = (id) => `http://localhost:44301/api/User/byIDUserUser/${id}`;
+  "https://localhost:44301/api/commentsreviews/topRatedcommentsreviews";
+const urlUser = (id) => `https://localhost:44301/api/User/byIDUserUser/${id}`;
 
 // Function to fetch and display book title by ID
 async function getBookTitleById(id) {

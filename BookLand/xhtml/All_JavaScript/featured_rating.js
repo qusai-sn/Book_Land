@@ -39,30 +39,26 @@ async function getTopRatedBooks() {
           <div class="swiper-slide">
             <div class="books-card style-2">
               <div class="dz-media">
-                <img loading="lazy" src="${
-                  book.imageUrl || "images/books/large/bigbook1.jpg"
-                }" alt="${book.title || "book"}" />
+                <img loading="lazy" src="${book.imageUrl || "images/books/large/bigbook1.jpg"
+          }" alt="${book.title || "book"}" />
               </div>
               <div class="dz-content">
-                <h6 class="sub-title">${
-                  book.isBestSeller ? "الأكثر مبيعاً" : ""
-                }</h6>
+                <h6 class="sub-title">${book.isBestSeller ? "الأكثر مبيعاً" : ""
+          }</h6>
                 <h2 class="title">${book.title || "كتاب مجهول"}</h2>
                 <ul class="dz-tags">
                   <li>${book.author || "مؤلف غير معروف"}</li>
                   <li>${book.category || "تصنيف غير معروف"}</li>
                 </ul>
-                <p class="text">${
-                  book.description || "لا يوجد وصف متاح لهذا الكتاب."
-                }</p>
+                <p class="text">${book.description || "لا يوجد وصف متاح لهذا الكتاب."
+          }</p>
                 <div class="price">
                   <span class="price-num">$${discountedPrice.toFixed(2)}</span>
                   <del>$${price.toFixed(2)}</del>
-                  ${
-                    discount > 0
-                      ? `<span class="badge">${discount}% خصم</span>`
-                      : ""
-                  }
+                  ${discount > 0
+            ? `<span class="badge">${discount}% خصم</span>`
+            : ""
+          }
                 </div>
                 <div class="bookcard-footer">
                   <a href="shop-cart.html" class="btn btn-primary btnhover m-t15 m-r10">اشترِ الآن</a>

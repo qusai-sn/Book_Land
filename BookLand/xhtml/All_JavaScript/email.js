@@ -1,4 +1,4 @@
-async function addNewsletter(event) {
+async function addNewsletter() {
   event.preventDefault(); // Prevent the default form submission
   debugger; // Pause execution for debugging
 
@@ -40,53 +40,3 @@ async function addNewsletter(event) {
 document
   .getElementById("newsletterForm")
   .addEventListener("submit", addNewsletter);
-let timeout = null;
-
-function searchBook() {
-  clearTimeout(timeout);
-  debugger;
-  timeout = setTimeout(() => {
-    const bookTitle = document.getElementById("bookSearch").value;
-
-    if (bookTitle) {
-      const apiUrl = `http://localhost:44301/api/Books/bynameBooks/Book%20Title%201/${encodeURIComponent(
-        bookTitle
-      )}`;
-
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          displayResults(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    } else {
-      document.getElementById("results").innerHTML = "";
-    }
-  }, 100);
-}
-
-function displayResults(data) {
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
-
-  if (data.length > 0) {
-    data.forEach((book) => {
-      const resultItem = document.createElement("li");
-      resultItem.className = "dropdown-item";
-      resultItem.innerHTML = `<strong>${book.title}</strong> by ${book.author}`;
-
-      resultItem.onclick = () => {
-        window.location.href = `http://localhost:44301/api/Books/details/${encodeURIComponent(
-          book.title
-        )}`;
-      };
-
-      resultsDiv.appendChild(resultItem);
-    });
-    resultsDiv.style.display = "block";
-  } else {
-    resultsDiv.innerHTML = "<li class='dropdown-item'>No books found.</li>";
-  }
-}
