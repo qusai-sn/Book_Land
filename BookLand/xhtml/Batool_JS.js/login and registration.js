@@ -111,6 +111,9 @@ async function logout() {
 
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('userId');
+    localStorage.removeItem('GoogleUser');
+
+    location.href = "index.html";
 }
 
 

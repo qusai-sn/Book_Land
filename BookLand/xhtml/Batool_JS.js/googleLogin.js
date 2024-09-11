@@ -114,7 +114,7 @@ async function addgoogleUser() {
         console.log("Token received:", token);
 
         // Save token to local storage or proceed as needed
-        localStorage.setItem("token", token);
+        localStorage.setItem("jwtToken", token);
 
         localStorage.removeItem("GName");
         localStorage.removeItem("GEmail");
