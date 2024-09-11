@@ -188,6 +188,7 @@ function initPayPalButton() {
                     });
                 };
                 completeTXN();
+                document.getElementById("finishOrder").style.display = "block";
 
             });
         },
