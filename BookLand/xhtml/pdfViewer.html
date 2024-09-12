@@ -1,0 +1,41 @@
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Books Embedded Viewer API Example</title>
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+    <script type="text/javascript">
+      // Load the Google Books API
+      google.books.load();
+
+      // Function to initialize and load the book viewer
+      function initialize(isbn) {
+        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        viewer.load('ISBN:' + isbn);  // Load the book based on the ISBN
+      }
+
+      // Callback when the Google Books API is ready
+      google.books.setOnLoadCallback(function() {
+        // Fetch the ISBN dynamically (this should be replaced with the actual ISBN from your database)
+        const isbn = '0738531367';  // Replace this with the actual ISBN you fetch from your database
+        initialize(isbn);  // Call the initialize function with the ISBN
+      });
+    </script>
+    <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;  /* Changed to center to perfectly center the content */
+        height: 100vh;  /* Set height to 100% of the viewport */
+        margin: 0;  /* Remove default margin */
+        padding: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>BookLand PDF Viewer</h1>
+    <div id="viewerCanvas" style="width: 1080px; height: 1920px"></div>
+  </body>
+</html>

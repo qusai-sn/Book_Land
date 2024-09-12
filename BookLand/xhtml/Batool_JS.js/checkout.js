@@ -172,8 +172,9 @@ function initPayPalButton() {
 
                 // Or go to another URL:  actions.redirect('thank_you.html');
 
+                const orderid = localStorage.getItem("orderID");
+                
                 async function completeTXN() {
-                    const orderid = localStorage.getItem("orderID");
                     // update status of the order in the database to "Paid" 
                     // add transaction id to the order
 
@@ -188,6 +189,21 @@ function initPayPalButton() {
                     });
                 };
                 completeTXN();
+
+                async function AddPoint() {
+                    
+                    const AddPointsURL = `https://localhost:7198/api/EarnPoints/AddPointToUser/${userID}/${orderid}`;
+
+                    let response = await fetch(AddPointsURL, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify()
+                    });
+                };
+                AddPoint();
+
                 document.getElementById("finishOrder").style.display = "block";
 
             });
@@ -201,33 +217,33 @@ function initPayPalButton() {
 initPayPalButton();
 
 
-document.getElementById("finishOrder").addEventListener('click', 
-async function finishOrder() {
-    debugger
-    const orderid = localStorage.getItem("orderID");
-    const userid = localStorage.getItem("userId");
+document.getElementById("finishOrder").addEventListener('click',
+    async function finishOrder() {
+        debugger
+        const orderid = localStorage.getItem("orderID");
+        const userid = localStorage.getItem("userId");
 
-    // send orders to library
+        // send orders to library
 
-    const sendToLibraryURL = `https://localhost:7198/api/Orders/SendBooksToLibrary/${userid}-${orderid}`;
+        const sendToLibraryURL = `https://localhost:7198/api/Orders/SendBooksToLibrary/${userid}-${orderid}`;
 
-    let sendResponse = await fetch(sendToLibraryURL, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        let sendResponse = await fetch(sendToLibraryURL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
 
-    });
+        });
 
-    localStorage.removeItem("orderID");
-    Swal.fire({
-        title: "success",
-        text: "You can find your books in the library.",
-        icon: "success"
-    });
-    location.href = "Order_history.html";
+        localStorage.removeItem("orderID");
+        Swal.fire({
+            title: "success",
+            text: "You can find your books in the library.",
+            icon: "success"
+        });
+        location.href = "Order_history.html";
 
-}
+    }
 )
 
 

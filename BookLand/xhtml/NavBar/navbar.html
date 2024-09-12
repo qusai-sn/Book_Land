@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- custom style -->
+    <style>
+        #results {
+            display: none;
+            /* إخفاء القائمة في البداية */
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1000;
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* For handling book card content */
+        .books-card {
+            background-color: #fff;
+            /* Card background */
+            border-radius: 8px;
+            overflow: hidden;
+            width: 90%;
+            /* Adjust as needed */
+        }
+
+        /* Optional: Adjust stars */
+        .text-yellow {
+            color: #ffc107;
+        }
+
+        .text-muted {
+            color: #e0e0e0;
+        }
+
+        .default-select {
+            padding: 5px;
+            border-radius: 5.5px;
+            font-size: 12px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            appearance: none;
+            margin: 5px;
+        }
+
+        .default-select:focus {
+            border-color: orange;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.2);
+        }
+    </style>
+
+
+
+
+
+    <!-- packages -->
+    <!-- FAVICONS ICON -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- STYLESHEETS -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"
+        integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <!-- GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+
+
+
+
+    <title>navbar</title>
+</head>
+
+<body>
+
+    <!-- nav starts under the first div of body -->
+
+
+    <!-- loader -->
+    <!-- <div id="loading-area" class="preloader-wrapper-1">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div> -->
+
+    <!-- Header container -->
+    <header class="site-header mo-left header style-1">
+
+
+
+        <!-- first navbar -->
+        <!-- Main Header -->
+        <div class="header-info-bar">
+            <div class="container clearfix">
+                <!-- Website Logo -->
+                <div class="logo-header logo-dark">
+                    <a href="index.html"><img src="images/logo.png" alt="logo" /></a>
+                </div>
+
+                <!-- EXTRA NAV -->
+                <div class="extra-nav">
+                    <div class="extra-cell">
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item">
+                                <a class="nav-link" href="wishlist.html">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                        width="24px" fill="#000000">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path
+                                            d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
+                                    </svg>
+                                    <span class="badge" id="badgeWishlist"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <button type="button" class="nav-link box cart-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                        width="24px" fill="#000000">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path
+                                            d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+                                    </svg>
+                                    <span class="badge" id="badgeCart"></span>
+                                </button>
+                                <ul class="dropdown-menu cart-list" id="cartContainer"></ul>
+                            </li>
+
+                            <li class="nav-item dropdown profile-dropdown ms-4">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <div id="img"></div>
+                                    <div class="profile-info" id="profile1">
+                                        <h6 class="m-0">Guest</h6>
+                                        <span>Please log in to see your profile.</span>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu py-0 dropdown-menu-end">
+                                    <div class="dropdown-header" id="profile2">
+
+                                        <h6 class="m-0">Guest</h6>
+                                        <span>Please log in to see your profile.</span>
+                                    </div>
+                                    <div class="dropdown-body">
+                                        <a href="my-profile.html"
+                                            class="dropdown-item d-flex justify-content-between align-items-center ai-icon">
+                                            <div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                    viewBox="0 0 24 24" width="20px" fill="#000000">
+                                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                                    <path
+                                                        d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                                </svg>
+                                                <span class="ms-2">Profile</span>
+                                            </div>
+                                        </a>
+                                        <a href="shop-cart.html"
+                                            class="dropdown-item d-flex justify-content-between align-items-center ai-icon">
+                                            <div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                    viewBox="0 0 24 24" width="20px" fill="#000000">
+                                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                                    <path
+                                                        d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+                                                </svg>
+                                                <span class="ms-2">My Order</span>
+                                            </div>
+                                        </a>
+                                        <a href="wishlist.html"
+                                            class="dropdown-item d-flex justify-content-between align-items-center ai-icon">
+                                            <div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                    viewBox="0 0 24 24" width="20px" fill="#000000">
+                                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                                    <path
+                                                        d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
+                                                </svg>
+                                                <span class="ms-2">Wishlist</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-footer">
+                                        <a class="btn btn-primary w-100 btnhover btn-sm" href="shop-login.html">Log
+                                            Out</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- header search nav -->
+                <div class="header-search-nav">
+                    <form class="header-item-search">
+                        <div class="input-group search-input">
+                            <!-- <div class="default-select" id="Category">
+
+          </div> -->
+
+                            <input type="text" class="form-control" aria-label="Search Books Here"
+                                placeholder="Search Books Here" id="bookSearch" oninput="searchBook()" />
+
+                            <button class="btn" type="button" id="searchButton">
+                                <i class="flaticon-loupe"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="results"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header End -->
+
+
+
+        <!-- secoend navbar -->
+        <!-- Main Header -->
+        <div class="sticky-header main-bar-wraper navbar-expand-lg">
+            <div class="main-bar clearfix">
+                <div class="container clearfix">
+                    <!-- Website Logo -->
+                    <div class="logo-header logo-dark">
+                        <a href="index.html"><img src="images/logo.png" alt="logo" /></a>
+                    </div>
+
+                    <!-- Nav Toggle Button -->
+                    <button class="navbar-toggler collapsed navicon justify-content-end" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <!-- EXTRA NAV -->
+                    <div class="extra-nav">
+                        <div class="extra-cell">
+                            <a href="contact-us.html" class="btn btn-primary btnhover">Get In Touch</a>
+                        </div>
+                    </div>
+
+                    <!-- Main Nav -->
+                    <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
+                        <div class="logo-header logo-dark">
+                            <a href="index.html"><img src="images/logo.png" alt="" /></a>
+                        </div>
+
+
+
+
+                        <ul class="nav navbar-nav">
+                            <li class="sub-menu-down">
+                                <a href="javascript:void(0);"><span>Home</span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="about-us.html"><span>About Us</span></a>
+                            </li>
+                            <li class="sub-menu-down">
+                                <a href="javascript:void(0);"><span>Pages</span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="my-profile.html">My Profile</a></li>
+                                    <li><a href="services.html">Services</a></li>
+                                    <li><a href="faq.html">FAQ's</a></li>
+                                    <li><a href="help-desk.html">Help Desk</a></li>
+                                    <li><a href="coming-soon.html">Coming Soon</a></li>
+                                    <li><a href="pricing.html">Pricing</a></li>
+                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                    <li>
+                                        <a href="under-construction.html">Under Construction</a>
+                                    </li>
+                                    <li><a href="error-404.html">Error 404</a></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu-down">
+                                <a href="javascript:void(0);"><span>Shop</span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="books-grid-view.html">Shop Grid</a></li>
+                                    <li>
+                                        <a href="books-grid-view-sidebar.html">Shop Grid Sidebar</a>
+                                    </li>
+                                    <li><a href="books-list.html">Shop List</a></li>
+                                    <li>
+                                        <a href="books-list-view-sidebar.html">Shop List Sidebar</a>
+                                    </li>
+                                    <li><a href="books-detail.html">Shop Detail</a></li>
+                                    <li><a href="shop-cart.html">Cart</a></li>
+                                    <li><a href="shop-checkout.html">Checkout</a></li>
+                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                    <li><a href="shop-login.html">Login</a></li>
+                                    <li><a href="shop-registration.html">Registration</a></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu-down">
+                                <a href="javascript:void(0);"><span>Blog</span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                                    <li>
+                                        <a href="blog-large-sidebar.html">Blog Large Sidebar</a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-list-sidebar.html">Blog List Sidebar</a>
+                                    </li>
+                                    <li><a href="blog-detail.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="contact-us.html"><span>Contact Us</span></a>
+                            </li>
+                        </ul>
+                        <div class="dz-social-icon">
+                            <ul>
+                                <li>
+                                    <a class="fab fa-facebook-f" target="_blank"
+                                        href="https://www.facebook.com/dexignzone"></a>
+                                </li>
+                                <li>
+                                    <a class="fab fa-twitter" target="_blank"
+                                        href="https://twitter.com/dexignzones"></a>
+                                </li>
+                                <li>
+                                    <a class="fab fa-linkedin-in" target="_blank"
+                                        href="https://www.linkedin.com/showcase/3686700/admin/"></a>
+                                </li>
+                                <li>
+                                    <a class="fab fa-instagram" target="_blank"
+                                        href="https://www.instagram.com/website_templates__/"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Header End -->
+    </header>
+    <!-- Header End -->
+
+
+
+
+
+
+
+
+    <!-- js packages -->
+
+    <!-- JQUERY MIN JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- WOW JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"
+        integrity="sha512-Eak/29OTpb36LLo2r47IpVzPBLXnAMPAVypbSZiZ4Qkf8p/7S/XRG5xp7OKWPPYfJT6metI+IORkR5G8F900+g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- BOOTSTRAP MIN JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- BOOTSTRAP SELECT MIN JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"
+        integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- WAYPOINTS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"
+        integrity="sha512-fHXRw0CXruAoINU11+hgqYvY/PcsOWzmj0QmcSOtjlJcqITbPyypc8cYpidjPurWpCnlB8VKfRwx6PIpASCUkQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- AJAX -->
+    <script src="js/dz.ajax.js"></script>
+
+    <!-- CUSTOM JS -->
+    <script src="js/custom.js"></script>
+
+
+
+
+    <!-- custom script -->
+    <!-- <script src="All_JavaScript/saerach.js"></script> -->
+    <!-- <script src="All_JavaScript/indexWishlist.js"></script> -->
+    <!-- <script src="All_JavaScript/indexCart.js"></script> -->
+    <!-- <script src="All_JavaScript/indexuser.js"></script> -->
+    <!-- <script src="All_JavaScript/indexCategories.js"></script> -->
+    <!-- <script src="All_JavaScript/indexBook.js"></script> -->
+
+    <!-- saerach.js -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let timeout = null;
+
+            // Add event listener to the search button
+            document.getElementById("searchButton").addEventListener("click", () => {
+                console.log("Button clicked!"); // Test to see if button click works
+                searchBook(true); // Call search function immediately when button is clicked
+            });
+
+            // Ensure the searchBook function is in the global scope
+            window.searchBook = function searchBook(isButtonClick = false) {
+                clearTimeout(timeout);
+
+                if (isButtonClick) {
+                    console.log("Search triggered by button click."); // Test to confirm the search is triggered by button click
+                    performSearch();
+                } else {
+                    timeout = setTimeout(performSearch, 300); // Delay search on typing for better UX
+                }
+            };
+
+            function performSearch() {
+                const bookTitle = document.getElementById("bookSearch").value.trim();
+
+                console.log("Performing search for:", bookTitle); // Log the search value for testing
+
+                if (bookTitle) {
+                    const apiUrl = `https://localhost:44301/api/Books/bynameBooks/${encodeURIComponent(
+                        bookTitle
+                    )}`;
+                    console.log("API URL:", apiUrl); // Log the API URL for testing
+
+                    fetch(apiUrl)
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        .then((books) => {
+                            console.log("API response data:", books); // Log the API response data for testing
+                            displayResults(books); // Display results
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching data:", error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error fetching data",
+                                text: "There was an error fetching the book data. Please try again later.",
+                                confirmButtonText: "OK",
+                            });
+                        });
+                } else {
+                    document.getElementById("results").innerHTML = "";
+                    document.getElementById("results").style.display = "none";
+                }
+            }
+
+            function displayResults(books) {
+                // تحقق ما إذا كانت البيانات عبارة عن كائن أو مصفوفة
+                if (Array.isArray(books)) {
+                    if (books.length > 0) {
+                        let booksHTML = books.map((book) => generateBookHTML(book)).join("");
+                        showBooksInModal(booksHTML);
+                    } else {
+                        showNoBooksFound();
+                    }
+                } else {
+                    // في حال كان الكائن مفردًا وليس مصفوفة
+                    let booksHTML = generateBookHTML(books);
+                    showBooksInModal(booksHTML);
+                }
+            }
+
+            function generateBookHTML(book) {
+                return `
+      <div style="text-align:left; margin-bottom: 15px;">
+        <img src="${book.imageUrl
+                    }" alt="${book.title}" style="width:65px; height:auto;" /><br/>
+        <span>Title:</span> ${book.title} <br/>
+        <span>Author:</span> ${book.author} <br/>
+        <span>Publisher:</span> ${book.publisher} <br/>
+        <span>Price:</span> $${book.price} <br/>
+        <span>Discount:</span> ${book.discountPercentage}% <br/>
+        <span>Description:</span> ${book.description} <br/>
+        <span>Rating:</span> ${book.rating}/5 <br/><br/>
+        <span>    <a href="javascript:void(0);" onclick="addToCart(${book.id
+                    }, '${book.format || "PDF"}', ${book.price || 0},'${book.imageUrl}')" id="add-to-cart-button" class="btn btn-secondary btnhover btnhover2">
+                                <i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart
+                            </a></span> <br/><br/>
+
+      </div>
+    `;
+            }
+
+            function showBooksInModal(booksHTML) {
+                Swal.fire({
+                    title: "Books Found",
+                    html: booksHTML,
+                    showCloseButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: "OK",
+                    width: "40%", // Set width for better display
+                    height: "10%", // Adjust height for a simpler display
+                    customClass: {
+                        popup: "swal-center",
+                    },
+                    position: "center", // Ensure it's centered
+                });
+            }
+
+            function showNoBooksFound() {
+                Swal.fire({
+                    icon: "info",
+                    title: "No books found",
+                    text: "No books were found with the specified title.",
+                    confirmButtonText: "OK",
+                });
+            }
+        });
+    </script>
+
+
+    <!-- indexWishlist -->
+    <script>
+        var n = localStorage.getItem("userId");
+        const url2 = `https://localhost:44301/api/Wishlist/wishlistItemCount/${n}`;
+
+        async function getWishlist() {
+            try {
+                const response = await fetch(url2, { method: "GET" });
+
+                if (!response.ok) {
+                    // Handle non-200 responses
+                    console.error("Error fetching wishlist:", response.statusText);
+                    document.getElementById("badgeWishlist").innerHTML = "0";
+                    return;
+                }
+
+                const result = await response.json();
+
+                // Check if result.count is undefined or null
+                const count = result.count != null ? result.count : 0;
+
+                const container = document.getElementById("badgeWishlist");
+                container.innerHTML = count;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("badgeWishlist").innerHTML = "0";
+            }
+        }
+
+        getWishlist();
+    </script>
+
+
+    <!-- indexCart -->
+    <script>
+        let userId = localStorage.getItem("userId") && 0;
+
+        // Initialize userId, set to 15 for testing logged-in state
+        // let userId = 15; // Change to 0 or comment out for guest user testing
+        debugger;
+
+        // Function to display the number of items in the cart and update the badge
+        async function getcountcart() {
+            const badgeCart = document.getElementById("badgeCart");
+            if (!userId) {
+                // For guest users, get cart size from localStorage
+                let cartSize = parseInt(localStorage.getItem("cartSize")) || 0;
+                badgeCart.innerHTML = cartSize; // Display the count from cartSize
+            } else {
+                // For registered users, get item count from the server
+                const url = `https://localhost:44301/api/CartItem/cartItemCount/${userId}`;
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(
+                            `Error fetching cart item count: ${response.statusText}`
+                        );
+                    }
+                    const result = await response.json();
+                    const count = result.count || 0;
+                    badgeCart.innerHTML = count;
+                } catch (error) {
+                    console.error("Error:", error);
+                    badgeCart.innerHTML = "0";
+                }
+            }
+        }
+
+        // URLs for fetching data from the server
+        const url14 = `https://localhost:44301/api/CartItem/topPriceCartItems/${userId}`;
+        const url7 = `https://localhost:44301/api/Books/byIDBooks/`;
+        const url8 = `https://localhost:44301/api/CartItem/byIDCartItemtTotal2/${userId}`;
+
+        // Function to get book details from the server using bookId
+        async function getBookDetails(bookId) {
+            try {
+                const response = await fetch(`${url7}${bookId}`);
+                if (!response.ok) {
+                    throw new Error(`Error fetching book details: ${response.statusText}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error("Error:", error);
+                return null;
+            }
+        }
+
+        // Function to get book details from localStorage
+        function getBookDetailsFromLocalStorage(bookId) {
+            let cartSize = parseInt(localStorage.getItem("cartSize")) || 0;
+            for (let i = 1; i <= cartSize; i++) {
+                let cartItem = JSON.parse(localStorage.getItem(`item${i}`));
+                if (cartItem && cartItem.bookId === bookId) {
+                    return cartItem;
+                }
+            }
+            return null;
+        }
+
+        // Function to get the total price of all items in the cart from the server
+        async function getTotalPrice() {
+            try {
+                const response = await fetch(url8);
+                if (!response.ok) {
+                    throw new Error(`Error fetching total price: ${response.statusText}`);
+                }
+                const result = await response.json();
+                return result.totalPrice || 0;
+            } catch (error) {
+                console.error("Error:", error);
+                return 0;
+            }
+        }
+
+        // Function to get top-priced items and update the cart UI
+        async function getTopPrice() {
+            const booksContainer = document.getElementById("cartContainer");
+            booksContainer.innerHTML = ""; // Clear previous content
+
+            if (!userId) {
+                // For guest users, get items from localStorage
+                let cartSize = parseInt(localStorage.getItem("cartSize")) || 0;
+
+                if (cartSize === 0) {
+                    booksContainer.innerHTML = "<li>No items in the cart</li>";
+                    return;
+                }
+
+                let totalPrice = 0;
+                for (let i = 1; i <= cartSize; i++) {
+                    let cartItem = JSON.parse(localStorage.getItem(`item${i}`));
+                    if (cartItem) {
+                        totalPrice += cartItem.price * cartItem.quantity;
+                        booksContainer.innerHTML += `
+          <li class="cart-item">
+            <div class="media">
+              <div class="media-left">
+                <img alt="${cartItem.bookId}" class="media-object" src="${cartItem.imageUrl
+                            }" />
+              </div>
+              <div class="media-body">
+                <h6 class="dz-title">
+                  <a href="books-detail.html?id=${cartItem.bookId
+                            }" class="media-heading">Book ID: ${cartItem.bookId}</a>
+                </h6>
+                <span class="dz-price">$${cartItem.price.toFixed(2)}</span>
+              </div>
+            </div>
+          </li>`;
+                    }
+                }
+
+                booksContainer.innerHTML += `
+      <li class="cart-item text-center">
+        <h6 class="text-secondary">Total = $${totalPrice.toFixed(2)}</h6>
+      </li>
+      <li class="text-center d-flex">
+        <a href="shop-cart.html" class="btn btn-sm btn-primary me-2 btnhover w-100">View Cart</a>
+      </li>`;
+            } else {
+                // For registered users, get items from the server
+                try {
+                    const response = await fetch(url14);
+                    if (!response.ok) {
+                        throw new Error(
+                            `Error fetching items from the server: ${response.statusText}`
+                        );
+                    }
+
+                    const result = await response.json();
+                    let totalPrice = 0;
+                    if (result.length === 0) {
+                        booksContainer.innerHTML = "<li>No items in the cart</li>";
+                        return;
+                    }
+
+                    for (let i = 0; i < Math.min(result.length, 3); i++) {
+                        const book = result[i];
+                        const bookDetails = await getBookDetails(book.id);
+                        if (book) {
+                            totalPrice += book.price;
+                            booksContainer.innerHTML += `
+            <li class="cart-item">
+              <div class="media">
+                <div class="media-left">
+                  <img alt="${book.title}" class="media-object" src="${book.userProfilePicture
+                                }" />
+                </div>
+                <div class="media-body">
+                  <h6 class="dz-title">
+                    <a href="books-detail.html?id=${book.id
+                                }" class="media-heading">${book.title}</a>
+                  </h6>
+                  <span class="dz-price">$${book.price.toFixed(2)}</span>
+                </div>
+              </div>
+            </li>`;
+                        }
+                    }
+
+                    booksContainer.innerHTML += `
+        <li class="cart-item text-center">
+          <h6 class="text-secondary">Total = $${totalPrice.toFixed(2)}</h6>
+        </li>
+        <li class="text-center d-flex">
+          <a href="shop-cart.html" class="btn btn-sm btn-primary me-2 btnhover w-100">View Cart</a>
+        </li>`;
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+        }
+
+        // Display cart on page load
+        window.onload = function () {
+            getTopPrice();
+            getcountcart();
+        };
+    </script>
+
+
+    <!-- indexuser -->
+    <script>
+        var n = localStorage.getItem("userId") || 0;
+
+        if (!n) {
+            console.error("User ID not found in local storage");
+            // Handle the case where there's no user ID, for example:
+            // Redirect to login or show a default message
+            document.getElementById("profile2").innerHTML = `
+    <h6 class="m-0">Guest</h6>
+    <span>Please log in to see your profile.</span>
+  `;
+        } else {
+            const url4 = `https://localhost:44301/api/User/byIDUser/${n}`;
+
+            async function getuser() {
+                try {
+                    var response = await fetch(url4);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    var result = await response.json();
+                    console.log(result);
+
+                    var profile = document.getElementById("profile2");
+                    profile.innerHTML = `
+         <h6 class="m-0">${result.name}</h6>
+        <span>${result.email}</span>
+      `;
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            }
+
+            getuser();
+
+            async function getusertwo() {
+                try {
+                    var response = await fetch(url4);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    var result = await response.json();
+                    console.log(result);
+
+                    var profile1 = document.getElementById("profile1");
+                    profile1.innerHTML = `
+         <h6 class="m-0">${result.name}</h6>
+        <span>${result.email}</span>
+      `;
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            }
+
+            getusertwo();
+
+            async function getusertree() {
+                try {
+                    var response = await fetch(url4);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    var result = await response.json();
+                    console.log(result);
+
+                    var imgContainer = document.getElementById("img");
+                    if (imgContainer && result.image) {
+                        imgContainer.innerHTML = `<img src="${result.image}" alt="img" />`;
+                    } else {
+                        console.error("Image container or image data is missing");
+                    }
+                } catch (error) {
+                    console.error("Error fetching user image:", error);
+                }
+            }
+
+            getusertree();
+        }
+    </script>
+
+
+    <!-- indexCategories -->
+    <script>
+        const url = "https://localhost:44301/api/Category";
+
+        async function getCategories() {
+            try {
+                const response = await fetch(url, { method: "GET" });
+                const result = await response.json();
+                console.log(result);
+
+                const container = document.getElementById("Category");
+
+                container.innerHTML = "";
+
+                const selectElement = document.createElement("select");
+                selectElement.className = "default-select";
+
+                const defaultOption = document.createElement("option");
+                defaultOption.textContent = "Select a category";
+                defaultOption.value = "";
+                selectElement.appendChild(defaultOption);
+
+                result.forEach((category) => {
+                    const option = document.createElement("option");
+                    option.value = category.id;
+                    option.textContent = category.name;
+
+                    selectElement.appendChild(option);
+                });
+
+                // إضافة مستمع للحدث "change"
+                selectElement.addEventListener("change", function () {
+                    const categoryId = selectElement.value;
+                    console.log("Selected category ID:", categoryId);
+
+                    if (categoryId) {
+                        localStorage.setItem("selectedCategoryId", categoryId);
+                        console.log(
+                            "Stored category ID in localStorage:",
+                            localStorage.getItem("selectedCategoryId")
+                        );
+
+                        window.location.href = `/Front-End/books-list.html?id=${categoryId}`;
+                    }
+                });
+
+                container.appendChild(selectElement);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        }
+
+        getCategories();
+        const urlCategories = "https://localhost:44301/api/Category";
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(urlCategories);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const categories = await response.json();
+
+                const categoriesList = document.getElementById("categories-list");
+
+                if (categories.length === 0) {
+                    categoriesList.innerHTML = "<li>No categories available.</li>";
+                    return;
+                }
+
+                const categoriesHTML = categories
+                    .map(
+                        (category) => `
+      <li><a href="books-grid-view.html?category=${category.id}">${category.name}</a></li>
+    `
+                    )
+                    .join("");
+
+                categoriesList.innerHTML = categoriesHTML;
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+                const categoriesList = document.getElementById("categories-list");
+                categoriesList.innerHTML = "<li>Failed to load categories.</li>";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadCategories);
+    </script>
+
+
+    <!-- indexBook -->
+    <script>
+        // Function to initialize Swiper
+        function initializeSwiper() {
+            const swiper = new Swiper(".swiper-container", {
+                slidesPerView: 5, // Number of books to display
+                spaceBetween: 10, // Space between slides
+                loop: true, // Infinite loop
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                on: {
+                    slideChange: function () {
+                        updateActiveSlideBackground(swiper);
+                    },
+                },
+            });
+
+            // Set background for the initial active slide
+            updateActiveSlideBackground(swiper);
+        }
+
+        // Fetch books and initialize Swiper after data is ready
+        getBooks();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const url6 = `https://localhost:44301/api/Books/RandomBook?count=5`;
+
+        async function getBooks() {
+            try {
+                const response = await fetch(url6);
+                const result = await response.json(); // array of books
+
+                const booksContainer = document.getElementById("Bookh");
+
+                // Clear previous content
+                booksContainer.innerHTML = "";
+
+                // Generate and append the content for each book
+                result.forEach((book) => {
+                    let starsHtml = generateStarsHtml(book.rating);
+
+                    // Calculate discounted price
+                    const price = parseFloat(book.price);
+                    const discountPercentage = parseFloat(book.discountPercentage) || 0;
+                    const discountedPrice = price - (price * discountPercentage) / 100;
+
+                    console.log(
+                        `Price: ${price}, Discount Percentage: ${discountPercentage}, Discounted Price: ${discountedPrice}`
+                    );
+
+                    const priceHtml =
+                        discountPercentage > 0
+                            ? `<span class="price-num discounted">$${discountedPrice.toFixed(2)}`
+                            : `<span class="price-num">$${price.toFixed(2)}</span>`;
+
+                    // Append book content to the container
+                    booksContainer.innerHTML += `
+        <div class="swiper-slide">
+          <div class="books-card">
+            <div class="dz-media">
+              <img src="${book.imageUrl || "default-image.jpg"}" alt="${book.title || "Book Image"
+                        }" style="width: 100%; height: auto;" />
+            </div>
+            <div class="dz-content">
+              <h5 class="title mb-0">${book.title || "Untitled"}</h5>
+              <div class="dz-meta">
+                <ul>
+                  <li>by ${book.author || "Unknown Author"}</li>
+                </ul>
+              </div>
+              <div class="book-footer">
+                <div class="price">
+                  ${priceHtml} <!-- Display price and discounted price -->
+                </div>
+                <div class="rate">
+                  ${starsHtml} <!-- Show rating stars -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+                });
+
+                // Reinitialize Swiper after content is loaded
+                initializeSwiper();
+            } catch (error) {
+                console.error("Error fetching books:", error);
+            }
+        }
+
+        // Function to generate HTML for rating stars
+        function generateStarsHtml(rating) {
+            let starsHtml = "";
+
+            // Add full stars
+            for (let i = 1; i <= Math.floor(rating); i++) {
+                starsHtml += '<i class="flaticon-star text-yellow"></i>';
+            }
+
+            // Add half star if rating contains 0.5
+            if (rating % 1 !== 0) {
+                starsHtml += '<i class="flaticon-star-half text-yellow"></i>';
+            }
+
+            // Add empty stars to complete five stars
+            for (let i = Math.ceil(rating); i < 5; i++) {
+                starsHtml += '<i class="flaticon-star text-muted"></i>';
+            }
+
+            return starsHtml;
+        }
+
+        // Function to initialize Swiper
+        function initializeSwiper() {
+            const swiper = new Swiper(".swiper-container", {
+                slidesPerView: 5, // Number of books to display
+                spaceBetween: 10, // Space between slides
+                loop: true, // Infinite loop
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                on: {
+                    slideChange: function () {
+                        updateActiveSlideBackground(swiper);
+                    },
+                },
+            });
+
+            // Set background for the initial active slide
+            updateActiveSlideBackground(swiper);
+        }
+
+        // Function to update background color for active slide
+        function updateActiveSlideBackground(swiper) {
+            // Remove background from all slides
+            document.querySelectorAll(".swiper-slide").forEach((slide) => {
+                slide.style.backgroundColor = ""; // Reset background color
+            });
+
+            // Set white background for the active slide
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            activeSlide.style.backgroundColor = "white";
+        }
+
+        // Fetch books and initialize Swiper after data is ready
+        getBooks();
+    </script>
+
+
+
+
+</body>
+
+</html>
