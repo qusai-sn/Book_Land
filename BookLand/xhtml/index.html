@@ -8,6 +8,7 @@
 
 	<!-- SweetAlert2 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="All_JavaScript/indexBook.js"></script>
 
 	<style>
 		#results {
@@ -53,7 +54,7 @@
 		.default-select {
 			padding: 5px;
 			border-radius: 5.5px;
-			font-size: 12px;
+			font-size: 18px;
 			background-color: #f9f9f9;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 			appearance: none;
@@ -65,6 +66,17 @@
 			outline: none;
 			box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.2);
 		}
+		.aswiper-wrapper{
+
+			height: 50vh;
+		}
+		.dz-content .title {
+    font-size: 15px; /* Keep your font-size */
+    white-space: nowrap; /* Prevent the text from wrapping to a new line */
+    overflow: hidden; /* Hide the overflowed text */
+    text-overflow: ellipsis; /* Display an ellipsis (...) at the end of the truncated text */
+    width: 100%; /* Ensure the element has a set width */
+}
 	</style>
 
 	<!-- Meta -->
@@ -629,7 +641,7 @@
 			<section class="content-inner-1">
 				<div class="container">
 					<div class="section-head book-align">
-						<h2 class="title mb-0">Books on Sale</h2>
+						<!-- <h2 class="title mb-0">Books on Sale</h2> -->
 						<div class="pagination-align style-1">
 							<div class="swiper-button-prev">
 								<i class="fa-solid fa-angle-left"></i>
@@ -1007,7 +1019,7 @@
 	<script src="js/custom.js"></script>
 	<!-- CUSTOM JS -->
 	<script src="All_JavaScript/saerach.js"></script>
-	
+	<script src="All_JavaScript/indexBook.js"></script>
 	<script src="All_JavaScript/book_card.js"></script>
 	<script src="All_JavaScript/book_sale.js"></script>
 	<script src="All_JavaScript/email.js"></script>
@@ -1022,6 +1034,35 @@
 	<script src="All_JavaScript/indexBook.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script>function initializeSwiper() {
+		const swiper = new Swiper(".swiper-container", {
+		  slidesPerView: 5, // Number of books to display
+		  spaceBetween: 10, // Space between slides
+		  loop: true, // Infinite loop
+		  pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		  },
+		  navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		  },
+		  on: {
+			slideChange: function () {
+			  updateActiveSlideBackground(swiper);
+			},
+		  },
+		});
+	  
+		// Set background for the initial active slide
+		updateActiveSlideBackground(swiper);
+	  }
+	  
+	  // Fetch books and initialize Swiper after data is ready
+	  getBooks();
+	  
+	  
+	  </script>
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:08 GMT -->
