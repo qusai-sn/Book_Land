@@ -42,5 +42,28 @@ namespace BookLand.Controllers
 
             return Ok(booksInLibrary);
         }
+
+        [HttpPost]
+        public IActionResult PostLibrary(int UserId, int BookId)
+        {
+
+            if (UserId <= 0 || BookId <= 0)
+            {
+
+                return BadRequest();
+
+            }
+
+            var postData = new Library
+            {
+                UserId = UserId,
+                BookId = BookId,
+                Format = "Hard Copy"
+            };
+            _db.Libraries.Add(postData);
+            _db.SaveChanges();
+
+            return Ok();
+        }
     }
 }
