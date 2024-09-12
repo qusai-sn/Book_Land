@@ -88,7 +88,7 @@ async function addgoogleUser() {
 
    getFromLocal();
 
-        const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin";
+        const googleLoginURL = "https://localhost:44301/api/LoginAndRegister/GoogleLogin";
 
         const GName = localStorage.getItem("GName");
         const GEmail = localStorage.getItem("GEmail");

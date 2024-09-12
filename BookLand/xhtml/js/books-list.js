@@ -269,7 +269,7 @@ function showNotification(message, type) {
 
 
 
-//https://localhost:7198/api/Shoping/16/items
+//https://localhost:44301/api/Shoping/16/items
 
 
  

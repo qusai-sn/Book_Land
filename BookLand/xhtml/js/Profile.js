@@ -2,7 +2,7 @@
 // async function UserProfile(id) {
 //     debugger
 //     try {
-//         const apiUrl = `https://localhost:7198/api/UserProfile/${id}`;
+//         const apiUrl = `https://localhost:44301/api/UserProfile/${id}`;
 //         const response = await fetch(apiUrl );
 //          console.log(response);
 
@@ -47,7 +47,7 @@
 // document.getElementById('UserProfile').addEventListener('submit', function(event) {
 //     event.preventDefault(); // Prevent the default form submission behavior
 
-//     const apiUrl = 'https://localhost:7198/api/UserProfile/1';
+//     const apiUrl = 'https://localhost:44301/api/UserProfile/1';
 //     const formData = new FormData(); // Use FormData to handle multipart/form-data type
 
 //     // Append form fields to formData
@@ -95,7 +95,7 @@
 //     const userId = 1; // Replace with the actual user ID
 
 //     // Fetch user profile data and populate the form
-//     fetch(`https://localhost:7198/api/UserProfile/GetUserProfile/${userId}`)
+//     fetch(`https://localhost:44301/api/UserProfile/GetUserProfile/${userId}`)
 //         .then(response => response.json())
 //         .then(data => {
 //             // Populate the form with user data
@@ -134,8 +134,8 @@
 //     event.preventDefault(); // Prevent form from submitting the default way
 
 // const userId = 1; // Replace with dynamic user ID
-//     const userApiUrl = `https://localhost:7198/api/UserProfile/UpdateUserDetail/${userId}`;
-//     const userDetailApiUrl = `https://localhost:7198/api/UserProfile/${userId}`;
+//     const userApiUrl = `https://localhost:44301/api/UserProfile/UpdateUserDetail/${userId}`;
+//     const userDetailApiUrl = `https://localhost:44301/api/UserProfile/${userId}`;
 
 // const userFormData = new FormData();
 // const userDetailFormData = new FormData();
@@ -191,7 +191,7 @@
 
 // $(document).ready(function () {
 //     debugger
-//     fetch(`https://localhost:7198/api/UserDetails/1`)
+//     fetch(`https://localhost:44301/api/UserDetails/1`)
 //         .then(response => response.json())
 //         .then(data => {
 //             $("#formcontrolinput2").val(data.professionalTitle);
@@ -210,7 +210,7 @@
 
 // async function fetchUserProfile(userId) {
 //     debugger
-//     const url = `https://localhost:7198/api/UserProfile/${userId}`;
+//     const url = `https://localhost:44301/api/UserProfile/${userId}`;
 
 //     try {
 //         const response = await fetch(url);
@@ -238,7 +238,7 @@
 
 // async function fetchUserProfile(userId) {
 //     console.log('Fetching user profile for userId:', userId);
-//     const url = `https://localhost:7198/api/UserProfile/${userId}`;
+//     const url = `https://localhost:44301/api/UserProfile/${userId}`;
 
 //     try {
 //         const response = await fetch(url);
@@ -275,7 +275,7 @@
 //     const userId = 1;
 
 //     function fetchUserData(id) {
-//         return fetch(`https://localhost:7198/api/CompinedData/${id}/fullProfile`)
+//         return fetch(`https://localhost:44301/api/CompinedData/${id}/fullProfile`)
 //             .then(response => response.json())
 //             .catch(error => console.error('Error:', error));
 //     }
@@ -303,7 +303,7 @@
 
 //     async function updateProfile(userId, updatedProfile) {
 //         try {
-//             const response = await fetch(`https://localhost:7198/api/CompinedData/${userId}/fullProfile`, {
+//             const response = await fetch(`https://localhost:44301/api/CompinedData/${userId}/fullProfile`, {
 //                 method: 'PUT',
 //                 headers: {
 //                     'Content-Type': 'application/json'

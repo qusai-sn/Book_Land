@@ -1,5 +1,5 @@
-const registerAPI = "https://localhost:7198/api/LoginAndRegister/register";
-const logInAPI = "https://localhost:7198/api/LoginAndRegister/login";
+const registerAPI = "https://localhost:44301/api/LoginAndRegister/register";
+const logInAPI = "https://localhost:44301/api/LoginAndRegister/login";
 
 
 
@@ -130,7 +130,7 @@ async function logout() {
 
 //  console.log("test2");
 
-//         const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin"
+//         const googleLoginURL = "https://localhost:44301/api/LoginAndRegister/GoogleLogin"
 //  console.log("test3");
 
 //         const response = await fetch(googleLoginURL, {
@@ -159,7 +159,7 @@ async function loginwithgoogle() {
         //     throw new Error("Google user not found in local storage");
         // }
 
-        // const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin";
+        // const googleLoginURL = "https://localhost:44301/api/LoginAndRegister/GoogleLogin";
         // console.log("Sending data:", {
         //     name: googleUser.displayName,
         //     email: googleUser.email,
@@ -215,7 +215,7 @@ async function loginwithgoogle() {
 
 
 async function SendOTP() {
-    const url = "https://localhost:7198/api/LoginAndRegister/reset/request";
+    const url = "https://localhost:44301/api/LoginAndRegister/reset/request";
     const response = await fetch(url,
         {
             method: "POST",
@@ -274,7 +274,7 @@ async function SendOTP() {
 
 
 async function checkOTP() {
-    const url = "https://localhost:7198/api/LoginAndRegister/reset/validate-otp";
+    const url = "https://localhost:44301/api/LoginAndRegister/reset/validate-otp";
     const response = await fetch(url,
         {
             method: "POST",
@@ -315,7 +315,7 @@ async function NewPWD(event) {
     console.log(document.getElementById("resetPasswordNewPWD").value);
 
     const otp = localStorage.getItem("OTP");
-    const url = `https://localhost:7198/api/LoginAndRegister/reset/password/${otp}`;
+    const url = `https://localhost:44301/api/LoginAndRegister/reset/password/${otp}`;
 
     
         const response = await fetch(url, {

@@ -32,9 +32,17 @@
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
         rel="stylesheet">
     <script src="/js/auth.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        #pdf_icon{
 
+          
+            margin: 0 0 0 10px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -389,7 +397,8 @@
                 <!-- Product END -->
             </section>
             <!-- contact area End-->
-
+            <button id="downloadPdfBtn" class="btn">Download PDF</button>
+            <button id="downloadExcelBtn" class="btn">Download Excel</button>
         </div>
         <!-- Footer -->
         <footer class="site-footer style-1">
@@ -559,6 +568,49 @@
     <script src="js/custom.js"></script><!-- CUSTOM JS -->
 <!-- ///////////////////////////////////////////// -->
  <script src="js/Order_history.js"></script>
+ <script>
+     // Retrieve userId from LocalStorage
+        var userId = localStorage.getItem("userId");
+        const pdfUrl = `https://localhost:44301/api/BookLibrary/pdf?id=${userId}`;
+        const excelUrl = `https://localhost:44301/api/BookLibrary/Excel/${userId}`;
+
+        // Check if userId exists
+        if (!userId) {
+            Swal.fire("Error", "User ID not found in LocalStorage.", "error");
+        }
+
+        document
+            .getElementById("downloadPdfBtn")
+            .addEventListener("click", function () {
+                downloadFile(pdfUrl, "PDF");
+            });
+
+        document
+            .getElementById("downloadExcelBtn")
+            .addEventListener("click", function () {
+                downloadFile(excelUrl, "Excel");
+            });
+
+        function downloadFile(url, fileType) {
+            Swal.fire({
+                title: "Do you want to proceed with the download?",
+                text: `A ${fileType} file will be downloaded.`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, proceed",
+                cancelButtonText: "Cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url; // This triggers the file download
+                    Swal.fire(
+                        "Download started!",
+                        `${fileType} file is being downloaded.`,
+                        "success"
+                    );
+                }
+            });
+        }
+ </script>
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:13 GMT -->

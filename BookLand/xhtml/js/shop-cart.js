@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        fetch('https://localhost:7198/api/Shoping/validate', {
+        fetch('https://localhost:44301/api/Shoping/validate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
