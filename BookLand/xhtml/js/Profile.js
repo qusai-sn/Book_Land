@@ -497,37 +497,44 @@ $(document).ready(function () {
         .then(data => populateForm(data))
         .catch(error => console.error('Error:', error));
 }
-);
-function fetchUserPoints(userId) {
-    // Check if the user points are already stored in local storage
-    const cachedPoints = localStorage.getItem(userId);
+); 
 
-    if (cachedPoints) {
-        // If points are cached, update the UI
-        document.getElementById('userPoints').innerText = `Points: ${cachedPoints}`;
-        console.log('User Points (cached):', cachedPoints);
-    } else {
-        // If points are not cached, fetch them from the API
-        fetch(`https://localhost:44301/api/LoyalityPoints/userPoints/${userId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('User not found');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('User Points:', data.Points);
-                // Cache the points in local storage
-                localStorage.setItem(userId, data.Points);
-                // Update the UI
-                document.getElementById('userPoints').innerText = `Points: ${data.Points}`;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+function fetchUserPoints() {
+    // Retrieve the user ID from local storage
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+        console.error('No user ID found in local storage');
+        return;
     }
+
+    // Check if the user points are already stored in local storage
+    const cachedPoints = localStorage.getItem(`userPoints_${userId}`);
+    if (cachedPoints) {
+        console.log('Retrieving cached points:', cachedPoints);
+        document.getElementById('userPoints').innerText = `Points: ${cachedPoints}`;
+        return;
+    }
+
+    // If points are not cached, fetch them from the API
+    fetch(`https://localhost:44301/api/LoyalityPoints/userPoints/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('User not found');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('User Points:', data);
+            // Cache the points in local storage
+            localStorage.setItem(`userPoints_${userId}`, data.points);
+            // Update the UI
+            document.getElementById('userPoints').innerText = `Points: ${data.points}`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
-// Example userId; replace with actual userId
-const userId = '1'; // Replace with the actual userId
-fetchUserPoints(userId);
+// Call the function
+fetchUserPoints(); 
