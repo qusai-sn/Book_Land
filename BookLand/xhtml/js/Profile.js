@@ -529,7 +529,7 @@ function fetchUserPoints() {
             // Cache the points in local storage
             localStorage.setItem(`userPoints_${userId}`, data.points);
             // Update the UI
-            document.getElementById('userPoints').innerText = `Points: ${data.points}`;
+            document.getElementById('userPoints').innerText = `Your Points: ${data.points}`;
         })
         .catch(error => {
             console.error('Error:', error);
