@@ -41,7 +41,8 @@ namespace BookLand.Controllers
                     Price = l.Book.Price,
                     ImageUrl = l.Book.ImageUrl,
                     Format = l.Format,
-                    TotalPrice = l.Book.Price
+                    TotalPrice = l.Book.Price,
+                    isbn = l.Book.Isbn,
                 })
                 .ToListAsync();
 

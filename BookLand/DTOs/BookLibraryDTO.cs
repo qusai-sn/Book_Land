@@ -8,5 +8,6 @@
         public string? ImageUrl { get; set; }
         public string? Format { get; set; }
         public decimal? TotalPrice { get; set; }
+        public string? isbn { get; set; }
     }
 }
