@@ -330,7 +330,7 @@
 
 					var books = [];
 
-					var url = "https://localhost:7198/api/Books/RandomBook";
+					var url = "https://localhost:44301/api/Books/RandomBook";
 					fetch(url)
 						.then(response => response.json())
 						.then(databooks => {
@@ -462,7 +462,7 @@
 					// Function to post the winning book data to another API
 					function postWinningBook(book) {
 						var userId = localStorage.getItem("userId")
-						var apiUrl = `https://localhost:7198/api/BookLibrary?UserId=${userId}&BookId=${book.id}`; // Change this to your API URL
+						var apiUrl = `https://localhost:44301/api/BookLibrary?UserId=${userId}&BookId=${book.id}`; // Change this to your API URL
 						var data = {
 							title: book.title,
 							id: book.id,

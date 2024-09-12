@@ -1,4 +1,6 @@
 ﻿using BookLand.DTOs;
+
+
 using BookLand.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,14 +46,12 @@ namespace BookLand.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostLibrary(int UserId, int BookId)
-        {
+        public IActionResult PostLibrary(int UserId, int BookId) {
 
-            if (UserId <= 0 || BookId <= 0)
-            {
-
+            if (UserId <= 0 || BookId <= 0) {
+               
                 return BadRequest();
-
+            
             }
 
             var postData = new Library
@@ -65,5 +65,6 @@ namespace BookLand.Controllers
 
             return Ok();
         }
+       
     }
 }

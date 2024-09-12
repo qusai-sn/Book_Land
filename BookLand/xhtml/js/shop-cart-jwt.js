@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function fetchCartDataFromServer(userId) {
         try {
-            const response = await fetch(`https://localhost:7198/api/Shoping/${userId}/items`, {
+            const response = await fetch(`https://localhost:44301/api/Shoping/${userId}/items`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${jwtToken}`, // Use the jwtToken correctly
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     
         // Send POST request to validate the coupon
-        fetch('https://localhost:7198/api/Shoping/validate', {
+        fetch('https://localhost:44301/api/Shoping/validate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,32 +1,3 @@
-// Function to initialize Swiper
-function initializeSwiper() {
-  const swiper = new Swiper(".swiper-container", {
-    slidesPerView: 5, // Number of books to display
-    spaceBetween: 10, // Space between slides
-    loop: true, // Infinite loop
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    on: {
-      slideChange: function () {
-        updateActiveSlideBackground(swiper);
-      },
-    },
-  });
-
-  // Set background for the initial active slide
-  updateActiveSlideBackground(swiper);
-}
-
-// Fetch books and initialize Swiper after data is ready
-getBooks();
-
-
 
 
 
@@ -169,3 +140,35 @@ function updateActiveSlideBackground(swiper) {
 
 // Fetch books and initialize Swiper after data is ready
 getBooks();
+
+
+
+// Function to initialize Swiper
+function initializeSwiper() {
+  const swiper = new Swiper(".swiper-container", {
+    slidesPerView: 5, // Number of books to display
+    spaceBetween: 10, // Space between slides
+    loop: true, // Infinite loop
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    on: {
+      slideChange: function () {
+        updateActiveSlideBackground(swiper);
+      },
+    },
+  });
+
+  // Set background for the initial active slide
+  updateActiveSlideBackground(swiper);
+}
+
+// Fetch books and initialize Swiper after data is ready
+getBooks();
+
+

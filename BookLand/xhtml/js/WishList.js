@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to fetch wishlist data by userId
     function fetchWishlist() {
-        fetch(`https://localhost:7198/api/UserProfile/wishlist/${userId}`)
+        fetch(`https://localhost:44301/api/UserProfile/wishlist/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error fetching wishlist');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to remove a book from the wishlist
     window.removeFromWishlist = function (bookId) {
 
-        fetch(`https://localhost:7198/api/UserProfile/remove/${userId}/${bookId}`, {
+        fetch(`https://localhost:44301/api/UserProfile/remove/${userId}/${bookId}`, {
             method: 'DELETE'
         })
             .then(response => {
