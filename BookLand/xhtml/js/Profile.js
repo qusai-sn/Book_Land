@@ -462,7 +462,9 @@ $(document).ready(function () {
             description: $("#exampleFormControlTextarea").val(),
             country: $("#formcontrolinput7").val(),
             city: $("#formcontrolinput9").val(),
-            postcode: $("#formcontrolinput8").val()
+            postcode: $("#formcontrolinput8").val(),
+            Points: $("#Points").val()
+
         };
 
         // Validate the input data
