@@ -17,9 +17,17 @@
 
       // Callback when the Google Books API is ready
       google.books.setOnLoadCallback(function() {
-        // Fetch the ISBN dynamically (this should be replaced with the actual ISBN from your database)
-        const isbn = '0738531367';  // Replace this with the actual ISBN you fetch from your database
-        initialize(isbn);  // Call the initialize function with the ISBN
+        // Fetch the ISBN from the URL search parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const isbn = urlParams.get('isbn');  // Get 'isbn' from the URL
+
+        if (isbn) {
+          // If an ISBN is found in the URL, initialize the viewer
+          initialize(isbn);
+        } else {
+          // If no ISBN is provided, show a message or handle it accordingly
+          document.getElementById('viewerCanvas').innerHTML = '<p>No ISBN provided in the URL.</p>';
+        }
       });
     </script>
     <style>
@@ -27,8 +35,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;  /* Changed to center to perfectly center the content */
-        height: 100vh;  /* Set height to 100% of the viewport */
+        justify-content: center;  /* Center the content */
+        height: 100vh;  /* Full viewport height */
         margin: 0;  /* Remove default margin */
         padding: 0;
     }

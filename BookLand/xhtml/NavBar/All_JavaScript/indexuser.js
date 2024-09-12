@@ -198,7 +198,7 @@ if (!n) {
     <span>Please log in to see your profile.</span>
   `;
 } else {
-  const url4 = `https://localhost:44301/api/User/byIDUser/${n}`;
+  const url4 = `https://localhost:7198/api/User/byIDUser/${n}`;
 
   async function getuser() {
     try {

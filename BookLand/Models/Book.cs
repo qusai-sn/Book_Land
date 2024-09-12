@@ -25,6 +25,8 @@ public partial class Book
 
     public decimal? Rating { get; set; }
 
+    public string? Isbn { get; set; }
+
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual ICollection<CommentsReview> CommentsReviews { get; set; } = new List<CommentsReview>();

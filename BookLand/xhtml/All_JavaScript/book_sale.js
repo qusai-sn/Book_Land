@@ -72,7 +72,7 @@ async function getBooksOnSale() {
           </del>
         </div>
                      
-                            <a href="javascript:void(0);" onclick="addToCart(${book.id
+                            <a href="javascript:void(0);" onclick="addToCart1(${book.id
           }, '${book.format || "PDF"}', ${book.price || 0},'${book.imageUrl
           }')" id="add-to-cart-button" class="btn btn-secondary btnhover btnhover2">
                                 <i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart

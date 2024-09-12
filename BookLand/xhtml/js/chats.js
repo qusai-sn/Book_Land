@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const API = `https://localhost:44301/api/Chat/showMessage/1`;
+        const API = `https://localhost:7198/api/Chat/showMessage/1`;
         //https://localhost:44309/api/Chat/showMessage/1
 
  
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const API = `https://localhost:44301/api/Chat/replayMessage/${userId}`;
+        const API = `https://localhost:7198/api/Chat/replayMessage/${userId}`;
         
         const formData = new FormData();
         formData.append('cmessages', messageInput);

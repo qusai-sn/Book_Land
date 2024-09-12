@@ -466,7 +466,7 @@
                 console.log("Performing search for:", bookTitle); // Log the search value for testing
 
                 if (bookTitle) {
-                    const apiUrl = `https://localhost:44301/api/Books/bynameBooks/${encodeURIComponent(
+                    const apiUrl = `https://localhost:7198/api/Books/bynameBooks/${encodeURIComponent(
                         bookTitle
                     )}`;
                     console.log("API URL:", apiUrl); // Log the API URL for testing
@@ -565,7 +565,7 @@
     <!-- indexWishlist -->
     <script>
         var n = localStorage.getItem("userId");
-        const url2 = `https://localhost:44301/api/Wishlist/wishlistItemCount/${n}`;
+        const url2 = `https://localhost:7198/api/Wishlist/wishlistItemCount/${n}`;
 
         async function getWishlist() {
             try {
@@ -612,7 +612,7 @@
                 badgeCart.innerHTML = cartSize; // Display the count from cartSize
             } else {
                 // For registered users, get item count from the server
-                const url = `https://localhost:44301/api/CartItem/cartItemCount/${userId}`;
+                const url = `https://localhost:7198/api/CartItem/cartItemCount/${userId}`;
                 try {
                     const response = await fetch(url);
                     if (!response.ok) {
@@ -631,9 +631,9 @@
         }
 
         // URLs for fetching data from the server
-        const url14 = `https://localhost:44301/api/CartItem/topPriceCartItems/${userId}`;
-        const url7 = `https://localhost:44301/api/Books/byIDBooks/`;
-        const url8 = `https://localhost:44301/api/CartItem/byIDCartItemtTotal2/${userId}`;
+        const url14 = `https://localhost:7198/api/CartItem/topPriceCartItems/${userId}`;
+        const url7 = `https://localhost:7198/api/Books/byIDBooks/`;
+        const url8 = `https://localhost:7198/api/CartItem/byIDCartItemtTotal2/${userId}`;
 
         // Function to get book details from the server using bookId
         async function getBookDetails(bookId) {
@@ -796,7 +796,7 @@
     <span>Please log in to see your profile.</span>
   `;
         } else {
-            const url4 = `https://localhost:44301/api/User/byIDUser/${n}`;
+            const url4 = `https://localhost:7198/api/User/byIDUser/${n}`;
 
             async function getuser() {
                 try {
@@ -867,7 +867,7 @@
 
     <!-- indexCategories -->
     <script>
-        const url = "https://localhost:44301/api/Category";
+        const url = "https://localhost:7198/api/Category";
 
         async function getCategories() {
             try {
@@ -918,7 +918,7 @@
         }
 
         getCategories();
-        const urlCategories = "https://localhost:44301/api/Category";
+        const urlCategories = "https://localhost:7198/api/Category";
 
         async function loadCategories() {
             try {
@@ -1001,7 +1001,7 @@
 
 
 
-        const url6 = `https://localhost:44301/api/Books/RandomBook?count=5`;
+        const url6 = `https://localhost:7198/api/Books/RandomBook?count=5`;
 
         async function getBooks() {
             try {

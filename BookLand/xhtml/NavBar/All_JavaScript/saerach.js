@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Performing search for:", bookTitle); // Log the search value for testing
 
         if (bookTitle) {
-            const apiUrl = `https://localhost:44301/api/Books/bynameBooks/${encodeURIComponent(
+            const apiUrl = `https://localhost:7198/api/Books/bynameBooks/${encodeURIComponent(
                 bookTitle
             )}`;
             console.log("API URL:", apiUrl); // Log the API URL for testing
@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showBooksInModal(booksHTML) {
         Swal.fire({
+            
             title: "Books Found",
             html: booksHTML,
             showCloseButton: true,
