@@ -37,6 +37,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 
 	<style>
 		.dz-body{
@@ -47,6 +49,28 @@
 		}
 		
 	</style>
+	<script>
+		window.fbAsyncInit = function() {
+		  FB.init({
+			appId      : '1031986551566607', // Replace 'YOUR_APP_ID' with your Facebook App ID
+			cookie     : true,
+			xfbml      : true,
+			version    : 'v11.0'
+		  });
+			
+		  FB.AppEvents.logPageView();   
+		};
+	  
+		(function(d, s, id){
+		   var js, fjs = d.getElementsByTagName(s)[0];
+		   if (d.getElementById(id)) {return;}
+		   js = d.createElement(s); js.id = id;
+		   js.src = "https://connect.facebook.net/en_US/sdk.js";
+		   fjs.parentNode.insertBefore(js, fjs);
+		 }(document, 'script', 'facebook-jssdk'));
+	  </script>
+	  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -746,7 +770,8 @@
 <script src="js/dz.ajax.js"></script><!-- AJAX -->
 <script src="js/custom.js"></script><!-- CUSTOM JS -->
 <script src="js/book-details.js"></script><!-- CUSTOM JS -->
- 
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/books-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:13 GMT -->
