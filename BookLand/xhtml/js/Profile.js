@@ -498,3 +498,30 @@ $(document).ready(function () {
         .catch(error => console.error('Error:', error));
 }
 );
+function fetchUserPoints(userId) {
+    // Check if the user points are already stored in local storage
+    const cachedPoints = localStorage.getItem(userId);
+   
+        // If points are not cached, fetch them from the API
+    fetch("https://localhost:44301/api/LoyalityPoints/userPoints/1")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('User not found');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User Points:', data);
+                // Cache the points in local storage
+                localStorage.setItem(userId, data.Points);
+                // Update the UI
+                document.getElementById('userPoints').innerText = `Points: ${data.Points}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+// Call the function with a valid userId
+fetchUserPoints(); 
