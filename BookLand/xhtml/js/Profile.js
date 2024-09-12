@@ -512,7 +512,7 @@ function fetchUserPoints() {
     const cachedPoints = localStorage.getItem(`userPoints_${userId}`);
     if (cachedPoints) {
         console.log('Retrieving cached points:', cachedPoints);
-        document.getElementById('userPoints').innerText = `Points: ${cachedPoints}`;
+        document.getElementById('userPoints').innerText = `Your Points: ${cachedPoints}`;
         return;
     }
 

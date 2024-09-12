@@ -38,7 +38,7 @@ async function getCategories() {
           localStorage.getItem("selectedCategoryId")
         );
 
-        window.location.href = `/Front-End/books-list.html?id=${categoryId}`;
+        window.location.href = `../books-list.html?id=${categoryId}`;
       }
     });
 
