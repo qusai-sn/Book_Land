@@ -1,6 +1,5 @@
-var ca = localStorage.getItem(categoryIds)
 const url100 = "https://localhost:44301/api/Books/bySaleBooks";
-const urlCategory = `https://localhost:44301/api/Category/byIDCategory/${categoryIds}`;
+const urlCategory = `https://localhost:44301/api/Category/byIDCategory/}`;
 
 async function getCategoriesByIds(categoryIds) {
   try {
