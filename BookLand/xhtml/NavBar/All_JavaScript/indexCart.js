@@ -402,7 +402,7 @@ async function getcountcart() {
     badgeCart.innerHTML = cartSize; // Display the count from cartSize
   } else {
     // For registered users, get item count from the server
-    const url = `https://localhost:44301/api/CartItem/cartItemCount/${userId}`;
+    const url = `https://localhost:7198/api/CartItem/cartItemCount/${userId}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -421,9 +421,9 @@ async function getcountcart() {
 }
 
 // URLs for fetching data from the server
-const url14 = `https://localhost:44301/api/CartItem/topPriceCartItems/${userId}`;
-const url7 = `https://localhost:44301/api/Books/byIDBooks/`;
-const url8 = `https://localhost:44301/api/CartItem/byIDCartItemtTotal2/${userId}`;
+const url14 = `https://localhost:7198/api/CartItem/topPriceCartItems/${userId}`;
+const url7 = `https://localhost:7198/api/Books/byIDBooks/`;
+const url8 = `https://localhost:7198/api/CartItem/byIDCartItemtTotal2/${userId}`;
 
 // Function to get book details from the server using bookId
 async function getBookDetails(bookId) {

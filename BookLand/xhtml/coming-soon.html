@@ -241,6 +241,7 @@
 								<div class="col-xs-6 col-lg-6 col-md-6">
 									<button id="btnSlowMo" class="btn btn-primary">SlowMo</button>
 								</div>
+								 
 							</div>
 						</div>
 					</div>
@@ -317,180 +318,227 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
-			<script>
-				$(document).ready(function () {
-					// Variables and elements
-					var wheel = $(".wheel"),
-						active = $(".active"),
-						lastRotation = 0,
-						currentRotation = 0,
-						deg,
-						$btnPlay = $("#btnPlay"),
-						$btnSlowMo = $("#btnSlowMo");
+ <script>$(document).ready(function () {
+    // Variables and elements
+    var wheel = $(".wheel"),
+        active = $(".active"),
+        lastRotation = 0,
+        currentRotation = 0,
+        deg,
+        $btnPlay = $("#btnPlay"),
+        $btnSlowMo = $("#btnSlowMo");
 
-					var books = [];
+    var books = [];
 
-					var url = "https://localhost:44301/api/Books/RandomBook";
-					fetch(url)
-						.then(response => response.json())
-						.then(databooks => {
-							console.log("Books from API:", databooks);
+    // Fetch books from the API
+    fetch("https://localhost:44301/api/Books/RandomBook")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch books");
+            }
+            return response.json();
+        })
+        .then(databooks => {
+            console.log("Books from API:", databooks);
 
-							// Populate the books array with the data from the API
-							books = databooks.map(book => ({
-								id: book.id,
-								title: book.title,
-								image: book.ImageUrl
-							}));
+            // Populate the books array with the data from the API
+            books = databooks.map(book => ({
+                id: book.id,
+                title: book.title,
+                image: book.ImageUrl
+            }));
 
-							console.log("Updated books array:", books);
-						})
-						.catch(error => console.error("Error fetching books:", error));
+            console.log("Updated books array:", books);
+        })
+        .catch(error => console.error("Error fetching books:", error));
 
-					// GSAP timeline for spinning the wheel
-					var spinWheel = gsap.timeline({
-						onUpdate: function () {
-							currentRotation = Math.round(gsap.getProperty(wheel[0], "rotation"));
-						}
-					});
+    // GSAP timeline for spinning the wheel
+    var spinWheel = gsap.timeline({
+        onUpdate: function () {
+            currentRotation = Math.round(gsap.getProperty(wheel[0], "rotation"));
+        }
+    });
 
-					// Function to get a random integer between two values
-					function getRandomInt(min, max) {
-						return Math.floor(Math.random() * (max - min + 1)) + min;
-					}
+    // Function to get a random integer between two values
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-					// Function to spin the wheel
-					function spin() {
-						deg = getRandomInt(360, 1080);
+    // Function to spin the wheel
+    function spin() {
+        deg = getRandomInt(360, 1080);
 
-						spinWheel.to(wheel, {
-							duration: 5,
-							rotation: deg,
-							transformOrigin: "50% 50%",
-							ease: "power4.out"
-						});
-					}
+        spinWheel.to(wheel, {
+            duration: 5,
+            rotation: deg,
+            transformOrigin: "50% 50%",
+            ease: "power4.out"
+        });
+    }
 
-					// Play button click event
-					$btnPlay.click(function () {
-						spin();
-					});
+    // Play button click event
+    $btnPlay.click(function () {
+        spin();
+    });
 
-					// SlowMo button click event
-					$btnSlowMo.click(function () {
-						spinWheel.timeScale(0.2); // Slow down the animation
-						spin();
-					});
+    // SlowMo button click event
+    $btnSlowMo.click(function () {
+        spinWheel.timeScale(0.2); // Slow down the animation
+        spin();
+    });
 
-					// Function to determine the winner based on the wheel's rotation
-					function getWinner() {
-						var normalizedRotation = currentRotation % 360;
-						if (normalizedRotation < 0) {
-							normalizedRotation += 360;
-						}
+    // Function to determine the winner based on the wheel's rotation
+    function getWinner() {
+        var normalizedRotation = currentRotation % 360;
+        if (normalizedRotation < 0) {
+            normalizedRotation += 360;
+        }
 
-						var sectorAngle = 360 / books.length;
-						var winningIndex = Math.floor((360 - normalizedRotation) / sectorAngle);
-						winningIndex = winningIndex % books.length;
+        var sectorAngle = 360 / books.length;
+        var winningIndex = Math.floor((360 - normalizedRotation) / sectorAngle);
+        winningIndex = winningIndex % books.length;
 
-						console.log("Current Rotation: " + normalizedRotation);
-						console.log("Winning Index: " + winningIndex);
+        console.log("Current Rotation: " + normalizedRotation);
+        console.log("Winning Index: " + winningIndex);
 
-						var winner = books[winningIndex];
+        var winner = books[winningIndex];
 
-						if (!winner) {
-							console.error("Invalid winning index or book not found.");
-							return null;
-						}
+        if (!winner) {
+            console.error("Invalid winning index or book not found.");
+            return null;
+        }
 
-						return winner;
-					}
+        return winner;
+    }
 
-					// Create sparkle effect at a given position
-					function createSparkle(x, y) {
-						var sparkle = $('<div class="sparkle"></div>').appendTo('body');
-						sparkle.css({
-							left: x,
-							top: y
-						});
+    // Create sparkle effect at a given position
+    function createSparkle(x, y) {
+        var sparkle = $('<div class="sparkle"></div>').appendTo('body');
+        sparkle.css({
+            left: x,
+            top: y
+        });
 
-						// Animate the sparkle with GSAP
-						gsap.to(sparkle, {
-							duration: 1,
-							x: getRandomInt(-200, 200),
-							y: getRandomInt(-200, 200),
-							opacity: 0,
-							scale: 0.5,
-							ease: "power1.out",
-							onComplete: function () {
-								sparkle.remove(); // Remove sparkle after animation
-							}
-						});
-					}
+        // Animate the sparkle with GSAP
+        gsap.to(sparkle, {
+            duration: 1,
+            x: getRandomInt(-200, 200),
+            y: getRandomInt(-200, 200),
+            opacity: 0,
+            scale: 0.5,
+            ease: "power1.out",
+            onComplete: function () {
+                sparkle.remove(); // Remove sparkle after animation
+            }
+        });
+    }
 
-					// Generate sparkle effect around the wheel
-					function sparkleEffect() {
-						var wheelCenter = wheel.offset();
-						var wheelWidth = wheel.width() / 2;
-						var wheelHeight = wheel.height() / 2;
+    // Generate sparkle effect around the wheel
+    function sparkleEffect() {
+        var wheelCenter = wheel.offset();
+        var wheelWidth = wheel.width() / 2;
+        var wheelHeight = wheel.height() / 2;
 
-						// Create sparkles around the center of the wheel
-						for (var i = 0; i < 20; i++) {
-							createSparkle(
-								wheelCenter.left + wheelWidth,
-								wheelCenter.top + wheelHeight
-							);
-						}
-					}
+        // Create sparkles around the center of the wheel
+        for (var i = 0; i < 20; i++) {
+            createSparkle(
+                wheelCenter.left + wheelWidth,
+                wheelCenter.top + wheelHeight
+            );
+        }
+    }
 
-					// Celebrate the winner and show the result in a SweetAlert
-					function celebrateWinner() {
-						var winner = getWinner();
+    // Celebrate the winner and show the result in a SweetAlert
+    function celebrateWinner() {
+        var winner = getWinner();
+        if (!winner) return;
 
-						if (!winner) return;
+        // Trigger the sparkle effect
+        sparkleEffect();
 
-						// Trigger the sparkle effect
-						sparkleEffect();
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            console.error('User ID is not available. Please log in.');
+            return;
+        }
 
-						// Display the winner in a SweetAlert popup
-						Swal.fire("Congratulations!", "The winning book is: " + winner.title, "success");
+        // Deduct points by calling the useSpinningWheel API
+        fetch(`https://localhost:44301/api/LoyalityPoints/useSpinningWheel/${userId}`, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.message || "An error occurred while deducting points.");
+                });
+            }
+            return response.json(); // Continue to next then if no error
+        })
+        .then(data => {
+            // Assuming the spin cost is part of the response from the useSpinningWheel API call
+            const spinCost = data.costPerSpin;
+            const remainingPoints = data.remainingPoints;
 
-						// Post the winning book data to the API
-						postWinningBook(winner);
-					}
+            // Display the winner, cost per spin, and remaining points in a SweetAlert popup
+            Swal.fire({
+                title: "Congratulations!",
+                html: `
+                    <p>The winning book is: ${winner.title}</p>
+                    <p>Cost Per Spin: ${spinCost} Points</p>
+                    <p>Remaining Points: ${remainingPoints}</p>
+                `,
+                icon: "success"
+            });
 
-					// Function to post the winning book data to another API
-					function postWinningBook(book) {
-						var userId = localStorage.getItem("userId")
-						var apiUrl = `https://localhost:44301/api/BookLibrary?UserId=${userId}&BookId=${book.id}`; // Change this to your API URL
-						var data = {
-							title: book.title,
-							id: book.id,
-							
-						};
+            // Post the winning book data to the API
+            postWinningBook(winner);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to complete operation: " + error.message,
+                icon: "error"
+            });
+        });
+    }
 
-						fetch(apiUrl, {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json'
-							},
-							body: JSON.stringify(data)
-						})
-							.then(response => response.json())
-							.then(result => {
-								console.log("Successfully posted winning book data:", result);
-							})
-							.catch(error => {
-								console.error("Error posting winning book data:", error);
-							});
-					}
+    // Function to post the winning book data to another API
+    function postWinningBook(book) {
+        var userId = localStorage.getItem("userId");
+        var apiUrl = `https://localhost:44301/api/BookLibrary?UserId=${userId}&BookId=${book.id}`;
+        var data = {
+            title: book.title,
+            id: book.id,
+        };
 
-					// Trigger the celebration when the wheel spin completes
-					spinWheel.eventCallback("onComplete", function () {
-						celebrateWinner();
-					});
-				});
-			</script>
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to post book data.");
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log("Successfully posted winning book data:", result);
+        })
+        .catch(error => {
+            console.error("Error posting winning book data:", error);
+        });
+    }
+
+    // Trigger the celebration when the wheel spin completes
+    spinWheel.eventCallback("onComplete", function () {
+        celebrateWinner();
+    });
+});
+</script>
 	</body>
 
 	</html>

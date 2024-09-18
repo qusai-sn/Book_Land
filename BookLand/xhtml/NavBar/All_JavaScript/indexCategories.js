@@ -1,4 +1,4 @@
-const url = "https://localhost:44301/api/Category";
+const url = "https://localhost:7198/api/Category";
 
 async function getCategories() {
   try {
@@ -49,7 +49,7 @@ async function getCategories() {
 }
 
 getCategories();
-const urlCategories = "https://localhost:44301/api/Category";
+const urlCategories = "https://localhost:7198/api/Category";
 
 async function loadCategories() {
   try {

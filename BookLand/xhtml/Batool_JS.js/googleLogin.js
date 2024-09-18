@@ -48,7 +48,7 @@ if (googleLogin) {
         // console.log(JSON.parse(localStorage.getItem('GoogleUser')));
 
   
-        // window.location.href = "books-list.html";
+        window.location.href = "books-list.html";
       } catch (error) {
         console.error("Error during login:", error);
         // alert("Error during login. Please try again.");
@@ -88,7 +88,7 @@ async function addgoogleUser() {
 
    getFromLocal();
 
-        const googleLoginURL = "https://localhost:7198/api/LoginAndRegister/GoogleLogin";
+        const googleLoginURL = "https://localhost:44301/api/LoginAndRegister/GoogleLogin";
 
         const GName = localStorage.getItem("GName");
         const GEmail = localStorage.getItem("GEmail");

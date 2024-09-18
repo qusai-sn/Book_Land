@@ -10,7 +10,7 @@
 //     badgeCart.innerHTML = cartSize; // عرض العدد من cartSize
 //   } else {
 //     // للمستخدم المسجل، جلب عدد العناصر من الخادم
-//     const url = `http://localhost:42480/api/CartItem/cartItemCount/${userId}`;
+//     const url = `http://localhost:44301/api/CartItem/cartItemCount/${userId}`;
 //     try {
 //       const response = await fetch(url);
 //       if (!response.ok) {
@@ -29,9 +29,9 @@
 // }
 
 // // عناوين URL للحصول على البيانات من الخادم
-// const url14 = `http://localhost:42480/api/CartItem/topPriceCartItems/${userId}`;
-// const url7 = `http://localhost:42480/api/Books/byIDBooks/`;
-// const url8 = `http://localhost:42480/api/CartItem/byIDCartItemtTotal2/${userId}`;
+// const url14 = `http://localhost:44301/api/CartItem/topPriceCartItems/${userId}`;
+// const url7 = `http://localhost:44301/api/Books/byIDBooks/`;
+// const url8 = `http://localhost:44301/api/CartItem/byIDCartItemtTotal2/${userId}`;
 
 // // دالة لجلب تفاصيل الكتاب من الخادم باستخدام bookId
 // async function getBookDetails(bookId) {
@@ -213,7 +213,7 @@
 //     badgeCart.innerHTML = cartSize; // Display the count from cartSize
 //   } else {
 //     // For registered users, get item count from the server
-//     const url = `http://localhost:42480/api/CartItem/cartItemCount/${userId}`;
+//     const url = `http://localhost:44301/api/CartItem/cartItemCount/${userId}`;
 //     try {
 //       const response = await fetch(url);
 //       if (!response.ok) {
@@ -232,9 +232,9 @@
 // }
 
 // // URLs for fetching data from the server
-// const url14 = `http://localhost:42480/api/CartItem/topPriceCartItems/${userId}`;
-// const url7 = `http://localhost:42480/api/Books/byIDBooks/`;
-// const url8 = `http://localhost:42480/api/CartItem/byIDCartItemtTotal2/${userId}`;
+// const url14 = `http://localhost:44301/api/CartItem/topPriceCartItems/${userId}`;
+// const url7 = `http://localhost:44301/api/Books/byIDBooks/`;
+// const url8 = `http://localhost:44301/api/CartItem/byIDCartItemtTotal2/${userId}`;
 
 // // Function to get book details from the server using bookId
 // async function getBookDetails(bookId) {

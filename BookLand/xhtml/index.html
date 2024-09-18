@@ -8,6 +8,7 @@
 
 	<!-- SweetAlert2 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="All_JavaScript/indexBook.js"></script>
 
 	<style>
 		#results {
@@ -43,7 +44,7 @@
 
 		/* Optional: Adjust stars */
 		.text-yellow {
-			color: #ffc107;
+			color:#EAA451;
 		}
 
 		.text-muted {
@@ -53,7 +54,7 @@
 		.default-select {
 			padding: 5px;
 			border-radius: 5.5px;
-			font-size: 12px;
+			font-size: 18px;
 			background-color: #f9f9f9;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 			appearance: none;
@@ -61,10 +62,32 @@
 		}
 
 		.default-select:focus {
-			border-color: orange;
+			border-color: #EAA451;
 			outline: none;
-			box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.2);
+			box-shadow: 0 0 0 2px #EAA451;
 		}
+		.aswiper-wrapper{
+
+			height: 50vh;
+		}
+		.dz-content .title {
+    font-size: 15px; /* Keep your font-size */
+    white-space: nowrap; /* Prevent the text from wrapping to a new line */
+    overflow: hidden; /* Hide the overflowed text */
+    text-overflow: ellipsis; /* Display an ellipsis (...) at the end of the truncated text */
+    width: 100%; /* Ensure the element has a set width */
+}
+.aswiper-wrapper{
+
+            height: 50vh;
+        }
+        .dz-content .title {
+    font-size: 15px; /* Keep your font-size /
+    white-space: nowrap; / Prevent the text from wrapping to a new line /
+    overflow: hidden; / Hide the overflowed text /
+    text-overflow: ellipsis; / Display an ellipsis (...) at the end of the truncated text /
+    width: 100%; / Ensure the element has a set width */
+}
 	</style>
 
 	<!-- Meta -->
@@ -294,8 +317,8 @@
 										<li><a href="services.html">Services</a></li>
 										<li><a href="faq.html">FAQ's</a></li>
 										<li><a href="help-desk.html">Help Desk</a></li>
-										<li><a href="coming-soon.html">Coming Soon</a></li>
-										<li><a href="pricing.html">Pricing</a></li>
+										<li><a href="coming-soon.html">Spinning Weel</a></li>
+										<li><a href="Order_history.html">Order History</a></li>
 										<li><a href="privacy-policy.html">Privacy Policy</a></li>
 										<li>
 											<a href="under-construction.html">Under Construction</a>
@@ -503,7 +526,7 @@
 					<div class="swiper-wrapper" id="Bookh">
 						<div class="swiper-slide"></div>
 					</div>
-				</div>,,
+				</div>
 
 
 			</div>
@@ -1007,7 +1030,7 @@
 	<script src="js/custom.js"></script>
 	<!-- CUSTOM JS -->
 	<script src="All_JavaScript/saerach.js"></script>
-	
+	<script src="All_JavaScript/indexBook.js"></script>
 	<script src="All_JavaScript/book_card.js"></script>
 	<script src="All_JavaScript/book_sale.js"></script>
 	<script src="All_JavaScript/email.js"></script>
@@ -1022,6 +1045,35 @@
 	<script src="All_JavaScript/indexBook.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script>function initializeSwiper() {
+		const swiper = new Swiper(".swiper-container", {
+		  slidesPerView: 5, // Number of books to display
+		  spaceBetween: 10, // Space between slides
+		  loop: true, // Infinite loop
+		  pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		  },
+		  navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		  },
+		  on: {
+			slideChange: function () {
+			  updateActiveSlideBackground(swiper);
+			},
+		  },
+		});
+	  
+		// Set background for the initial active slide
+		updateActiveSlideBackground(swiper);
+	  }
+	  
+	  // Fetch books and initialize Swiper after data is ready
+	  getBooks();
+	  
+	  
+	  </script>
 </body>
 
 <!-- Mirrored from bookland.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Sep 2024 18:28:08 GMT -->

@@ -1,5 +1,5 @@
 const url100 = "https://localhost:44301/api/Books/bySaleBooks";
-const urlCategory = "https://localhost:44301/api/Category/byIDCategory/";
+const urlCategory = `https://localhost:44301/api/Category/byIDCategory/}`;
 
 async function getCategoriesByIds(categoryIds) {
   try {
@@ -72,7 +72,7 @@ async function getBooksOnSale() {
           </del>
         </div>
                      
-                            <a href="javascript:void(0);" onclick="addToCart(${book.id
+                            <a href="javascript:void(0);" onclick="addToCart1(${book.id
           }, '${book.format || "PDF"}', ${book.price || 0},'${book.imageUrl
           }')" id="add-to-cart-button" class="btn btn-secondary btnhover btnhover2">
                                 <i class="flaticon-shopping-cart-1 m-r10"></i> Add to cart

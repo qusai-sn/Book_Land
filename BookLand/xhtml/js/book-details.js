@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    fetch(`https://localhost:7198/api/Shoping/${bookId}`)
+    fetch(`https://localhost:44301/api/Shoping/${bookId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Fetch comments for the book
-    fetch(`https://localhost:7198/api/Shoping/${bookId}/comments`) //https://localhost:7198/api/Shoping/3/comments
+    fetch(`https://localhost:44301/api/Shoping/${bookId}/comments`) //https://localhost:44301/api/Shoping/3/comments
 
         .then(response => response.json())
         .then(comments => displayComments(comments))
@@ -202,7 +202,7 @@ document.getElementById('commentForm').addEventListener('submit', async function
     formData.append('rating', rating);
 
     try {
-        const response = await fetch('https://localhost:7198/api/Shoping', {
+        const response = await fetch('https://localhost:44301/api/Shoping', {
             method: 'POST',
             body: formData
         });

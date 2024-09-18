@@ -1,6 +1,6 @@
 
-const moveToOrdersAPI = "https://localhost:7198/api/Orders/MoveItemsToOrder/";
-const deleteCart = "https://localhost:7198/api/Carts/deleteCart/";
+const moveToOrdersAPI = "https://localhost:44301/api/Orders/MoveItemsToOrder/";
+const deleteCart = "https://localhost:44301/api/Carts/deleteCart/";
 
 
 // test cart tems in local storage

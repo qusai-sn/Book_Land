@@ -1,20 +1,6 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-const url6 = `https://localhost:44301/api/Books/RandomBook?count=5`;
-
+const url6 = "https://localhost:44301/api/Books/RandomBook?count=5";
 async function getBooks() {
   try {
     const response = await fetch(url6);
@@ -71,6 +57,41 @@ async function getBooks() {
         </div>
       `;
     });
+
+
+
+    // Function to initialize Swiper
+    function initializeSwiper() {
+      const swiper = new Swiper(".swiper-container", {
+        slidesPerView: 5, // Number of books to display
+        spaceBetween: 10, // Space between slides
+        loop: true, // Infinite loop
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        on: {
+          slideChange: function () {
+            updateActiveSlideBackground(swiper);
+          },
+        },
+      });
+
+      // Set background for the initial active slide
+      updateActiveSlideBackground(swiper);
+    }
+
+
+
+
+
+
+
+
 
     // Reinitialize Swiper after content is loaded
     initializeSwiper();
