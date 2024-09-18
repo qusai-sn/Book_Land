@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td class="product-item-name">${item.bookName}</td>
                 <td class="product-item-price">$${item.price.toFixed(2)}</td>
                 <td class="product-item-quantity">
-                    <input type="number" class="form-control quantity" value="${item.quantity}" min="1" style="width: 60px;" onchange="updateQuantity(${item.bookId}, this.value)" />
+                    <input type="number" class="form-control quantity" value="${item.quantity}" min="1" style="width: 100px;" onchange="updateQuantity(${item.bookId}, this.value)" />
                 </td>
                 <td class="product-item-format">
                     <div class="form-check">
@@ -234,7 +234,7 @@ function displayCartItems(items) {
             <td class="product-item-name">${item.bookName}</td>
             <td class="product-item-price">$${item.price.toFixed(2)}</td>
             <td class="product-item-quantity">
-                <input type="number" class="form-control quantity" value="${item.quantity}" min="1" style="width: 60px;" onchange="updateQuantity(${item.bookId}, this.value)" />
+                <input type="number" class="form-control quantity" value="${item.quantity}" min="1" style="width: 110px;" onchange="updateQuantity(${item.bookId}, this.value)" />
             </td>
             <td class="product-item-format">
                 <div class="form-check">
