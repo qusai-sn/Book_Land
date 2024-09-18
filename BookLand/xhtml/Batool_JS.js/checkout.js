@@ -41,7 +41,7 @@ $(document).ready(function () {
 const userID = localStorage.getItem("userId");
 
 async function getUserInfo(id) {
-    const url = `https://localhost:44301/api/Orders/getUserInfo/${id}`;
+    const url = `https://localhost:7198/api/Orders/getUserInfo/${id}`;
     const response = await fetch(url);
     let Data = await response.json();
 
@@ -94,7 +94,7 @@ const getUserId = localStorage.getItem("userId");
 
 // fill order items table
 async function fillOrderItemsTable(orderid) {
-    const url = `https://localhost:44301/api/Orders/getFinalOrderItemsInfo/${orderid}`;
+    const url = `https://localhost:7198/api/Orders/getFinalOrderItemsInfo/${orderid}`;
     const response = await fetch(url);
     let Data = await response.json();
 
@@ -120,7 +120,8 @@ fillOrderItemsTable(getOrderId);
 // fill order total table
 async function getOrderTotal(orderid, couponPercent) {
     // debugger
-    const url = `https://localhost:44301/api/Orders/OrderTotal/${orderid}`;
+    if (couponPercent == null) {orderCoupon = 0} else {orderCoupon = couponPercent}
+    const url = `https://localhost:7198/api/Orders/OrderTotal/${orderid}?couponsPercentage=${orderCoupon}`;
     const response = await fetch(url);
     let Data = await response.json();
 
@@ -178,7 +179,7 @@ function initPayPalButton() {
                     // update status of the order in the database to "Paid" 
                     // add transaction id to the order
 
-                    const editOrderURL = `https://localhost:44301/api/Orders/FinishOrder/${orderid}`;
+                    const editOrderURL = `https://localhost:7198/api/Orders/FinishOrder/${orderid}`;
 
                     let response = await fetch(editOrderURL, {
                         method: 'PUT',
@@ -192,7 +193,7 @@ function initPayPalButton() {
 
                 async function AddPoint() {
                     
-                    const AddPointsURL = `https://localhost:44301/api/EarnPoints/AddPointToUser/${userID}/${orderid}`;
+                    const AddPointsURL = `https://localhost:7198/api/EarnPoints/AddPointToUser/${userID}/${orderid}`;
 
                     let response = await fetch(AddPointsURL, {
                         method: 'PUT',
@@ -225,7 +226,7 @@ document.getElementById("finishOrder").addEventListener('click',
 
         // send orders to library
 
-        const sendToLibraryURL = `https://localhost:44301/api/Orders/SendBooksToLibrary/${userid}-${orderid}`;
+        const sendToLibraryURL = `https://localhost:7198/api/Orders/SendBooksToLibrary/${userid}-${orderid}`;
 
         let sendResponse = await fetch(sendToLibraryURL, {
             method: "POST",

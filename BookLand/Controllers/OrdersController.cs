@@ -156,10 +156,10 @@ namespace BookLand.Controllers
 
 
         [HttpGet("OrderTotal/{orderID}")]
-        public IActionResult OrderTotal(int orderID, int couponsPercentage)
+        public IActionResult OrderTotal(int orderID, int? couponsPercentage)
         {
-            int coupon;
-            if (couponsPercentage <= 0  )
+            int? coupon;
+            if (couponsPercentage <= 0 || couponsPercentage == null )
             {
                 coupon = 0;
             }
