@@ -10,13 +10,13 @@ namespace BookLand.Services
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("batoulkhazali96@gmail.com", "fyqh zvgz bgyv gail"),
+                Credentials = new NetworkCredential("email", "password"),
                 EnableSsl = true,
             };
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("batoulkhazali96@gmail.com"),
+                From = new MailAddress("sender email"),
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true,
